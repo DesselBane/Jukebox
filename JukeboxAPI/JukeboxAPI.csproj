@@ -3,7 +3,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Controllers" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
@@ -12,9 +11,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.NETCore.App" Version="2.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="NSwag.AspNetCore" Version="11.15.3" />
     <PackageReference Include="SpaMiddleware" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{D07F2941-D8F4-4195-825B-29864E85BD90}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
