@@ -9,7 +9,7 @@ using Infrastructure.DataModel;
 using Infrastructure.Email;
 using Infrastructure.ErrorCodes;
 using Infrastructure.Options;
-using Infrastructure.Services;
+using Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace Common.Security

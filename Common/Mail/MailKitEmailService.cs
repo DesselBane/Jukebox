@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common.Mail.Extensions;
+using Common.Extensions;
 using Infrastructure.Email;
 using MailKit.Net.Smtp;
 

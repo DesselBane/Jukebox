@@ -6,7 +6,7 @@ using Castle.DynamicProxy;
 using Common.Extensions;
 using Infrastructure.DataModel;
 using Infrastructure.Interception;
-using Infrastructure.Services;
+using Infrastructure.Security;
 
 namespace Common.Security
 {

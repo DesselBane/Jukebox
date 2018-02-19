@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Infrastructure.DataModel;
 
-namespace Infrastructure.Services
+namespace Infrastructure.Security
 {
     public interface IAuthenticationService
     {

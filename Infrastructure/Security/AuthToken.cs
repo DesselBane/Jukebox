@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Infrastructure.Services
+namespace Infrastructure.Security
 {
     [DataContract]
     public sealed class AuthToken

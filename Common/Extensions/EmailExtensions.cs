@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Email;
 using MimeKit;
 
-namespace Common.Mail.Extensions
+namespace Common.Extensions
 {
     public static class EmailExtensions
     {
