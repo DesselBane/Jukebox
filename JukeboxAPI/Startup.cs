@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SPAMiddleware;
 
 namespace JukeboxAPI
 {
@@ -23,6 +24,7 @@ namespace JukeboxAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSpaMiddleware("C:\\Workspace\\Projekte\\Jukebox\\JukeboxAPI\\wwwroot\\index.html");
             services.AddMvc();
         }
 
@@ -34,7 +36,10 @@ namespace JukeboxAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSpaMiddleware();
+            
             app.UseMvc();
+            app.UseStaticFiles();
         }
     }
 }
