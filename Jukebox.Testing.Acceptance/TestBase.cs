@@ -109,7 +109,7 @@ namespace Jukebox.Testing.Acceptance
                 new LoginDTO {Username = username, Password = password}.ToStringContent());
             var loginContent = JsonConvert.DeserializeObject<AuthToken>(await loginResponse.Content.ReadAsStringAsync());
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer ", loginContent.AccessToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginContent.AccessToken);
         }
 
         protected async Task<User> SetupAuthenticationAsync()

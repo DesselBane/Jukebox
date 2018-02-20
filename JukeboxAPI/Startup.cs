@@ -41,6 +41,8 @@ namespace Jukebox
 
             app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUi3Settings());
 
+            app.UseAuthentication();
+
             app.UseSpaMiddleware();
             
             app.UseMvc();
