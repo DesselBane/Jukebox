@@ -5,9 +5,16 @@ namespace Jukebox.Database.SqLite
 {
     public class SqLiteDataContext : DataContext
     {
+        private readonly string _connectionString;
+
+        public SqLiteDataContext(string connectionString = "Data Source=jukebox.db")
+        {
+            _connectionString = connectionString;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=jukebox.db");
+            optionsBuilder.UseSqlite(_connectionString);
         }
     }
 }

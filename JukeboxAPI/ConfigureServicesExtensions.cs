@@ -6,9 +6,12 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.DynamicProxy;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Email;
+using Jukebox.Common.Abstractions.Options;
 using Jukebox.Common.Abstractions.Security;
+using Jukebox.Common.Interception;
 using Jukebox.Common.Mail;
 using Jukebox.Common.Security;
+using Jukebox.Controllers;
 using Jukebox.Database.SqLite;
 using Jukebox.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,31 +28,33 @@ namespace Jukebox
 {
     public static class ConfigureServicesExtensions
     {
-        private static readonly string SecretKey = "67F4189B-3206-47DB-9BDB-41D93F6B0D71";
-        
+        private static readonly string SecretKey = "67F4189B320647DB9BDB41D93F6B0D71";
+
         public static IServiceProvider ConfigureJukebox(this IServiceCollection services, IConfiguration config)
         {
             services.ConfigureServices(config);
-            
+
             var builder = new ContainerBuilder();
             builder.ConfigureContainerBuilder(config);
-            
+
             builder.Populate(services);
+            builder.ConfigureControllers();
             return new AutofacServiceProvider(builder.Build());
         }
 
-        private static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
         {
-            return services.AddSpaMiddleware("",new []{"/api","/swagger"})
+            return services.AddSpaMiddleware("", new[] {"/api", "/swagger"})
                 .ConfigureAuthService()
                 .ConfigureMvc();
         }
 
-        private static ContainerBuilder ConfigureContainerBuilder(this ContainerBuilder builder, IConfiguration config)
+        public static ContainerBuilder ConfigureContainerBuilder(this ContainerBuilder builder, IConfiguration config)
         {
             return builder.ConfigureAuth()
                 .ConfigureDatabase()
-                .ConfigureEMail(config);
+                .ConfigureEMail(config)
+                .ConfigureHosting(config);
         }
 
         private static IServiceCollection ConfigureMvc(this IServiceCollection services)
@@ -69,7 +74,7 @@ namespace Jukebox
 
             return services;
         }
-        
+
         private static IServiceCollection ConfigureAuthService(this IServiceCollection services)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
@@ -82,11 +87,11 @@ namespace Jukebox
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
-                ValidIssuer = "ES_AUTHORITY",
+                ValidIssuer = "JB_AUTHORITY",
 
                 // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
-                ValidAudience = "ES_AUDIENCE",
+                ValidAudience = "JB_AUDIENCE",
 
                 // Validate the token expiry
                 ValidateLifetime = true,
@@ -101,11 +106,11 @@ namespace Jukebox
             services.AddSingleton(tokenValidationParams);
             return services;
         }
-        
+
         private static ContainerBuilder ConfigureAuth(this ContainerBuilder builder)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
-            
+
             builder.RegisterType<JwtAuthenticationService>()
                 .As<IAuthenticationService>()
                 .EnableInterfaceInterceptors()
@@ -116,8 +121,8 @@ namespace Jukebox
 
             builder.RegisterInstance(new JwtTokenOptions
             {
-                Issuer = "ES_AUTHORITY",
-                Audience = "ES_AUDIENCE",
+                Issuer = "JB_AUTHORITY",
+                Audience = "JB_AUDIENCE",
                 Expiration = TimeSpan.FromHours(1),
                 RefreshTokenExpiration = TimeSpan.FromDays(30),
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
@@ -131,18 +136,19 @@ namespace Jukebox
             builder.Register(x => x.Resolve<IHttpContextAccessor>().HttpContext.User.Identity as ClaimsIdentity ??
                                   new ClaimsIdentity());
 
+
             
             return builder;
         }
 
         private static ContainerBuilder ConfigureDatabase(this ContainerBuilder builder)
         {
-            builder.RegisterType<DataContext>()
-                .As<SqLiteDataContext>();
+            builder.RegisterType<SqLiteDataContext>()
+                .As<DataContext>();
 
             return builder;
         }
-        
+
         private static ContainerBuilder ConfigureEMail(this ContainerBuilder builder, IConfiguration configurationRoot)
         {
             var mailOptions = configurationRoot.GetSection("eMail").Get<EmailServiceConfiguration>();
@@ -163,8 +169,29 @@ namespace Jukebox
 
             builder.RegisterInstance(mailOptions)
                 .As<IEmailServiceConfiguration>();
+
+
+            return builder;
+        }
+
+        private static ContainerBuilder ConfigureHosting(this ContainerBuilder builder,
+            IConfiguration configurationRoot)
+        {
+            var hostingOptions = configurationRoot.GetSection("hosting").Get<HostingOptions>();
+
+            builder.RegisterInstance(hostingOptions)
+                .As<IHostingOptions>();
+
+            return builder;
+        }
+
+        public static ContainerBuilder ConfigureControllers(this ContainerBuilder builder)
+        {
+            builder.RegisterType<ControllerInterceptor>();
             
-            
+            builder.RegisterType<AuthController>()
+                .EnableClassInterceptors()
+                .InterceptedBy(typeof(ControllerInterceptor));
 
             return builder;
         }
