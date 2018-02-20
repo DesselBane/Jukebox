@@ -1,26 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Jukebox</AssemblyName>
+    <RootNamespace>Jukebox</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
     <PackageReference Include="ExceptionMiddleware" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.NETCore.App" Version="2.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.15.3" />
-    <PackageReference Include="SpaMiddleware" Version="1.0.1" />
+    <PackageReference Include="SpaMiddleware" Version="1.0.3" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
-      <Project>{D07F2941-D8F4-4195-825B-29864E85BD90}</Project>
-      <Name>Infrastructure</Name>
+    <ProjectReference Include="..\Jukebox.Common.Abstractions\Jukebox.Common.Abstractions.csproj">
+      <Project>{B2DBFF04-FB85-4517-AE34-E7068C2499C4}</Project>
+      <Name>Jukebox.Common.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jukebox.Common\Jukebox.Common.csproj">
+      <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
+      <Name>Jukebox.Common</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

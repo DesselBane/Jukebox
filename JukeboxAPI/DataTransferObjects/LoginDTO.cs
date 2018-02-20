@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace JukeboxAPI.DataTransferObjects
+namespace Jukebox.DataTransferObjects
 {
     [DataContract]
     public class LoginDTO

@@ -2,14 +2,14 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ExceptionMiddleware;
-using Infrastructure.ErrorCodes;
-using Infrastructure.Security;
-using JukeboxAPI.DataTransferObjects;
+using Jukebox.Common.Abstractions.ErrorCodes;
+using Jukebox.Common.Abstractions.Security;
+using Jukebox.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace EventSystemWebApi.Controllers
+namespace Jukebox.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class AuthController : Controller
