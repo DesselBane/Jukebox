@@ -9,6 +9,7 @@ import {AuthGuard} from "./security/auth.guard";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {HttpClientErrorInterceptor} from "./security/HttpClientErrorInterceptor";
 import {AuthenticationInterceptor} from "./security/AuthenticationInterceptor";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {AuthenticationInterceptor} from "./security/AuthenticationInterceptor";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     FormsModule,
     MaterialMetaModule

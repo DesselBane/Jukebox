@@ -1,4 +1,20 @@
-<h1>Hello World</h1>
-<button (click)="play()">Play</button>
-<button (click)="play()">Next</button>
-<button (click)="stop()">Stop</button>
+<mat-toolbar color="primary">
+  <button mat-button id="btn_menu" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span id="title">Jukebox</span>
+  <span id="user">User</span>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" #sidenav opened="true">
+    <mat-nav-list>
+      <mat-list-item><p>Item 1</p></mat-list-item>
+      <mat-list-item><p>Item 3</p></mat-list-item>
+      <mat-list-item><p>Item 3</p></mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    Main Content
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
