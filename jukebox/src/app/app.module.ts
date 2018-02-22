@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {HttpClientErrorInterceptor} from "./security/HttpClientErrorInterceptor";
 import {AuthenticationInterceptor} from "./security/AuthenticationInterceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AppRoutingModule} from "./app-routing.module";
 
 
 @NgModule({
@@ -21,7 +22,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserAnimationsModule,
     SharedModule,
     FormsModule,
-    MaterialMetaModule
+    MaterialMetaModule,
+
+    //Has to be last !!!
+    AppRoutingModule
   ],
   providers: [
     AuthGuard,
