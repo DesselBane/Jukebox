@@ -3,3 +3,31 @@
 html body{
   margin: 0;
 }
+
+mat-card{
+  margin: 1em;
+}
+
+h1 {
+  font-family: Roboto, sans-serif;
+}
+
+h3 {
+  font-size: 36px;
+  padding-top: 24px;
+  line-height: 42px;
+  font-family: Roboto, sans-serif;
+}
+
+p {
+  font-family: Roboto, sans-serif;
+}
+
+form{
+  display: grid;
+}
+
+.textCenter
+{
+  text-align: center;
+}

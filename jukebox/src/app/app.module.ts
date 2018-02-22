@@ -6,11 +6,12 @@ import {SharedModule} from "./shared/shared.module";
 import {FormsModule} from "@angular/forms";
 import {MaterialMetaModule} from "./material-meta/material-meta.module";
 import {AuthGuard} from "./security/auth.guard";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {HttpClientErrorInterceptor} from "./security/HttpClientErrorInterceptor";
-import {AuthenticationInterceptor} from "./security/AuthenticationInterceptor";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientErrorInterceptor} from "./shared/HttpClientErrorInterceptor";
+import {AuthenticationInterceptor} from "./shared/AuthenticationInterceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
+import {SecurityModule} from "./security/security.module";
 
 
 @NgModule({
@@ -23,6 +24,8 @@ import {AppRoutingModule} from "./app-routing.module";
     SharedModule,
     FormsModule,
     MaterialMetaModule,
+    HttpClientModule,
+    SecurityModule,
 
     //Has to be last !!!
     AppRoutingModule
