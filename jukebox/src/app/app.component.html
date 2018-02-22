@@ -5,15 +5,9 @@
   <span id="title">Jukebox</span>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav mode="side" #sidenav >
+  <mat-sidenav mode="over" #sidenav >
     <mat-nav-list>
-      <mat-list-item routerLink="auth/login">
-        <p>Login</p>
-      </mat-list-item>
-      <mat-list-item routerLink="auth/register">
-        <p>Register</p>
-      </mat-list-item>
-      <mat-list-item><p>Item 3</p></mat-list-item>
+      <app-nav-item *ngFor="let item of navItems" [CurrentItem]="item"></app-nav-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
