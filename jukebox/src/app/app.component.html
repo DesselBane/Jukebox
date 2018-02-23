@@ -1,16 +1,1 @@
-<mat-toolbar color="primary">
-  <button mat-button id="btn_menu" (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span id="title">Jukebox</span>
-</mat-toolbar>
-<mat-sidenav-container>
-  <mat-sidenav mode="over" #sidenav >
-    <mat-nav-list>
-      <app-nav-item *ngFor="let item of navItems" [CurrentItem]="item"></app-nav-item>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<app-navigation-bar></app-navigation-bar>

@@ -1,0 +1,10 @@
+<mat-expansion-panel *ngIf="needsExpander()">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{CurrentItem.name}}</mat-panel-title>
+  </mat-expansion-panel-header>
+      <app-nav-item *ngFor="let subItem of CurrentItem.subItems" [CurrentItem]="subItem" (ItemClicked)="ItemClicked.emit()"></app-nav-item>
+</mat-expansion-panel>
+
+<mat-list-item *ngIf="!needsExpander() && CurrentItem.isVisible" routerLink="{{CurrentItem.route}}" (click)="ItemClicked.emit()">
+  <p>{{CurrentItem.name}}</p>
+</mat-list-item>

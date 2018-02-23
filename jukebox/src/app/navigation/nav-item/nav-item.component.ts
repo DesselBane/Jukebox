@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NavItem} from "../models/nav-item";
 
 @Component({
@@ -11,9 +11,17 @@ export class NavItemComponent implements OnInit {
   @Input()
   CurrentItem: NavItem;
 
+  @Output()
+  ItemClicked = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  needsExpander() : boolean
+  {
+    return this.CurrentItem.subItems.some(value => value.isVisible);
   }
 
 }

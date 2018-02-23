@@ -7,16 +7,26 @@ import '../rxjs-extensions';
 import {Observable} from 'rxjs/Observable';
 import {ILoginTokenResponse} from "../shared/models/ilogin-token-response";
 import {LoginTokenModel} from "../shared/models/login-token-model";
+import {NavigationService} from "../navigation/navigation.service";
+import {NavItem} from "../navigation/models/nav-item";
 
 @Injectable()
 export class AuthenticationService {
+  private _navigation: NavigationService;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, navigation: NavigationService) {
+    this._navigation = navigation;
     // set token if saved in local storage
     let storeToken = JSON.parse(localStorage.getItem('loginToken'));
     if(storeToken !== null && storeToken instanceof LoginTokenModel)
       AuthenticationService.loginTokenResponse = LoginTokenModel.parse(storeToken);
+
   }
+
+  private static _loginNav = new NavItem("Login","auth/login");
+  private static _registerNav = new NavItem("Register","auth/register");
+  private static _logoutNav = new NavItem("Logout", "auth/logout");
+  private static isInitialized = false;
 
   private static _loginToken: LoginTokenModel;
 
@@ -63,6 +73,32 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('loginToken');
     AuthenticationService._loginToken = null;
+    this._logoutNav.isVisible = false;
+    this._loginNav.isVisible = true;
+    this._registerNav.isVisible = true;
+  }
+
+  public initialize()
+  {
+    if(AuthenticationService.isInitialized)
+      return;
+    AuthenticationService.isInitialized = true;
+
+    this._navigation.registerNavItem(AuthenticationService._loginNav);
+    this._navigation.registerNavItem(AuthenticationService._registerNav);
+    this._navigation.registerNavItem(AuthenticationService._logoutNav);
+
+    if(AuthenticationService.isAuthenticated())
+    {
+      AuthenticationService._logoutNav.isVisible = true;
+      AuthenticationService._loginNav.isVisible = false;
+      AuthenticationService._registerNav.isVisible = false;
+    }
+    else {
+      AuthenticationService._logoutNav.isVisible = false;
+      AuthenticationService._loginNav.isVisible = true;
+      AuthenticationService._registerNav.isVisible = true;
+    }
   }
 
   login(username: string, password: string): Observable<ILoginTokenResponse> {
@@ -71,7 +107,12 @@ export class AuthenticationService {
         username: username,
         password: password
       }))
-      .do(response => AuthenticationService.loginTokenResponse = response);
+      .do(response => {
+        AuthenticationService.loginTokenResponse = response;
+        AuthenticationService._logoutNav.isVisible = true;
+        AuthenticationService._loginNav.isVisible = false;
+        AuthenticationService._registerNav.isVisible = false;
+      });
   }
 
   refreshToken() : Observable<void>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavItem} from "./shared/models/nav-item";
+import {NavItem} from "./navigation/models/nav-item";
 
 @Component({
   selector: 'app-root',
@@ -7,12 +7,6 @@ import {NavItem} from "./shared/models/nav-item";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  navItems = [
-    new NavItem("Login","auth/login"),
-    new NavItem("Register","auth/register"),
-    new NavItem("Home","home")
-  ];
 
   constructor()
   {

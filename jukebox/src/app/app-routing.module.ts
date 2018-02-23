@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 
 export const routes: Routes = [
-  {path: 'auth', loadChildren: './security/security.module#SecurityModule'},
   {path: 'home', loadChildren: './song-selection/song-selection.module#SongSelectionModule'},
 
   // otherwise redirect to home

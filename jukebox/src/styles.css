@@ -55,3 +55,7 @@ form{
 {
   text-align: center;
 }
+
+.mat-expansion-panel-body {
+  padding: 0 !important;
+}
