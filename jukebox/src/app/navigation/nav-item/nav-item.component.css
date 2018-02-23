@@ -1,10 +1,1 @@
 
-.mat-expansion-panel:not([class*=mat-elevation-z]) {
-  box-shadow: none !important;
-}
-
-.mat-expansion-panel-header{
-  font-size: 16px !important;
-  padding: 0 16px;
-}
-

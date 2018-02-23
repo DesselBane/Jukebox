@@ -12,6 +12,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {SecurityModule} from "./security/security.module";
 import {NavigationModule} from "./navigation/navigation.module";
+import {SongSelectionModule} from "./song-selection/song-selection.module";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {NavigationModule} from "./navigation/navigation.module";
 
     //App Module load here
     SecurityModule,
+    SongSelectionModule,
 
     //Has to be last !!!
     AppRoutingModule

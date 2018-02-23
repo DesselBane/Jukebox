@@ -4,11 +4,27 @@
   </button>
   <span id="title">Jukebox</span>
 </mat-toolbar>
+
 <mat-sidenav-container>
-  <mat-sidenav mode="over" #sidenav >
-    <mat-nav-list>
+  <mat-sidenav mode="over" #sidenav id="sidenavContainer">
+
+    <mat-nav-list id="sidenavList">
       <app-nav-item *ngFor="let item of _navItems" [CurrentItem]="item" (ItemClicked)="sidenav.toggle()"></app-nav-item>
     </mat-nav-list>
+
+    <mat-expansion-panel id="sidenavUser">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Username
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item>
+            Logout
+          </mat-list-item>
+        </mat-nav-list>
+    </mat-expansion-panel>
+
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

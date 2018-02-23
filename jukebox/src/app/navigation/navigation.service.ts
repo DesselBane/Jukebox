@@ -14,7 +14,9 @@ export class NavigationService {
   }
 
   constructor() {
-    this._navItemsRepo = [];
+    this._navItemsRepo = [new NavItem("Test", "",[
+      new NavItem("Sub Item")
+    ])];
     this._navItemsSubject = new Subject<NavItem[]>();
   }
 

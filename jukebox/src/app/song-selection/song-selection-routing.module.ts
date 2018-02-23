@@ -6,7 +6,7 @@ import {SelectionComponent} from "./selection/selection.component";
   imports: [
     RouterModule.forChild([
       {
-        path: '',
+        path: 'home',
         component: SelectionComponent
       }
     ])
