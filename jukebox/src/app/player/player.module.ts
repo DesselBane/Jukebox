@@ -6,6 +6,9 @@ import {MaterialMetaModule} from "../material-meta/material-meta.module";
 import {NavigationService} from "../navigation/navigation.service";
 import {NavItem} from "../navigation/models/nav-item";
 import {PlayerRoutingModule} from "./player-routing.module";
+import { CurrentPlayerStatusComponent } from './current-player-status/current-player-status.component';
+import { SongSelectionComponent } from './song-selection/song-selection.component';
+import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 
 @NgModule({
   imports: [
@@ -14,15 +17,22 @@ import {PlayerRoutingModule} from "./player-routing.module";
     PlayerRoutingModule
   ],
   declarations: [
-    PlayerSelectionComponent
+    PlayerSelectionComponent,
+    CurrentPlayerStatusComponent,
+    SongSelectionComponent
   ],
   providers: [
-    PlayerService
+    PlayerService,
+    ActivePlayerNeededGuard
+  ],
+  exports: [
+    CurrentPlayerStatusComponent
   ]
 })
 export class PlayerModule {
   constructor(navService: NavigationService)
   {
+    navService.registerNavItem(new NavItem("Home","home"));
     navService.registerNavItem(new NavItem("Select Player","player/select"));
   }
 }

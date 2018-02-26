@@ -1,0 +1,11 @@
+@import "../../../theme";
+
+div {
+  height: 5em;
+  background-color: mat-color($custom-primary);
+  padding: .5em;
+
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}

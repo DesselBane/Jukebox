@@ -10,6 +10,7 @@ import {MaterialMetaModule} from "../material-meta/material-meta.module";
 import {AuthenticationService} from "./authentication.service";
 import {CanDeactivateGuard} from "./can-deactivate.guard";
 import { LogoutComponent } from './logout/logout.component';
+import {AuthGuard} from "./auth.guard";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   providers:[
     AuthenticationService,
-    CanDeactivateGuard
+    CanDeactivateGuard,
+    AuthGuard
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

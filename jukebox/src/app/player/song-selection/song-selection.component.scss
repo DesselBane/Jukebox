@@ -1,0 +1,17 @@
+.gridWrapper{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+app-current-player-status{
+  grid-row: 3;
+}
+
+mat-list {
+  grid-row: 1;
+}
+
+mat-list-item button {
+  margin:  0 0 0 auto;
+}
+

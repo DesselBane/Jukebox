@@ -12,7 +12,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {SecurityModule} from "./security/security.module";
 import {NavigationModule} from "./navigation/navigation.module";
-import {SongSelectionModule} from "./song-selection/song-selection.module";
 import {PlayerModule} from "./player/player.module";
 
 
@@ -30,7 +29,6 @@ import {PlayerModule} from "./player/player.module";
 
     //App Modules load here
     SecurityModule,
-    SongSelectionModule,
     PlayerModule,
 
     //Has to be last !!!
