@@ -25,6 +25,9 @@ export class NavigationService {
 
   public registerNavItem(item: NavItem) : void
   {
+    console.log("Item registered");
+    console.log(item);
+
     this._navItemsRepo.push(item);
     this._navItemsSubject.next(this._navItemsRepo);
   }

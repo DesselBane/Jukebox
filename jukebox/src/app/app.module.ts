@@ -13,6 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {SecurityModule} from "./security/security.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {SongSelectionModule} from "./song-selection/song-selection.module";
+import {PlayerModule} from "./player/player.module";
 
 
 @NgModule({
@@ -27,9 +28,10 @@ import {SongSelectionModule} from "./song-selection/song-selection.module";
     HttpClientModule,
     NavigationModule,
 
-    //App Module load here
+    //App Modules load here
     SecurityModule,
     SongSelectionModule,
+    PlayerModule,
 
     //Has to be last !!!
     AppRoutingModule
