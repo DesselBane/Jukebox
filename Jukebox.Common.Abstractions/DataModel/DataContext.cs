@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+// ReSharper disable VirtualMemberNeverOverridden.Global
 
 namespace Jukebox.Common.Abstractions.DataModel
 {
@@ -8,6 +9,7 @@ namespace Jukebox.Common.Abstractions.DataModel
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserClaim> Claims { get; set; }
+        public virtual DbSet<Song> Songs { get; set; }
 
         #endregion
 

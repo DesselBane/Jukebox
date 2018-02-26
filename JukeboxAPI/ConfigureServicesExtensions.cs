@@ -193,6 +193,10 @@ namespace Jukebox
                 .EnableClassInterceptors()
                 .InterceptedBy(typeof(ControllerInterceptor));
 
+            builder.RegisterType<SongController>()
+                .EnableClassInterceptors()
+                .InterceptedBy(typeof(ControllerInterceptor));
+            
             return builder;
         }
     }
