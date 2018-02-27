@@ -57,7 +57,8 @@ namespace Jukebox
                    .ConfigureDatabase()
                    .ConfigureEMail(config)
                    .ConfigureHosting(config)
-                   .ConfigureIndexing();
+                   .ConfigureIndexing()
+                   .ConfigureSongSearch();
 
         #endregion
 
