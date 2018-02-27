@@ -17,6 +17,18 @@ namespace Jukebox.Testing.Acceptance.Authentication
     public class AuthControllerTest : TestBase
     {
         [Fact]
+        public async Task ChangePassword_422_0_NoData()
+        {
+            var r = await _Client.PostAsync("api/auth/changePassword", "".ToStringContent());
+
+            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
+
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
+
+            Assert.Equal(Guid.Parse(GlobalErrorCodes.NO_DATA), error.ErrorCode);
+        }
+
+        [Fact]
         public async Task ChangePassword_NotFound_HashDoesntExist()
         {
             var r = await _Client.PostAsync("/api/auth/changepassword", new PasswordUpdateDTO {Password = "newPassword", ResetHash = "asdljhn"}.ToStringContent());
@@ -30,7 +42,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task ChangePassword_Success()
         {
             const string NEW_PW = "newPassword";
-            var user = CreateUser();
+            var          user   = CreateUser();
             user.ResetHash = "1234ResetHash";
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
@@ -42,62 +54,6 @@ namespace Jukebox.Testing.Acceptance.Authentication
             await _Context.Entry(user).ReloadAsync();
 
             Assert.Equal(NEW_PW.HashPassword(user.Salt).Item1, user.Password);
-        }
-
-        [Fact]
-        public async Task ChangePassword_422_0_NoData()
-        {
-            var r = await _Client.PostAsync("api/auth/changePassword", "".ToStringContent());
-
-            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
-
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-
-            Assert.Equal(Guid.Parse(GlobalErrorCodes.NO_DATA), error.ErrorCode);
-        }
-
-        [Fact]
-        public async Task ChangeUsername_MustBeAuthorized()
-        {
-            var r = await _Client.PostAsync("/api/auth/changeusername?username=asdkösjgn@gmx.de", null);
-            Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode);
-        }
-
-        [Fact]
-        public async Task ChangeUsername_Success()
-        {
-            var newUsername = Guid.NewGuid() + "@gmx.de";
-            var user = await SetupAuthenticationAsync();
-
-            var r = await _Client.PostAsync($"/api/auth/changeusername?username={newUsername}", null);
-            r.EnsureSuccessStatusCode();
-
-            await _Context.Entry(user).ReloadAsync();
-
-            Assert.Equal(newUsername, user.EMail);
-        }
-
-        [Fact]
-        public async Task ChangeUsername_Conflict_1_UsernameExists()
-        {
-            var user = await SetupAuthenticationAsync();
-
-            var r = await _Client.PostAsync($"/api/auth/changeusername?username={user.EMail}", null);
-            Assert.Equal(HttpStatusCode.Conflict, r.StatusCode);
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_EXISTS_ALREADY), error.ErrorCode);
-        }
-
-        [Fact]
-        public async Task ChangeUsername_422_1_WrongFormat()
-        {
-            await SetupAuthenticationAsync();
-
-            var r = await _Client.PostAsync("/api/auth/changeusername?username=asdb", null);
-
-            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_NO_EMAIL), error.ErrorCode);
         }
 
         [Fact]
@@ -114,11 +70,70 @@ namespace Jukebox.Testing.Acceptance.Authentication
         }
 
         [Fact]
+        public async Task ChangeUsername_422_1_WrongFormat()
+        {
+            await SetupAuthenticationAsync();
+
+            var r = await _Client.PostAsync("/api/auth/changeusername?username=asdb", null);
+
+            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
+            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_NO_EMAIL), error.ErrorCode);
+        }
+
+        [Fact]
+        public async Task ChangeUsername_Conflict_1_UsernameExists()
+        {
+            var user = await SetupAuthenticationAsync();
+
+            var r = await _Client.PostAsync($"/api/auth/changeusername?username={user.EMail}", null);
+            Assert.Equal(HttpStatusCode.Conflict, r.StatusCode);
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
+            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_EXISTS_ALREADY), error.ErrorCode);
+        }
+
+        [Fact]
+        public async Task ChangeUsername_MustBeAuthorized()
+        {
+            var r = await _Client.PostAsync("/api/auth/changeusername?username=asdkösjgn@gmx.de", null);
+            Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode);
+        }
+
+        [Fact]
+        public async Task ChangeUsername_Success()
+        {
+            var newUsername = Guid.NewGuid() + "@gmx.de";
+            var user        = await SetupAuthenticationAsync();
+
+            var r = await _Client.PostAsync($"/api/auth/changeusername?username={newUsername}", null);
+            r.EnsureSuccessStatusCode();
+
+            await _Context.Entry(user).ReloadAsync();
+
+            Assert.Equal(newUsername, user.EMail);
+        }
+
+        [Fact]
         public async Task DeleteAccount_MustBeAuthorized()
         {
             var r = await _Client.DeleteAsync("/api/auth/deleteaccount");
 
             Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteAccount_NotFound_1_UserDoesntExist()
+        {
+            var user = await SetupAuthenticationAsync();
+
+            _Context.Users.Remove(user);
+            await _Context.SaveChangesAsync();
+
+            var r = await _Client.DeleteAsync("/api/auth/deleteaccount");
+
+            Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
+            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USER_NOT_FOUND), error.ErrorCode);
         }
 
         [Fact]
@@ -138,31 +153,25 @@ namespace Jukebox.Testing.Acceptance.Authentication
         }
 
         [Fact]
-        public async Task DeleteAccount_NotFound_1_UserDoesntExist()
+        public async Task Register_422_0_NoData()
         {
-            var user = await SetupAuthenticationAsync();
+            var r = await _Client.PutAsync("api/auth/register", "".ToStringContent());
 
-            _Context.Users.Remove(user);
-            await _Context.SaveChangesAsync();
+            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
 
-            var r = await _Client.DeleteAsync("/api/auth/deleteaccount");
-
-            Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
             var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USER_NOT_FOUND), error.ErrorCode);
+
+            Assert.Equal(Guid.Parse(GlobalErrorCodes.NO_DATA), error.ErrorCode);
         }
 
-
         [Fact]
-        public async Task Register_Success()
+        public async Task Register_422_1_WrongFormat()
         {
-            var username = Guid.NewGuid() + "@gmx.de";
-            var response = await _Client.PutAsync($"/api/Auth/Register?username={username}", new StringContent(""));
-            response.EnsureSuccessStatusCode();
+            var response = await _Client.PutAsync("/api/Auth/Register?username=bla", new StringContent(""));
 
-            var user = await _Context.Users.FirstOrDefaultAsync(x => string.Equals(x.EMail, username,
-                StringComparison.CurrentCultureIgnoreCase));
-            Assert.NotNull(user);
+            Assert.Equal((HttpStatusCode) 422, response.StatusCode);
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await response.Content.ReadAsStringAsync());
+            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_NO_EMAIL), error.ErrorCode);
         }
 
         [Fact]
@@ -178,26 +187,39 @@ namespace Jukebox.Testing.Acceptance.Authentication
             Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_EXISTS_ALREADY), error.ErrorCode);
         }
 
-        [Fact]
-        public async Task Register_422_1_WrongFormat()
-        {
-            var response = await _Client.PutAsync("/api/Auth/Register?username=bla", new StringContent(""));
 
-            Assert.Equal((HttpStatusCode) 422, response.StatusCode);
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await response.Content.ReadAsStringAsync());
-            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USERNAME_NO_EMAIL), error.ErrorCode);
+        [Fact]
+        public async Task Register_Success()
+        {
+            var username = Guid.NewGuid() + "@gmx.de";
+            var response = await _Client.PutAsync($"/api/Auth/Register?username={username}", new StringContent(""));
+            response.EnsureSuccessStatusCode();
+
+            var user = await _Context.Users.FirstOrDefaultAsync(x => string.Equals(x.EMail, username,
+                                                                                   StringComparison.CurrentCultureIgnoreCase));
+            Assert.NotNull(user);
         }
 
         [Fact]
-        public async Task Register_422_0_NoData()
+        public async Task ResetPassword_422_0_NoData()
         {
-            var r = await _Client.PutAsync("api/auth/register", "".ToStringContent());
+            var r = await _Client.PostAsync("api/auth/resetPassword", "".ToStringContent());
 
             Assert.Equal((HttpStatusCode) 422, r.StatusCode);
 
             var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
 
             Assert.Equal(Guid.Parse(GlobalErrorCodes.NO_DATA), error.ErrorCode);
+        }
+
+        [Fact]
+        public async Task ResetPassword_NotFound_1_WrongUsername()
+        {
+            var r = await _Client.PostAsync("/api/auth/resetpassword?username=notExistingUser@gmx.de", null);
+
+            Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
+            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
+            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USER_NOT_FOUND), error.ErrorCode);
         }
 
         [Fact]
@@ -213,28 +235,6 @@ namespace Jukebox.Testing.Acceptance.Authentication
             await _Context.Entry(user).ReloadAsync();
 
             Assert.True(!string.IsNullOrWhiteSpace(user.ResetHash));
-        }
-
-        [Fact]
-        public async Task ResetPassword_NotFound_1_WrongUsername()
-        {
-            var r = await _Client.PostAsync("/api/auth/resetpassword?username=notExistingUser@gmx.de", null);
-
-            Assert.Equal(HttpStatusCode.NotFound, r.StatusCode);
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-            Assert.Equal(Guid.Parse(AuthenticationErrorCodes.USER_NOT_FOUND), error.ErrorCode);
-        }
-
-        [Fact]
-        public async Task ResetPassword_422_0_NoData()
-        {
-            var r = await _Client.PostAsync("api/auth/resetPassword", "".ToStringContent());
-
-            Assert.Equal((HttpStatusCode) 422, r.StatusCode);
-
-            var error = JsonConvert.DeserializeObject<ExceptionDTO>(await r.Content.ReadAsStringAsync());
-
-            Assert.Equal(Guid.Parse(GlobalErrorCodes.NO_DATA), error.ErrorCode);
         }
     }
 }

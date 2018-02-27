@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using Jukebox.Common.Abstractions.DataModel;
+using Jukebox.Common.Abstractions.Claims;
 
 namespace Jukebox.Common.Extensions
 {

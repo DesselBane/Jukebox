@@ -1,59 +1,30 @@
-﻿using System.IO;
+﻿using System.Net;
 using System.Threading.Tasks;
+using ExceptionMiddleware;
 using Jukebox.Common.Abstractions.DataModel;
-using Microsoft.AspNetCore.Authorization;
+using Jukebox.Common.Abstractions.ErrorCodes;
+using Jukebox.Common.Abstractions.Songs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
+using NSwag.Annotations;
 
 namespace Jukebox.Controllers
 {
     [Route("api/[controller]")]
     public class SongController : Controller
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext      _dataContext;
+        private readonly IIndexingService _indexingService;
 
-        public SongController(DataContext dataContext)
+        public SongController(DataContext dataContext, IIndexingService indexingService)
         {
-            _dataContext = dataContext;
+            _dataContext     = dataContext;
+            _indexingService = indexingService;
         }
 
-        [AllowAnonymous]
         [HttpPost("index")]
-        public Task StartIndexing()
-        {
-            var filePath = "C:\\Workspace\\Music";
-            var fileProvider = new PhysicalFileProvider(filePath);
-            return IndexDirectory(fileProvider);
-        }
-
-
-        private async Task IndexDirectory(IFileProvider fileProvider)
-        {
-            foreach (var directoryContent in fileProvider.GetDirectoryContents(""))
-            {
-                if (directoryContent.IsDirectory)
-                    await IndexDirectory(new PhysicalFileProvider(directoryContent.PhysicalPath));
-
-                var info = new FileInfo(directoryContent.PhysicalPath);
-                var tagLibFile = TagLib.File.Create(directoryContent.PhysicalPath);
-                
-                if (info.Extension != ".mp3") 
-                    continue;
-                
-                var song =  await _dataContext.Songs.FirstOrDefaultAsync(x => x.FilePath == info.FullName);
-
-                if (song != null) 
-                    continue;
-                
-                song = new Song();
-                _dataContext.Songs.Add(song);
-                song.FilePath = info.FullName;
-                song.Title = tagLibFile.Tag.Title;
-                song.Album = tagLibFile.Tag.Album;
-                song.Artists.AddRange(tagLibFile.Tag.Artists);
-                await _dataContext.SaveChangesAsync();
-            }
-        }
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description                = "Indexing Worked")]
+        [SwaggerResponse(208, typeof(ExceptionDTO), Description                      = SongErrorCodes.INDEX_OPERATION_ALREADY_RUNNING + "\nIndexing operation already running")]
+        [SwaggerResponse(HttpStatusCode.Forbidden, typeof(ExceptionDTO), Description = SongErrorCodes.NO_PERMISSION_TO_START_INDEXING + "\nUser donst have permission")]
+        public Task StartIndexing() => _indexingService.IndexSongsAsync();
     }
 }

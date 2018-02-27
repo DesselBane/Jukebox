@@ -13,15 +13,6 @@ namespace Jukebox.Common.Abstractions.Interception
 
         #endregion
 
-
-        protected void BuildUp(IDictionary<string, Action<IInvocation>> mappings)
-        {
-            if (_mappings != null)
-                throw new InvalidOperationException($"{nameof(BuildUp)} Method can only be called once");
-
-            _mappings = new ReadOnlyDictionary<string, Action<IInvocation>>(mappings);
-        }
-
         #region Implementation of IInterceptor
 
         public void Intercept(IInvocation invocation)
@@ -33,5 +24,14 @@ namespace Jukebox.Common.Abstractions.Interception
         }
 
         #endregion
+
+
+        protected void BuildUp(IDictionary<string, Action<IInvocation>> mappings)
+        {
+            if (_mappings != null)
+                throw new InvalidOperationException($"{nameof(BuildUp)} Method can only be called once");
+
+            _mappings = new ReadOnlyDictionary<string, Action<IInvocation>>(mappings);
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ExceptionMiddleware;
+using Jukebox.Common.Abstractions.Claims;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Email;
 using Jukebox.Common.Abstractions.ErrorCodes;
@@ -16,39 +17,28 @@ namespace Jukebox.Common.Security
 {
     public class JwtAuthenticationService : IAuthenticationService
     {
-        #region Vars
+        #region Constructors
 
-        private readonly ClaimsIdentity _identity;
-        private readonly IHostingOptions _hostingOptions;
-        private readonly IEmailService _mailService;
+        public JwtAuthenticationService(JwtTokenOptions options,
+                                        DataContext     securityContext,
+                                        IEmailService   mailService,
+                                        ClaimsIdentity  identity,
+                                        IHostingOptions hostingOptions)
+        {
+            _options         = options;
+            _securityContext = securityContext;
+            _mailService     = mailService;
+            _identity        = identity;
+            _hostingOptions  = hostingOptions;
 
-        private readonly JwtTokenOptions _options;
-        private readonly DataContext _securityContext;
+            options.ThrowIfInvalidOptions();
+        }
 
         #endregion
 
         #region Properties
 
         private DbSet<User> UserRepository => _securityContext.Users;
-
-        #endregion
-
-        #region Constructors
-
-        public JwtAuthenticationService(JwtTokenOptions options,
-                                        DataContext securityContext,
-                                        IEmailService mailService,
-                                        ClaimsIdentity identity,
-                                        IHostingOptions hostingOptions)
-        {
-            _options = options;
-            _securityContext = securityContext;
-            _mailService = mailService;
-            _identity = identity;
-            _hostingOptions = hostingOptions;
-
-            options.ThrowIfInvalidOptions();
-        }
 
         #endregion
 
@@ -66,7 +56,7 @@ namespace Jukebox.Common.Security
         public async Task<AuthToken> AuthenticateTokenAsync(AuthToken token)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
-            var jwtToken = jwtHandler.ReadJwtToken(token.AccessToken);
+            var jwtToken   = jwtHandler.ReadJwtToken(token.AccessToken);
 
             var user = await _securityContext.Users
                                              .Include(x => x.Claims)
@@ -75,7 +65,8 @@ namespace Jukebox.Common.Security
             if (user.RefreshToken != token.RefreshToken)
                 throw new UnauthorizedException("Refresh Tokens dont match", Guid.Parse(AuthenticationErrorCodes.REFRESH_TOKENS_DIDNT_MATCH));
 
-            if (!user.RefreshTokenExpiration.HasValue || user.RefreshTokenExpiration.Value < DateTime.UtcNow)
+            if (!user.RefreshTokenExpiration.HasValue ||
+                user.RefreshTokenExpiration.Value < DateTime.UtcNow)
                 throw new UnauthorizedException("Refresh Token Expired", Guid.Parse(AuthenticationErrorCodes.REFRESH_TOKEN_EXPIRED));
 
             return await GenerateTokenAsync(user);
@@ -109,12 +100,12 @@ namespace Jukebox.Common.Security
             await _securityContext.SaveChangesAsync();
 
             await _mailService.SendMessageAsync(new SimpleEmail
-            {
-                To = user.EMail,
-                From = "No-reply@EventSystemWebmaster.de",
-                Subject = "You requested a password reset.",
-                Body = $"Please click this link to set your new Password: {_hostingOptions.Url}/auth/changePassword?user={user.ResetHash}"
-            });
+                                                {
+                                                    To      = user.EMail,
+                                                    From    = "No-reply@EventSystemWebmaster.de",
+                                                    Subject = "You requested a password reset.",
+                                                    Body    = $"Please click this link to set your new Password: {_hostingOptions.Url}/auth/changePassword?user={user.ResetHash}"
+                                                });
         }
 
         public async Task<AuthToken> ChangeUsernameAsync(string username, ClaimsIdentity ident)
@@ -140,23 +131,34 @@ namespace Jukebox.Common.Security
             return _securityContext.Users.FirstOrDefaultAsync(x => string.Equals(x.EMail, _identity.GetUsername(), StringComparison.CurrentCultureIgnoreCase));
         }
 
+        #region Vars
+
+        private readonly ClaimsIdentity  _identity;
+        private readonly IHostingOptions _hostingOptions;
+        private readonly IEmailService   _mailService;
+
+        private readonly JwtTokenOptions _options;
+        private readonly DataContext     _securityContext;
+
+        #endregion
+
         #region Impl
 
         public static void UpdatePassword(User user, string newPassword)
         {
             var pwSalt = newPassword.HashPassword();
-            user.Password = pwSalt.Item1;
-            user.Salt = pwSalt.Item2;
+            user.Password  = pwSalt.Item1;
+            user.Salt      = pwSalt.Item2;
             user.ResetHash = null;
         }
 
         public static User CreateNewUser(string username)
         {
             var user = new User
-            {
-                EMail = username,
-                Password = null
-            };
+                       {
+                           EMail    = username,
+                           Password = null
+                       };
 
             user.Claims.Add(new UsernameClaim(username));
 
@@ -171,47 +173,44 @@ namespace Jukebox.Common.Security
             user.Claims.Add(new UsernameClaim(newUsername));
         }
 
-        private static string GenerateResetHash()
-        {
-            return Guid.NewGuid().ToString().HashPassword().Item1;
-        }
+        private static string GenerateResetHash() => Guid.NewGuid().ToString().HashPassword().Item1;
 
         private async Task<AuthToken> GenerateTokenAsync(ClaimsIdentity identity)
         {
             var now = DateTime.UtcNow;
 
             var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, identity.Name),
-                new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator().ConfigureAwait(false)),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64)
-            };
+                         {
+                             new Claim(JwtRegisteredClaimNames.Sub, identity.Name),
+                             new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator().ConfigureAwait(false)),
+                             new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64)
+                         };
 
             claims.AddRange(identity.Claims);
 
             var token = new JwtSecurityToken(
-                _options.Issuer,
-                _options.Audience,
-                claims.ToArray(),
-                now,
-                now.Add(_options.Expiration),
-                _options.SigningCredentials);
+                                             _options.Issuer,
+                                             _options.Audience,
+                                             claims.ToArray(),
+                                             now,
+                                             now.Add(_options.Expiration),
+                                             _options.SigningCredentials);
 
             var refreshToken = Guid.NewGuid().ToString();
 
             var user = await _securityContext.Users.FirstOrDefaultAsync(x => x.EMail == identity.Name);
-            user.RefreshToken = refreshToken;
+            user.RefreshToken           = refreshToken;
             user.RefreshTokenExpiration = now.Add(_options.RefreshTokenExpiration);
             await _securityContext.SaveChangesAsync();
 
 
             return new AuthToken
-            {
-                RefreshToken = user.RefreshToken,
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                AccessToken_ValidUntil = now.Add(_options.Expiration),
-                RefreshToken_ValidUntil = user.RefreshTokenExpiration.Value
-            };
+                   {
+                       RefreshToken            = user.RefreshToken,
+                       AccessToken             = new JwtSecurityTokenHandler().WriteToken(token),
+                       AccessToken_ValidUntil  = now.Add(_options.Expiration),
+                       RefreshToken_ValidUntil = user.RefreshTokenExpiration.Value
+                   };
         }
 
         private async Task<ClaimsIdentity> AuthenticateUserAsync(string username, string password)

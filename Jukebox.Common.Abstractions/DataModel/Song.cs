@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Jukebox.Common.Abstractions.DataModel
 {
     public class Song
     {
-        public int Id { get; set; }
+        public int    Id       { get; set; }
         public string FilePath { get; set; }
-        public string Title { get; set; }
+        public string Title    { get; set; }
 
         public string Album { get; set; }
-        
+
         public string ArtistsDb
         {
             get => string.Join("§$%&", Artists);

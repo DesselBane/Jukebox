@@ -6,6 +6,24 @@ namespace Jukebox.Common.Security
 {
     public class JwtTokenOptions
     {
+        public void ThrowIfInvalidOptions()
+        {
+            if (string.IsNullOrEmpty(Issuer))
+                throw new ArgumentNullException(nameof(Issuer));
+
+            if (string.IsNullOrEmpty(Audience))
+                throw new ArgumentNullException(nameof(Audience));
+
+            if (Expiration == TimeSpan.Zero)
+                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(Expiration));
+
+            if (SigningCredentials == null)
+                throw new ArgumentNullException(nameof(SigningCredentials));
+
+            if (NonceGenerator == null)
+                throw new ArgumentNullException(nameof(NonceGenerator));
+        }
+
         #region Properties
 
         public TimeSpan RefreshTokenExpiration { get; set; } = TimeSpan.FromDays(30);
@@ -38,23 +56,5 @@ namespace Jukebox.Common.Security
         public Func<Task<string>> NonceGenerator { get; set; } = () => Task.FromResult(Guid.NewGuid().ToString());
 
         #endregion
-
-        public void ThrowIfInvalidOptions()
-        {
-            if (string.IsNullOrEmpty(Issuer))
-                throw new ArgumentNullException(nameof(Issuer));
-
-            if (string.IsNullOrEmpty(Audience))
-                throw new ArgumentNullException(nameof(Audience));
-
-            if (Expiration == TimeSpan.Zero)
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(Expiration));
-
-            if (SigningCredentials == null)
-                throw new ArgumentNullException(nameof(SigningCredentials));
-
-            if (NonceGenerator == null)
-                throw new ArgumentNullException(nameof(NonceGenerator));
-        }
     }
 }

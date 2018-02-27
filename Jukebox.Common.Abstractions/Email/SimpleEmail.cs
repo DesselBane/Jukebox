@@ -4,6 +4,8 @@ namespace Jukebox.Common.Abstractions.Email
 {
     public class SimpleEmail : IEmail
     {
+        public override string ToString() => JsonConvert.SerializeObject(this);
+
         #region Implementation of IEmail
 
         public string To { get; set; }
@@ -15,10 +17,5 @@ namespace Jukebox.Common.Abstractions.Email
         public string Body { get; set; }
 
         #endregion
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

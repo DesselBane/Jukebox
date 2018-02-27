@@ -10,6 +10,8 @@ namespace Jukebox.Testing.Acceptance
 {
     public class IntStartup : Startup
     {
+        public IntStartup(IConfiguration configuration)
+            : base(configuration) { }
 
         #region Overrides of Startup
 
@@ -21,17 +23,13 @@ namespace Jukebox.Testing.Acceptance
 
             builder.ConfigureContainerBuilder(Configuration);
             builder.RegisterInstance(new SqLiteDataContext($"Data Source=test{Guid.NewGuid().ToString()}.db"))
-                .As<DataContext>();
+                   .As<DataContext>();
 
             builder.Populate(services);
             builder.ConfigureControllers();
             return new AutofacServiceProvider(builder.Build());
         }
-       
-        #endregion
 
-        public IntStartup(IConfiguration configuration) : base(configuration)
-        {
-        }
+        #endregion
     }
 }

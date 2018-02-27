@@ -7,11 +7,9 @@ namespace Jukebox.Database.SqLite
     {
         private readonly string _connectionString;
 
-        public SqLiteDataContext() : this("Data Source=jukebox.db")
-        {
-            
-        }
-        
+        public SqLiteDataContext()
+            : this("Data Source=jukebox.db") { }
+
         public SqLiteDataContext(string connectionString)
         {
             _connectionString = connectionString;

@@ -6,9 +6,6 @@ namespace Jukebox.Common.Extensions
 {
     public static class StringContentExtensions
     {
-        public static StringContent ToStringContent(this object data)
-        {
-            return new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-        }
+        public static StringContent ToStringContent(this object data) => new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
     }
 }

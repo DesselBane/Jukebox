@@ -24,50 +24,47 @@ namespace Jukebox.Common.Security
         {
             _authenticationValidator = authenticationValidator;
             BuildUp(new Dictionary<string, Action<IInvocation>>
-            {
-                {
-                    nameof(AuthenticateAsync),
-                    x => AuthenticateAsync((string) x.Arguments[0], (string) x.Arguments[1])
-                },
-                {
-                    nameof(AuthenticateTokenAsync),
-                    x => AuthenticateTokenAsync((AuthToken) x.Arguments[0])
-                },
-                {
-                    nameof(RegisterUserAsync),
-                    x => RegisterUserAsync((string) x.Arguments[0])
-                },
-                {
-                    nameof(ChangePasswordAsync),
-                    x => ChangePasswordAsync((string) x.Arguments[0], (string) x.Arguments[1])
-                },
-                {
-                    nameof(ResetPasswordAsync),
-                    x => ResetPasswordAsync((string) x.Arguments[0])
-                },
-                {
-                    nameof(ChangeUsernameAsync),
-                    x => ChangeUsernameAsync((string) x.Arguments[0], (ClaimsIdentity) x.Arguments[1])
-                },
-                {
-                    nameof(DeleteAccountAsync),
-                    x => DeleteAccountAsync((ClaimsIdentity) x.Arguments[0])
-                },
-                {
-                    nameof(GetCurrentUserAsync),
-                    x => GetCurrentUserAsync()
-                }
-            });
+                    {
+                        {
+                            nameof(AuthenticateAsync),
+                            x => AuthenticateAsync((string) x.Arguments[0], (string) x.Arguments[1])
+                        },
+                        {
+                            nameof(AuthenticateTokenAsync),
+                            x => AuthenticateTokenAsync((AuthToken) x.Arguments[0])
+                        },
+                        {
+                            nameof(RegisterUserAsync),
+                            x => RegisterUserAsync((string) x.Arguments[0])
+                        },
+                        {
+                            nameof(ChangePasswordAsync),
+                            x => ChangePasswordAsync((string) x.Arguments[0], (string) x.Arguments[1])
+                        },
+                        {
+                            nameof(ResetPasswordAsync),
+                            x => ResetPasswordAsync((string) x.Arguments[0])
+                        },
+                        {
+                            nameof(ChangeUsernameAsync),
+                            x => ChangeUsernameAsync((string) x.Arguments[0], (ClaimsIdentity) x.Arguments[1])
+                        },
+                        {
+                            nameof(DeleteAccountAsync),
+                            x => DeleteAccountAsync((ClaimsIdentity) x.Arguments[0])
+                        },
+                        {
+                            nameof(GetCurrentUserAsync),
+                            x => GetCurrentUserAsync()
+                        }
+                    });
         }
 
         #endregion
 
         #region Implementation of IAuthenticationService
 
-        public Task<AuthToken> AuthenticateAsync(string username, string password)
-        {
-            return null;
-        }
+        public Task<AuthToken> AuthenticateAsync(string username, string password) => null;
 
         public Task<AuthToken> AuthenticateTokenAsync(AuthToken token)
         {
@@ -111,10 +108,7 @@ namespace Jukebox.Common.Security
             return null;
         }
 
-        public Task<User> GetCurrentUserAsync()
-        {
-            return null;
-        }
+        public Task<User> GetCurrentUserAsync() => null;
 
         #endregion
     }

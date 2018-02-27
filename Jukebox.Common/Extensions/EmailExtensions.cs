@@ -12,9 +12,7 @@ namespace Jukebox.Common.Extensions
             mime.To.Add(new MailboxAddress(mail.To));
             mime.Subject = mail.Subject;
             mime.Body = new TextPart("plain")
-            {
-                Text = mail.Body
-            };
+                        {Text = mail.Body};
 
             return mime;
         }

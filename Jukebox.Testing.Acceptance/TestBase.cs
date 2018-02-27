@@ -5,6 +5,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Jukebox.Common.Abstractions.Claims;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Security;
 using Jukebox.Common.Extensions;
@@ -27,14 +28,6 @@ namespace Jukebox.Testing.Acceptance
 
         #endregion
 
-        #region Vars
-
-        protected readonly HttpClient _Client;
-        protected readonly DataContext _Context;
-        protected readonly TestServer _Server;
-
-        #endregion
-
         #region Constructors
 
         public TestBase()
@@ -44,20 +37,20 @@ namespace Jukebox.Testing.Acceptance
             if (string.IsNullOrWhiteSpace(envName))
                 envName = "integrationTest";
 
-            var fullName = this.GetType().Assembly.Location;
-            
+            var fullName = GetType().Assembly.Location;
+
             var config = new ConfigurationBuilder()
-                .SetBasePath(fullName.Remove(fullName.LastIndexOf('\\')))
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{envName}.json", true)
-                .AddEnvironmentVariables()
-                .Build();
-            
+                         .SetBasePath(fullName.Remove(fullName.LastIndexOf('\\')))
+                         .AddJsonFile("appsettings.json", false, true)
+                         .AddJsonFile($"appsettings.{envName}.json", true)
+                         .AddEnvironmentVariables()
+                         .Build();
+
             _Server = new TestServer(new WebHostBuilder()
-                .UseEnvironment(envName)
-                .UseWebRoot("../../../../JukeboxAPI/wwwroot")
-                .UseConfiguration(config)
-                .UseStartup<IntStartup>());
+                                     .UseEnvironment(envName)
+                                     .UseWebRoot("../../../../JukeboxAPI/wwwroot")
+                                     .UseConfiguration(config)
+                                     .UseStartup<IntStartup>());
 
             _Client = _Server.CreateClient();
 
@@ -76,6 +69,14 @@ namespace Jukebox.Testing.Acceptance
 
         #endregion
 
+        #region Vars
+
+        protected readonly HttpClient  _Client;
+        protected readonly DataContext _Context;
+        protected readonly TestServer  _Server;
+
+        #endregion
+
         #region Helper
 
         protected async Task<User> CreateUserAsync()
@@ -86,18 +87,18 @@ namespace Jukebox.Testing.Acceptance
             await _Context.SaveChangesAsync();
             return user;
         }
-        
+
         protected User CreateUser()
         {
-            var username = Guid.NewGuid() + "@gmx.de";
-            var password = ALL_TIME_PASSWORD;
+            var username     = Guid.NewGuid() + "@gmx.de";
+            var password     = ALL_TIME_PASSWORD;
             var passwordHash = password.HashPassword();
             var user = new User
-            {
-                EMail = username,
-                Password = passwordHash.Item1,
-                Salt = passwordHash.Item2,
-            };
+                       {
+                           EMail    = username,
+                           Password = passwordHash.Item1,
+                           Salt     = passwordHash.Item2
+                       };
 
             user.Claims.Add(new UsernameClaim(username));
             return user;
@@ -106,7 +107,7 @@ namespace Jukebox.Testing.Acceptance
         protected async Task SetupBasicAuthenticationAsync(HttpClient client, string username, string password = ALL_TIME_PASSWORD)
         {
             var loginResponse = await client.PostAsync("/api/auth/login",
-                new LoginDTO {Username = username, Password = password}.ToStringContent());
+                                                       new LoginDTO {Username = username, Password = password}.ToStringContent());
             var loginContent = JsonConvert.DeserializeObject<AuthToken>(await loginResponse.Content.ReadAsStringAsync());
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginContent.AccessToken);
@@ -122,10 +123,7 @@ namespace Jukebox.Testing.Acceptance
             return user;
         }
 
-        protected DataContext CreateDataContext()
-        {
-            return _Server.Host.Services.GetRequiredService<DataContext>();
-        }
+        protected DataContext CreateDataContext() => _Server.Host.Services.GetRequiredService<DataContext>();
 
         #endregion Helper
     }

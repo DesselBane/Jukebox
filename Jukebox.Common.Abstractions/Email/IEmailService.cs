@@ -19,6 +19,5 @@ namespace Jukebox.Common.Abstractions.Email
         /// <param name="mail">The Email to be sent</param>
         /// <returns></returns>
         Task SendMessageAsync(IEmail mail);
-
     }
 }
