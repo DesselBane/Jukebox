@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {AudioPlayer} from "./models/audio-player";
 import {Subject} from "rxjs/Subject";
-import {Song} from "./models/song";
+import {Song} from "../song/models/song";
 
 @Injectable()
 export class PlayerService {

@@ -1,4 +1,4 @@
-import {Song} from "./song";
+import {Song} from "../../song/models/song";
 
 export class AudioPlayer {
   set currentSong(value: Song) {

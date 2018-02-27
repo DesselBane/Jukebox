@@ -7,7 +7,7 @@ import {NavigationService} from "../navigation/navigation.service";
 import {NavItem} from "../navigation/models/nav-item";
 import {PlayerRoutingModule} from "./player-routing.module";
 import { CurrentPlayerStatusComponent } from './current-player-status/current-player-status.component';
-import { SongSelectionComponent } from './song-selection/song-selection.component';
+import { SongSelectionComponent } from '../song/song-selection/song-selection.component';
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 
 @NgModule({
@@ -18,8 +18,7 @@ import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
   ],
   declarations: [
     PlayerSelectionComponent,
-    CurrentPlayerStatusComponent,
-    SongSelectionComponent
+    CurrentPlayerStatusComponent
   ],
   providers: [
     PlayerService,

@@ -13,6 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {SecurityModule} from "./security/security.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {PlayerModule} from "./player/player.module";
+import {SongModule} from "./song/song.module";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {PlayerModule} from "./player/player.module";
     //App Modules load here
     SecurityModule,
     PlayerModule,
+    SongModule,
 
     //Has to be last !!!
     AppRoutingModule
