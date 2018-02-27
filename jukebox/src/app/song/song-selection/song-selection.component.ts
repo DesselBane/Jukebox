@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Song} from "../models/song";
 import {PlayerService} from "../../player/player.service";
+import {SongService} from "../song.service";
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-song-selection',
@@ -11,13 +14,23 @@ export class SongSelectionComponent implements OnInit {
 
   private _availableSongs: Song[];
   private _playerService: PlayerService;
+  private _songService: SongService;
 
-  constructor(playerService: PlayerService) {
+  private searchSubject = new Subject<string>();
+
+  constructor(playerService: PlayerService, songService: SongService) {
     this._playerService = playerService;
-    this._availableSongs = [
-      new Song("Meadows of Heaven","Nightwish","Dark Pasion Play"),
-      new Song("Song of Myself","Nightwish","Imaginaerum")
-    ];
+    this._songService = songService;
+
+    this.searchSubject.asObservable()
+      .debounceTime(500)
+      .mergeMap(value => this._songService.searchForSongs(value))
+      .catch(err => {
+        return Observable.of([])
+      })
+      .subscribe(songs => {
+          this._availableSongs = songs;
+        });
   }
 
   ngOnInit() {
@@ -26,5 +39,10 @@ export class SongSelectionComponent implements OnInit {
   songSelected(song: Song) : void
   {
     this._playerService.addSongToPlaylist(song);
+  }
+
+  searchBarTyped(searchString: string)
+  {
+    this.searchSubject.next(searchString);
   }
 }

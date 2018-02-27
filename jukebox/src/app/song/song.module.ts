@@ -4,6 +4,7 @@ import {SongSelectionComponent} from "./song-selection/song-selection.component"
 import {MaterialMetaModule} from "../material-meta/material-meta.module";
 import {PlayerModule} from "../player/player.module";
 import {SongRoutingModule} from "./song-routing.module";
+import {SongService} from "./song.service";
 
 @NgModule({
   imports: [
@@ -14,6 +15,9 @@ import {SongRoutingModule} from "./song-routing.module";
   ],
   declarations: [
     SongSelectionComponent
+  ],
+  providers: [
+    SongService
   ]
 })
 export class SongModule { }

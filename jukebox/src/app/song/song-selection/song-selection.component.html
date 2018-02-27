@@ -1,4 +1,9 @@
 <div class="gridWrapper">
+  <form>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Search here..." (keyup)="searchBarTyped($event.target.value)">
+    </mat-form-field>
+  </form>
   <mat-list>
     <mat-list-item *ngFor="let item of _availableSongs">
         <p>{{item.title}} - {{item.artist}}</p>
