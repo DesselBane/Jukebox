@@ -222,6 +222,14 @@ namespace Jukebox
             return builder;
         }
 
+        private static ContainerBuilder ConfigureSongSearch(this ContainerBuilder builder)
+        {
+            builder.RegisterType<SongSearchService>()
+                   .As<ISongSearchService>();
+            
+            return builder;
+        }
+        
         #endregion
     }
 }
