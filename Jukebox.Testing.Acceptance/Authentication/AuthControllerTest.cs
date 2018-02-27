@@ -8,6 +8,7 @@ using Jukebox.Common.Abstractions.ErrorCodes;
 using Jukebox.Common.Extensions;
 using Jukebox.Common.Security;
 using Jukebox.DataTransferObjects;
+using Jukebox.Testing.Acceptance.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Xunit;
@@ -42,7 +43,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task ChangePassword_Success()
         {
             const string NEW_PW = "newPassword";
-            var          user   = CreateUser();
+            var          user   = AuthExtensions.CreateUser();
             user.ResetHash = "1234ResetHash";
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
@@ -59,7 +60,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task ChangeUsername_422_0_NoData()
         {
-            await SetupAuthenticationAsync();
+            await _Client.SetupAuthenticationAsync(_Context);
             var r = await _Client.PostAsync("api/auth/changeUsername", "".ToStringContent());
 
             Assert.Equal((HttpStatusCode) 422, r.StatusCode);
@@ -72,7 +73,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task ChangeUsername_422_1_WrongFormat()
         {
-            await SetupAuthenticationAsync();
+            await _Client.SetupAuthenticationAsync(_Context);
 
             var r = await _Client.PostAsync("/api/auth/changeusername?username=asdb", null);
 
@@ -84,7 +85,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task ChangeUsername_Conflict_1_UsernameExists()
         {
-            var user = await SetupAuthenticationAsync();
+            var user = await _Client.SetupAuthenticationAsync(_Context);
 
             var r = await _Client.PostAsync($"/api/auth/changeusername?username={user.EMail}", null);
             Assert.Equal(HttpStatusCode.Conflict, r.StatusCode);
@@ -103,7 +104,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task ChangeUsername_Success()
         {
             var newUsername = Guid.NewGuid() + "@gmx.de";
-            var user        = await SetupAuthenticationAsync();
+            var user        = await _Client.SetupAuthenticationAsync(_Context);
 
             var r = await _Client.PostAsync($"/api/auth/changeusername?username={newUsername}", null);
             r.EnsureSuccessStatusCode();
@@ -124,7 +125,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task DeleteAccount_NotFound_1_UserDoesntExist()
         {
-            var user = await SetupAuthenticationAsync();
+            var user = await _Client.SetupAuthenticationAsync(_Context);
 
             _Context.Users.Remove(user);
             await _Context.SaveChangesAsync();
@@ -139,7 +140,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task DeleteAccount_Success()
         {
-            var user = await SetupAuthenticationAsync();
+            var user = await _Client.SetupAuthenticationAsync(_Context);
 
             var r = await _Client.DeleteAsync("/api/auth/deleteAccount");
 
@@ -225,7 +226,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task ResetPassword_Success()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 

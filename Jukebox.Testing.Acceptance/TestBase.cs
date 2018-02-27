@@ -24,7 +24,7 @@ namespace Jukebox.Testing.Acceptance
     {
         #region Const
 
-        protected const string ALL_TIME_PASSWORD = "superSecretBla123";
+        public const string ALL_TIME_PASSWORD = "superSecretBla123";
 
         #endregion
 
@@ -78,50 +78,6 @@ namespace Jukebox.Testing.Acceptance
         #endregion
 
         #region Helper
-
-        protected async Task<User> CreateUserAsync()
-        {
-            var user = CreateUser();
-
-            _Context.Users.Add(user);
-            await _Context.SaveChangesAsync();
-            return user;
-        }
-
-        protected User CreateUser()
-        {
-            var username     = Guid.NewGuid() + "@gmx.de";
-            var password     = ALL_TIME_PASSWORD;
-            var passwordHash = password.HashPassword();
-            var user = new User
-                       {
-                           EMail    = username,
-                           Password = passwordHash.Item1,
-                           Salt     = passwordHash.Item2
-                       };
-
-            user.Claims.Add(new UsernameClaim(username));
-            return user;
-        }
-
-        protected async Task SetupBasicAuthenticationAsync(HttpClient client, string username, string password = ALL_TIME_PASSWORD)
-        {
-            var loginResponse = await client.PostAsync("/api/auth/login",
-                                                       new LoginDTO {Username = username, Password = password}.ToStringContent());
-            var loginContent = JsonConvert.DeserializeObject<AuthToken>(await loginResponse.Content.ReadAsStringAsync());
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginContent.AccessToken);
-        }
-
-        protected async Task<User> SetupAuthenticationAsync()
-        {
-            var user = CreateUser();
-            _Context.Users.Add(user);
-            await _Context.SaveChangesAsync();
-
-            await SetupBasicAuthenticationAsync(_Client, user.EMail);
-            return user;
-        }
 
         protected DataContext CreateDataContext() => _Server.Host.Services.GetRequiredService<DataContext>();
 

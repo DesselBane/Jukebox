@@ -32,6 +32,8 @@ namespace Jukebox
     {
         private static readonly string SecretKey = "67F4189B320647DB9BDB41D93F6B0D71";
 
+        #region General
+
         public static IServiceProvider ConfigureJukebox(this IServiceCollection services, IConfiguration config)
         {
             services.ConfigureServices(config);
@@ -47,7 +49,8 @@ namespace Jukebox
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config) =>
             services.AddSpaMiddleware("", new[] {"/api", "/swagger"})
                     .ConfigureAuthService()
-                    .ConfigureMvc();
+                    .ConfigureMvc()
+                    .ConfigureOptions(config);
 
         public static ContainerBuilder ConfigureContainerBuilder(this ContainerBuilder builder, IConfiguration config) =>
             builder.ConfigureAuth()
@@ -55,6 +58,10 @@ namespace Jukebox
                    .ConfigureEMail(config)
                    .ConfigureHosting(config)
                    .ConfigureIndexing();
+
+        #endregion
+
+        #region Service Collection
 
         private static IServiceCollection ConfigureMvc(this IServiceCollection services)
         {
@@ -102,6 +109,17 @@ namespace Jukebox
             services.AddSingleton(tokenValidationParams);
             return services;
         }
+
+        private static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration config)
+        {
+            services.Configure<IndexOptions>(config.GetSection("Index"));
+
+            return services;
+        }
+        
+        #endregion
+
+        #region Container Builder
 
         private static ContainerBuilder ConfigureAuth(this ContainerBuilder builder)
         {
@@ -194,9 +212,16 @@ namespace Jukebox
         private static ContainerBuilder ConfigureIndexing(this ContainerBuilder builder)
         {
             builder.RegisterType<IndexingService>()
-                   .As<IIndexingService>();
+                   .As<IIndexingService>()
+                .EnableInterfaceInterceptors()
+                .InterceptedBy(typeof(IndexingServiceInterceptor));
+
+            builder.RegisterType<IndexingServiceInterceptor>();
+            builder.RegisterType<IndexingValidator>();
 
             return builder;
         }
+
+        #endregion
     }
 }

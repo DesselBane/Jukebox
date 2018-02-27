@@ -11,14 +11,14 @@
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
-    <PackageReference Include="ExceptionMiddleware" Version="1.0.0" />
-      <PackageReference Include="JetBrains.Annotations" Version="11.1.0"/>
+    <PackageReference Include="ExceptionMiddleware" Version="1.0.1"/>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0"/>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.NETCore.App" Version="2.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-      <PackageReference Include="NSwag.Annotations" Version="11.15.3"/>
+    <PackageReference Include="NSwag.Annotations" Version="11.15.3"/>
     <PackageReference Include="NSwag.AspNetCore" Version="11.15.3" />
     <PackageReference Include="SpaMiddleware" Version="1.0.3" />
   </ItemGroup>
@@ -44,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.HDS037.Test.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.HDS037.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

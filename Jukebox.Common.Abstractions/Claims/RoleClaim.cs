@@ -6,13 +6,13 @@ namespace Jukebox.Common.Abstractions.Claims
     public class RoleClaim : Claim
     {
         public RoleClaim(RoleClaimTypes value)
-            : base(ROLE_CLAIM_TYPE, value.ToString(), ValueType) { }
+            : base(ROLE_CLAIM_TYPE, value.ToString(), ClaimValueType) { }
 
         public RoleClaim(RoleClaimTypes value, string issuer)
-            : base(ROLE_CLAIM_TYPE, value.ToString(), ValueType, issuer) { }
+            : base(ROLE_CLAIM_TYPE, value.ToString(), ClaimValueType, issuer) { }
 
         public RoleClaim(RoleClaimTypes value, string issuer, string originalIssuer)
-            : base(ROLE_CLAIM_TYPE, value.ToString(), ValueType, issuer, originalIssuer) { }
+            : base(ROLE_CLAIM_TYPE, value.ToString(), ClaimValueType, issuer, originalIssuer) { }
 
         public RoleClaimTypes RoleType
         {
@@ -27,7 +27,7 @@ namespace Jukebox.Common.Abstractions.Claims
         #region Const
 
         public const string ROLE_CLAIM_TYPE = "http://Jukebox/Claims/Security/Role";
-        public const string ValueType       = ClaimValueTypes.String;
+        public const string ClaimValueType       = ClaimValueTypes.String;
 
         #endregion
     }

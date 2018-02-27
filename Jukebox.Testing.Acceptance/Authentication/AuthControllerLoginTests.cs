@@ -10,6 +10,7 @@ using Jukebox.Common.Abstractions.Security;
 using Jukebox.Common.Extensions;
 using Jukebox.Common.Security;
 using Jukebox.DataTransferObjects;
+using Jukebox.Testing.Acceptance.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -46,7 +47,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task Login_422_0_NoData()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 
@@ -61,7 +62,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task Login_422_1_UseraccountNotActivated()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             user.Password = null;
             user.Salt     = null;
             _Context.Users.Add(user);
@@ -77,7 +78,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task Login_Success()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 
@@ -91,7 +92,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task Login_Unauthorized_1_InvalidPassword()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 
@@ -129,7 +130,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task RefreshToken_Success()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             user.RefreshToken           = Guid.NewGuid().ToString();
             user.RefreshTokenExpiration = DateTime.Now.AddDays(60);
             _Context.Users.Add(user);
@@ -174,7 +175,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task RefreshToken_Unauthorized_RefreshTokenExpired()
         {
-            var user = CreateUser();
+            var user = AuthExtensions.CreateUser();
             user.RefreshToken           = Guid.NewGuid().ToString();
             user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(-1);
 
@@ -196,7 +197,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task RefreshToken_Unauthorized_TokenDidntMatch()
         {
-            var user  = await SetupAuthenticationAsync();
+            var user  = await _Client.SetupAuthenticationAsync(_Context);
             var token = await CreateAccessTokenAsync(user.EMail);
 
             var r = await _Client.PostAsync("api/auth/refreshtoken", new AuthToken
