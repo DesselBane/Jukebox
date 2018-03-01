@@ -55,7 +55,7 @@ ipc.on('updateMenu', function (event, arg) {
 
   menu.append(new MenuItem({
     label: arg.label,
-
+    click(){ win.webContents.send('menuItemClicked',arg)}
   }));
   win.setMenu(menu);
 

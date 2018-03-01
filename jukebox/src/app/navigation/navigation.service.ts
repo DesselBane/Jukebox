@@ -25,6 +25,13 @@ export class NavigationService {
 
     this._navItemsRepo = [];
     this._navItemsSubject = new Subject<NavItem[]>();
+
+    if(this._electronService.isElectronApp)
+    {
+      this._electronService.ipcRenderer.on('menuItemClicked', (event,arg) =>{
+        this._router.navigateByUrl(arg.route);
+      })
+    }
   }
 
   private _navItemsRepo: NavItem[];
