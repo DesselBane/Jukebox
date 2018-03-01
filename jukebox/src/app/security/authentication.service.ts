@@ -54,7 +54,7 @@ export class AuthenticationService {
   }
 
   static isAuthenticated(): boolean {
-    if (this.loginToken == null) {
+    if (this.isLoggedIn() == false) {
       return false;
     }
 
@@ -62,6 +62,7 @@ export class AuthenticationService {
   }
 
   static isLoggedIn(): boolean {
+    this.updateNavItems();
     return AuthenticationService.loginToken != null;
   }
 
@@ -73,9 +74,7 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('loginToken');
     AuthenticationService._loginToken = null;
-    this._logoutNav.isVisible = false;
-    this._loginNav.isVisible = true;
-    this._registerNav.isVisible = true;
+    this.updateNavItems();
   }
 
   public initialize()
@@ -88,17 +87,8 @@ export class AuthenticationService {
     this._navigation.registerNavItem(AuthenticationService._registerNav);
     this._navigation.registerNavItem(AuthenticationService._logoutNav);
 
-    if(AuthenticationService.isAuthenticated())
-    {
-      AuthenticationService._logoutNav.isVisible = true;
-      AuthenticationService._loginNav.isVisible = false;
-      AuthenticationService._registerNav.isVisible = false;
-    }
-    else {
-      AuthenticationService._logoutNav.isVisible = false;
-      AuthenticationService._loginNav.isVisible = true;
-      AuthenticationService._registerNav.isVisible = true;
-    }
+    AuthenticationService.updateNavItems();
+
   }
 
   login(username: string, password: string): Observable<ILoginTokenResponse> {
@@ -109,9 +99,7 @@ export class AuthenticationService {
       }))
       .do(response => {
         AuthenticationService.loginTokenResponse = response;
-        AuthenticationService._logoutNav.isVisible = true;
-        AuthenticationService._loginNav.isVisible = false;
-        AuthenticationService._registerNav.isVisible = false;
+        AuthenticationService.updateNavItems();
       });
   }
 
@@ -140,5 +128,21 @@ export class AuthenticationService {
     });
   }
 
+  private static updateNavItems()
+  {
+    if (AuthenticationService.loginToken != null && this.loginToken.isValid())
+    {
+      console.log("logged in");
+      AuthenticationService._logoutNav.isVisible = true;
+      AuthenticationService._loginNav.isVisible = false;
+      AuthenticationService._registerNav.isVisible = false;
+    }
+    else {
+      console.log("NOT logged in");
+      AuthenticationService._logoutNav.isVisible = false;
+      AuthenticationService._loginNav.isVisible = true;
+      AuthenticationService._registerNav.isVisible = true;
+    }
+  }
 
 }

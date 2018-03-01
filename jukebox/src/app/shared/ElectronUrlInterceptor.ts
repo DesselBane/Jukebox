@@ -19,7 +19,19 @@ export class ElectronUrlInterceptor implements HttpInterceptor {
     let newReq = req;
 
     if(this._electronService.isElectronApp)
-      newReq = req.clone({ url: 'http://localhost:5000' + req.urlWithParams});
+    {
+      let baseUrl = 'http://localhost:5000';
+      if(!req.urlWithParams.startsWith('/'))
+        baseUrl += '/';
+
+      let newUrl = baseUrl + req.urlWithParams;
+
+      newReq = req.clone({url: newUrl});
+      console.log("electron runtime detected. new request goes here: " + newReq.urlWithParams);
+    }else
+    {
+      console.log("web runtime detected")
+    }
 
 
     return next.handle(newReq);

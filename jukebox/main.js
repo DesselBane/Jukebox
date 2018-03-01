@@ -5,9 +5,9 @@ let win;
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 600,
-    height: 600,
-    backgroundColor: '#ffffff',
+    width: 1600,
+    height: 800,
+    backgroundColor: '#ffffff'
   });
 
 
@@ -39,4 +39,4 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
-})
+});

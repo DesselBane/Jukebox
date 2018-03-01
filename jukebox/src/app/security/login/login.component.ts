@@ -33,11 +33,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-      if(AuthenticationService.isLoggedIn())
-        this._router.navigateByUrl(this.returnUrl);
-
     // get return url from route parameters or default to '/'
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+
+    if(AuthenticationService.isAuthenticated())
+    {
+      console.log("navigated since logged in");
+      this._router.navigateByUrl(this.returnUrl);
+    }
+
+
     if (this._route.snapshot.queryParams['reason'] === 'sessionTimeout') {
       this._snackBar.open('Du wurdes ausgeloggt, da deine Sitzung abgelaufen ist.', 'OK', {duration: 5000});
     }
