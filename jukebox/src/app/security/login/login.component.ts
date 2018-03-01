@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   error = '';
   resetPasswordRoute = '/auth/resetPassword';
-  returnUrl: string;
+  returnUrl = "";
   private _snackBar: MatSnackBar;
   private _route: ActivatedRoute;
   private _router: Router;

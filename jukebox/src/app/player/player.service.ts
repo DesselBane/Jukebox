@@ -27,7 +27,8 @@ export class PlayerService {
 
   constructor() {
     let lastPlayer = JSON.parse(localStorage.getItem("currentPlayer"));
-    this._activePlayer = new AudioPlayer(lastPlayer._playerId,lastPlayer._name);
+    if(lastPlayer != null)
+      this._activePlayer = new AudioPlayer(lastPlayer._playerId,lastPlayer._name);
   }
 
   getAvailablePlayers() : Observable<AudioPlayer[]>

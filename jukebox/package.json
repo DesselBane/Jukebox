@@ -2,6 +2,7 @@
   "name": "jukebox",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "jukebox-build": "ng build --op ../JukeboxAPI/wwwroot"
+    "jukebox-build": "ng build --op ../JukeboxAPI/wwwroot",
+    "electron": "ng build --bh ./ && electron ."
   },
   "private": true,
   "dependencies": {
@@ -27,6 +29,7 @@
     "@angular/router": "5.2.0",
     "angular2-jwt": "0.2.3",
     "core-js": "2.4.1",
+    "ngx-electron": "^1.0.4",
     "rxjs": "5.5.6",
     "zone.js": "0.8.19"
   },
