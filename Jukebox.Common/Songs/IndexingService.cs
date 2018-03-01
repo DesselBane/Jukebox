@@ -70,7 +70,16 @@ namespace Jukebox.Common.Songs
                 if (info.Extension != ".mp3")
                     continue;
 
-                var tagLibFile = TagLibFile.Create(directoryContent.PhysicalPath);
+                TagLibFile tagLibFile;
+                
+                try
+                {
+                     tagLibFile = TagLibFile.Create(directoryContent.PhysicalPath);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
 
                 var song = await _dataContext.Songs.FirstOrDefaultAsync(x => x.FilePath == info.FullName);
 
@@ -83,7 +92,13 @@ namespace Jukebox.Common.Songs
                 song.FilePath = info.FullName;
                 song.Title    = tagLibFile.Tag.Title;
                 song.Album    = tagLibFile.Tag.Album;
-                song.Artists.AddRange(tagLibFile.Tag.Artists);
+
+                foreach (var artist in tagLibFile.Tag.Artists)
+                {
+                    if(!song.Artists.Contains(artist))
+                        song.Artists.Add(artist);
+                }
+                
                 song.LastTimeIndexed = indexingStart;
                 await _dataContext.SaveChangesAsync();
             }
