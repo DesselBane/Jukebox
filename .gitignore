@@ -3,6 +3,6 @@
 **/bin/
 **/wwwroot/
 *.db
-**/Migrations/
+
 
 *.DotSettings.user
