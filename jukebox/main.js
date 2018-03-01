@@ -1,6 +1,11 @@
 const { app, BrowserWindow } = require('electron');
+const ipc = require('electron').ipcMain;
+const Menu = require('electron').Menu;
+const MenuItem = require('electron').MenuItem;
 
 let win;
+let menu = Menu.buildFromTemplate([]);
+
 
 function createWindow () {
   // Create the browser window.
@@ -20,6 +25,7 @@ function createWindow () {
   win.on('closed', function () {
     win = null
   });
+
 }
 
 // Create window on electron intialization
@@ -39,4 +45,18 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
+});
+
+
+
+ipc.on('updateMenu', function (event, arg) {
+
+  console.log(arg);
+
+  menu.append(new MenuItem({
+    label: arg.label,
+
+  }));
+  win.setMenu(menu);
+
 });
