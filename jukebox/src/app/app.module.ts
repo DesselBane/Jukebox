@@ -14,6 +14,8 @@ import {SecurityModule} from "./security/security.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {PlayerModule} from "./player/player.module";
 import {SongModule} from "./song/song.module";
+import {NgxElectronModule} from "ngx-electron";
+import {ElectronUrlInterceptor} from "./shared/ElectronUrlInterceptor";
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import {SongModule} from "./song/song.module";
     MaterialMetaModule,
     HttpClientModule,
     NavigationModule,
+    NgxElectronModule,
 
     //App Modules load here
     SecurityModule,
@@ -46,6 +49,11 @@ import {SongModule} from "./song/song.module";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ElectronUrlInterceptor,
       multi: true
     }
   ],
