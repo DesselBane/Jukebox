@@ -31,7 +31,7 @@ import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 export class PlayerModule {
   constructor(navService: NavigationService)
   {
-    navService.registerNavItem(new NavItem("Home","home"));
-    navService.registerNavItem(new NavItem("Select Player","player/select"));
+    navService.registerNavItem(new NavItem("home","Home","home"));
+    navService.registerNavItem(new NavItem("player/select","Select Player","player/select"));
   }
 }

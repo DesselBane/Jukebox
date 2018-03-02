@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {NavItem} from "./models/nav-item";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 export class NavigationService {
   private _electronService: ElectronService;
   private _router: Router;
+  private _zone: NgZone;
 
 
   get navItems(): Observable<NavItem[]> {
@@ -19,19 +20,14 @@ export class NavigationService {
     return this._navItemsRepo;
   }
 
-  constructor(electronService: ElectronService, router: Router) {
+  constructor(electronService: ElectronService, router: Router, zone: NgZone) {
     this._electronService = electronService;
     this._router = router;
+    this._zone = zone;
 
     this._navItemsRepo = [];
     this._navItemsSubject = new Subject<NavItem[]>();
 
-    if(this._electronService.isElectronApp)
-    {
-      this._electronService.ipcRenderer.on('menuItemClicked', (event,arg) =>{
-        this._router.navigateByUrl(arg.route);
-      })
-    }
   }
 
   private _navItemsRepo: NavItem[];
@@ -39,21 +35,45 @@ export class NavigationService {
 
   public registerNavItem(item: NavItem) : void
   {
-    console.log("Item registered");
-    console.log(item);
-
     this._navItemsRepo.push(item);
     this._navItemsSubject.next(this._navItemsRepo);
 
+
     if(this._electronService.isElectronApp)
     {
-      let that = this;
+      let menu = this._electronService.remote.Menu.getApplicationMenu();
 
-      this._electronService.ipcRenderer.send('updateMenu', {
-        label: item.name,
-        route: item.route,
-      });
+      let menuItem = this.createElectronMenuItem(item);
+      menu.append(menuItem);
+
+      this._electronService.remote.Menu.setApplicationMenu(menu);
     }
+  }
+
+  private createElectronMenuItem(navItem: NavItem) : any
+  {
+    let subItems = [];
+
+    navItem.subItems.forEach(value => {
+        subItems.push(this.createElectronMenuItem(value));
+    });
+
+    let item = new this._electronService.remote.MenuItem({
+      label: navItem.name,
+      click: () => this._zone.run(() => this._router.navigate([navItem.route])),
+      submenu: subItems.length > 0 ? subItems : null,
+      type: subItems.length > 0 ? "submenu" : "normal",
+      enabled: navItem.isVisible,
+      id: navItem.id
+    });
+
+    navItem.isVisibleChanged.subscribe(() => {
+      let menuItem = this._electronService.remote.Menu.getApplicationMenu().getMenuItemById(navItem.id);
+      if(menuItem != null)
+        menuItem.visible = navItem.isVisible;
+    });
+
+    return item;
   }
 
 }

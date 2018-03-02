@@ -26,10 +26,14 @@ function createWindow () {
     win = null
   });
 
+
 }
 
 // Create window on electron intialization
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+  Menu.setApplicationMenu(menu);
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -45,18 +49,4 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
-});
-
-
-
-ipc.on('updateMenu', function (event, arg) {
-
-  console.log(arg);
-
-  menu.append(new MenuItem({
-    label: arg.label,
-    click(){ win.webContents.send('menuItemClicked',arg)}
-  }));
-  win.setMenu(menu);
-
 });
