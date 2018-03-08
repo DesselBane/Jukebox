@@ -26,7 +26,7 @@ export class AuthenticationService {
   private static _loginNav = new NavItem("auth/login","Login","auth/login");
   private static _registerNav = new NavItem("auth/register","Register","auth/register");
   private static _logoutNav = new NavItem("auth/logout","Logout", "auth/logout");
-  private static _authParentItem = new NavItem("auth","Auth","",[AuthenticationService._loginNav,AuthenticationService._registerNav], true);
+  private static _authParentItem = new NavItem("auth","Account","",[AuthenticationService._loginNav,AuthenticationService._registerNav, AuthenticationService._logoutNav], true);
   private static isInitialized = false;
 
   private static _loginToken: LoginTokenModel;
@@ -85,7 +85,6 @@ export class AuthenticationService {
     AuthenticationService.isInitialized = true;
 
     this._navigation.registerNavItem(AuthenticationService._authParentItem);
-    this._navigation.registerNavItem(AuthenticationService._logoutNav);
 
     AuthenticationService.updateNavItems();
 
