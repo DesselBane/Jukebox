@@ -65,7 +65,7 @@ namespace Jukebox.Testing.Acceptance.Extensions
             return JsonConvert.DeserializeObject<ExceptionDTO>(await httpResponseMessage.Content.ReadAsStringAsync());
         }
 
-        public static async Task GiveSysadminRoleAsync(this User user, DataContext dataContext)
+        public static async Task GrantSystemAdminRoleAsync(this DataContext dataContext, User user)
         {
             var dbUser = await dataContext.Users
                                         .Include(x => x.Claims)

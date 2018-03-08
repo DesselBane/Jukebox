@@ -28,7 +28,7 @@ namespace Jukebox.Testing.Acceptance.Song
         public async Task IndexSongs_200_SysAdmin()
         {
             var user = await _Context.CreateUserAsync();
-            await user.GiveSysadminRoleAsync(_Context);
+            await _Context.GrantSystemAdminRoleAsync(user);
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
             var r = await _Client.PostAsync("api/song/index", "".ToStringContent());
