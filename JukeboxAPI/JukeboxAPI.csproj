@@ -5,9 +5,6 @@
     <RootNamespace>Jukebox</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
@@ -53,4 +50,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="wwwroot\**"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="wwwroot\**"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="wwwroot\**"/>
+    </ItemGroup>
 </Project>
