@@ -15,12 +15,12 @@ namespace Jukebox.Controllers
     public class SongController : Controller
     {
         private readonly IIndexingService   _indexingService;
-        private readonly ISongSearchService _songSearchService;
+        private readonly ISongService _songService;
 
-        public SongController(IIndexingService indexingService, ISongSearchService songSearchService)
+        public SongController(IIndexingService indexingService, ISongService songService)
         {
             _indexingService   = indexingService;
-            _songSearchService = songSearchService;
+            _songService = songService;
         }
 
         [HttpPost("index")]
@@ -32,6 +32,9 @@ namespace Jukebox.Controllers
         [HttpGet("search")]
         [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<Song>))]
-        public Task<IEnumerable<Song>> SearchForSong([FromQuery] string searchTerm) => _songSearchService.SearchForSongAsync(searchTerm);
+        public Task<IEnumerable<Song>> SearchForSong([FromQuery] string searchTerm) => _songService.SearchForSongAsync(searchTerm);
+
+        [HttpGet("{songId}")]
+        public Task<IActionResult> GetSongById(int songId) => _songService.GetSongById(songId);
     }
 }

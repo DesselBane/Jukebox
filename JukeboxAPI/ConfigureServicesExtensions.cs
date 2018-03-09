@@ -232,8 +232,8 @@ namespace Jukebox
 
         private static ContainerBuilder ConfigureSongSearch(this ContainerBuilder builder)
         {
-            builder.RegisterType<SongSearchService>()
-                   .As<ISongSearchService>();
+            builder.RegisterType<SongService>()
+                   .As<ISongService>();
 
             return builder;
         }
