@@ -3,6 +3,7 @@
     public enum RoleClaimTypes
     {
         SystemAdmin,
-        IndexAdmin
+        IndexAdmin,
+        PlayerAdmin
     }
 }

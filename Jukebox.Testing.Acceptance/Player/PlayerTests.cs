@@ -62,7 +62,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Context.GrantSystemAdminRoleAsync(user);
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
-            var player = PlayerExtensions.CreateDefaultPlayer();
+            var player = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PutAsync("api/player", player.ToStringContent());
             
@@ -86,7 +86,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Context.GrantCreatePlayerRight(user);
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
-            var player = PlayerExtensions.CreateDefaultPlayer();
+            var player = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PutAsync("api/player", player.ToStringContent());
             
@@ -108,7 +108,7 @@ namespace Jukebox.Testing.Acceptance.Player
         {
             await _Client.SetupAuthenticationAsync(_Context);
 
-            var player = PlayerExtensions.CreateDefaultPlayer();
+            var player = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PutAsync("api/player", player.ToStringContent());
             
@@ -144,7 +144,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
             var player = await _Context.CreatePlayerAsync();
-            var newPlayer = PlayerExtensions.CreateDefaultPlayer();
+            var newPlayer = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PostAsync($"api/player/{player.Id}", newPlayer.ToStringContent());
             r.EnsureSuccessStatusCode();
@@ -171,7 +171,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
             var player    = await _Context.CreatePlayerAsync();
-            var newPlayer = PlayerExtensions.CreateDefaultPlayer();
+            var newPlayer = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PostAsync($"api/player/{player.Id}", newPlayer.ToStringContent());
             r.EnsureSuccessStatusCode();
@@ -196,7 +196,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Client.SetupAuthenticationAsync(_Context);
 
             var player = await _Context.CreatePlayerAsync();
-            var newPlayer = PlayerExtensions.CreateDefaultPlayer();
+            var newPlayer = PlayerTestExtensions.CreateDefaultPlayer();
 
             var r = await _Client.PostAsync($"api/player/{player.Id}", newPlayer.ToStringContent());
             
@@ -216,7 +216,7 @@ namespace Jukebox.Testing.Acceptance.Player
 
             var player = await _Context.CreatePlayerAsync();
             var otherPlayer = await _Context.CreatePlayerAsync();
-            var newPlayer = PlayerExtensions.CreateDefaultPlayer();
+            var newPlayer = PlayerTestExtensions.CreateDefaultPlayer();
             newPlayer.Name = otherPlayer.Name;
 
             var r = await _Client.PostAsync($"api/player/{player.Id}", newPlayer.ToStringContent());
@@ -236,7 +236,7 @@ namespace Jukebox.Testing.Acceptance.Player
             await _Client.SetupBasicAuthenticationAsync(user.EMail);
 
             var player = await _Context.CreatePlayerAsync();
-            var newPlayer = PlayerExtensions.CreateDefaultPlayer();
+            var newPlayer = PlayerTestExtensions.CreateDefaultPlayer();
             newPlayer.Id = player.Id;
 
             var r = await _Client.PostAsync("api/player/999", newPlayer.ToStringContent());
