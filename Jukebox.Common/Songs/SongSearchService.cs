@@ -15,12 +15,12 @@ namespace Jukebox.Common.Songs
         {
             _dataContext = dataContext;
         }
-        
+
         public async Task<IEnumerable<Song>> SearchForSongAsync(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return new List<Song>();
-            
+
             searchTerm = searchTerm.ToLower();
 
             return await _dataContext.Songs

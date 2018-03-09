@@ -24,7 +24,7 @@ namespace Jukebox.Testing.Acceptance.Extensions
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginContent.AccessToken);
         }
-        
+
         public static User CreateUser()
         {
             var username     = Guid.NewGuid() + "@gmx.de";
@@ -40,7 +40,7 @@ namespace Jukebox.Testing.Acceptance.Extensions
             user.Claims.Add(new UsernameClaim(username));
             return user;
         }
-        
+
         public static async Task<User> CreateUserAsync(this DataContext dataContext)
         {
             var user = CreateUser();
@@ -49,8 +49,8 @@ namespace Jukebox.Testing.Acceptance.Extensions
             await dataContext.SaveChangesAsync();
             return user;
         }
-        
-        public static async Task<User> SetupAuthenticationAsync(this HttpClient client,DataContext dataContext)
+
+        public static async Task<User> SetupAuthenticationAsync(this HttpClient client, DataContext dataContext)
         {
             var user = CreateUser();
             dataContext.Users.Add(user);
@@ -60,21 +60,18 @@ namespace Jukebox.Testing.Acceptance.Extensions
             return user;
         }
 
-        public static async Task<ExceptionDTO> GetErrorObjectAsync(this HttpResponseMessage httpResponseMessage)
-        {
-            return JsonConvert.DeserializeObject<ExceptionDTO>(await httpResponseMessage.Content.ReadAsStringAsync());
-        }
+        public static async Task<ExceptionDTO> GetErrorObjectAsync(this HttpResponseMessage httpResponseMessage) => JsonConvert.DeserializeObject<ExceptionDTO>(await httpResponseMessage.Content.ReadAsStringAsync());
 
         public static async Task GrantSystemAdminRoleAsync(this DataContext dataContext, User user)
         {
             var dbUser = await dataContext.Users
-                                        .Include(x => x.Claims)
-                                        .FirstOrDefaultAsync(x => x.Id == user.Id);
-            
-            if(dbUser == null)
+                                          .Include(x => x.Claims)
+                                          .FirstOrDefaultAsync(x => x.Id == user.Id);
+
+            if (dbUser == null)
                 throw new InvalidOperationException();
-            
-            if(!dbUser.HasClaim(RoleClaim.ROLE_CLAIM_TYPE,RoleClaimTypes.SystemAdmin.ToString()))
+
+            if (!dbUser.HasClaim(RoleClaim.ROLE_CLAIM_TYPE, RoleClaimTypes.SystemAdmin.ToString()))
                 dbUser.Claims.Add(new RoleClaim(RoleClaimTypes.SystemAdmin));
 
             await dataContext.SaveChangesAsync();

@@ -19,9 +19,7 @@ namespace Jukebox.Common.Songs
         {
             if (!_identity.HasClaim(RoleClaim.ROLE_CLAIM_TYPE, RoleClaimTypes.IndexAdmin.ToString()) &&
                 !_identity.HasClaim(RoleClaim.ROLE_CLAIM_TYPE, RoleClaimTypes.SystemAdmin.ToString()))
-            {
-                throw new ForbiddenException("User not permitted to start indexing",Guid.Parse(SongErrorCodes.NO_PERMISSION_TO_START_INDEXING));
-            }
+                throw new ForbiddenException("User not permitted to start indexing", Guid.Parse(SongErrorCodes.NO_PERMISSION_TO_START_INDEXING));
         }
     }
 }

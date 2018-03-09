@@ -16,42 +16,38 @@ namespace Jukebox.Common.Songs
 {
     public class IndexingService : IIndexingService
     {
-        private readonly DataContext _dataContext;
-        private readonly IndexOptions _indexOptions;
-
-        private static bool _IS_INDEXING = false;
-        private static readonly object _IS_INDEXING_SYNC_HANDLE = new object();
+        private static          bool         _IS_INDEXING;
+        private static readonly object       _IS_INDEXING_SYNC_HANDLE = new object();
+        private readonly        DataContext  _dataContext;
+        private readonly        IndexOptions _indexOptions;
 
         public IndexingService(DataContext dataContext, IOptions<IndexOptions> indexOptions)
         {
-            _dataContext = dataContext;
+            _dataContext  = dataContext;
             _indexOptions = indexOptions.Value;
-            
         }
 
         public async Task IndexSongsAsync()
         {
             lock (_IS_INDEXING_SYNC_HANDLE)
             {
-                if(_IS_INDEXING)
-                    throw new AlreadyReportedException("Indexing already running",Guid.Parse(SongErrorCodes.INDEX_OPERATION_ALREADY_RUNNING));
+                if (_IS_INDEXING)
+                    throw new AlreadyReportedException("Indexing already running", Guid.Parse(SongErrorCodes.INDEX_OPERATION_ALREADY_RUNNING));
 
                 _IS_INDEXING = true;
             }
 
             var indexingStart = DateTime.UtcNow;
-            
+
             foreach (var indexingPath in _indexOptions.IndexingPaths)
-            {
-                await IndexDirectory(new PhysicalFileProvider(indexingPath),indexingStart);
-            }
+                await IndexDirectory(new PhysicalFileProvider(indexingPath), indexingStart);
 
             _dataContext.Songs.RemoveRange(await _dataContext.Songs
                                                              .Where(x => x.LastTimeIndexed < indexingStart)
                                                              .ToListAsync());
             await _dataContext.SaveChangesAsync();
-            
-            
+
+
             lock (_IS_INDEXING_SYNC_HANDLE)
             {
                 _IS_INDEXING = false;
@@ -63,7 +59,7 @@ namespace Jukebox.Common.Songs
             foreach (var directoryContent in fileProvider.GetDirectoryContents(""))
             {
                 if (directoryContent.IsDirectory)
-                    await IndexDirectory(new PhysicalFileProvider(directoryContent.PhysicalPath),indexingStart);
+                    await IndexDirectory(new PhysicalFileProvider(directoryContent.PhysicalPath), indexingStart);
 
                 var info = new FileInfo(directoryContent.PhysicalPath);
 
@@ -71,12 +67,11 @@ namespace Jukebox.Common.Songs
                     continue;
 
                 TagLibFile tagLibFile;
-                
+
                 try
                 {
-                     tagLibFile = TagLibFile.Create(directoryContent.PhysicalPath);
-                }
-                catch (Exception e)
+                    tagLibFile = TagLibFile.Create(directoryContent.PhysicalPath);
+                } catch (Exception e)
                 {
                     continue;
                 }
@@ -95,15 +90,13 @@ namespace Jukebox.Common.Songs
 
                 foreach (var artist in tagLibFile.Tag.Artists)
                 {
-                    if(!song.Artists.Contains(artist))
+                    if (!song.Artists.Contains(artist))
                         song.Artists.Add(artist);
                 }
-                
+
                 song.LastTimeIndexed = indexingStart;
                 await _dataContext.SaveChangesAsync();
             }
         }
-        
-        
     }
 }

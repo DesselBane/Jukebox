@@ -27,7 +27,7 @@ namespace Jukebox.Common.Abstractions.Claims
         #region Const
 
         public const string ROLE_CLAIM_TYPE = "http://Jukebox/Claims/Security/Role";
-        public const string ClaimValueType       = ClaimValueTypes.String;
+        public const string ClaimValueType  = ClaimValueTypes.String;
 
         #endregion
     }

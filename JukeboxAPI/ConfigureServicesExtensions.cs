@@ -7,10 +7,12 @@ using Autofac.Extras.DynamicProxy;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Email;
 using Jukebox.Common.Abstractions.Options;
+using Jukebox.Common.Abstractions.Players;
 using Jukebox.Common.Abstractions.Security;
 using Jukebox.Common.Abstractions.Songs;
 using Jukebox.Common.Interception;
 using Jukebox.Common.Mail;
+using Jukebox.Common.Players;
 using Jukebox.Common.Security;
 using Jukebox.Common.Songs;
 using Jukebox.Controllers;
@@ -58,7 +60,8 @@ namespace Jukebox
                    .ConfigureEMail(config)
                    .ConfigureHosting(config)
                    .ConfigureIndexing()
-                   .ConfigureSongSearch();
+                   .ConfigureSongSearch()
+                   .ConfigurePlayers();
 
         #endregion
 
@@ -117,7 +120,7 @@ namespace Jukebox
 
             return services;
         }
-        
+
         #endregion
 
         #region Container Builder
@@ -207,6 +210,10 @@ namespace Jukebox
                    .EnableClassInterceptors()
                    .InterceptedBy(typeof(ControllerInterceptor));
 
+            builder.RegisterType<PlayerController>()
+                   .EnableClassInterceptors()
+                   .InterceptedBy(typeof(ControllerInterceptor));
+            
             return builder;
         }
 
@@ -214,8 +221,8 @@ namespace Jukebox
         {
             builder.RegisterType<IndexingService>()
                    .As<IIndexingService>()
-                .EnableInterfaceInterceptors()
-                .InterceptedBy(typeof(IndexingServiceInterceptor));
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(IndexingServiceInterceptor));
 
             builder.RegisterType<IndexingServiceInterceptor>();
             builder.RegisterType<IndexingValidator>();
@@ -227,7 +234,20 @@ namespace Jukebox
         {
             builder.RegisterType<SongSearchService>()
                    .As<ISongSearchService>();
-            
+
+            return builder;
+        }
+
+        private static ContainerBuilder ConfigurePlayers(this ContainerBuilder builder)
+        {
+            builder.RegisterType<PlayerService>()
+                   .As<IPlayerService>()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(PlayerServiceInterceptor));
+
+            builder.RegisterType<PlayerServiceInterceptor>();
+            builder.RegisterType<PlayerValidator>();
+
             return builder;
         }
         

@@ -69,6 +69,12 @@ namespace Jukebox.Testing.Acceptance
 
         #endregion
 
+        #region Helper
+
+        protected DataContext CreateDataContext() => _Server.Host.Services.GetRequiredService<DataContext>();
+
+        #endregion Helper
+
         #region Vars
 
         protected readonly HttpClient  _Client;
@@ -76,11 +82,5 @@ namespace Jukebox.Testing.Acceptance
         protected readonly TestServer  _Server;
 
         #endregion
-
-        #region Helper
-
-        protected DataContext CreateDataContext() => _Server.Host.Services.GetRequiredService<DataContext>();
-
-        #endregion Helper
     }
 }

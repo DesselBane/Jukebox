@@ -153,7 +153,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
 
             var handler               = new JwtSecurityTokenHandler();
             var tokenValidationParams = _Server.Host.Services.GetService(typeof(TokenValidationParameters)) as TokenValidationParameters;
-            var principal             = handler.ValidateToken(result.AccessToken, tokenValidationParams, out var _);
+            var principal             = handler.ValidateToken(result.AccessToken, tokenValidationParams, out _);
             Assert.True(principal.Identity.IsAuthenticated);
         }
 

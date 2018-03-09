@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using ExceptionMiddleware;
@@ -15,12 +14,12 @@ namespace Jukebox.Controllers
     [Route("api/[controller]")]
     public class SongController : Controller
     {
-        private readonly IIndexingService _indexingService;
+        private readonly IIndexingService   _indexingService;
         private readonly ISongSearchService _songSearchService;
 
         public SongController(IIndexingService indexingService, ISongSearchService songSearchService)
         {
-            _indexingService = indexingService;
+            _indexingService   = indexingService;
             _songSearchService = songSearchService;
         }
 
@@ -32,11 +31,7 @@ namespace Jukebox.Controllers
 
         [HttpGet("search")]
         [AllowAnonymous]
-        [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<Song>))]
-        public Task<IEnumerable<Song>> SearchForSong([FromQuery]string searchTerm)
-        {
-            return _songSearchService.SearchForSongAsync(searchTerm);
-        }
-        
+        [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<Song>))]
+        public Task<IEnumerable<Song>> SearchForSong([FromQuery] string searchTerm) => _songSearchService.SearchForSongAsync(searchTerm);
     }
 }

@@ -28,7 +28,7 @@ namespace Jukebox.Common.Songs
         public Task IndexSongsAsync()
         {
             _indexingValidator.HasPermissionToStartIndexing();
-            
+
             return null;
         }
     }
