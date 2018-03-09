@@ -3,6 +3,7 @@ import {RouterModule} from "@angular/router";
 import {PlayerSelectionComponent} from "./player-selection/player-selection.component";
 import {SongSelectionComponent} from "../song/song-selection/song-selection.component";
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
+import {WebPlayerComponent} from "./web-player/web-player.component";
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
       {
         path: 'player',
         children: [
-          {path: 'select', component: PlayerSelectionComponent}
+          {path: 'select', component: PlayerSelectionComponent},
+          {path: 'web', component: WebPlayerComponent}
         ]
       },
       {

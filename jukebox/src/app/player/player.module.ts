@@ -7,8 +7,8 @@ import {NavigationService} from "../navigation/navigation.service";
 import {NavItem} from "../navigation/models/nav-item";
 import {PlayerRoutingModule} from "./player-routing.module";
 import { CurrentPlayerStatusComponent } from './current-player-status/current-player-status.component';
-import { SongSelectionComponent } from '../song/song-selection/song-selection.component';
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
+import { WebPlayerComponent } from './web-player/web-player.component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,8 @@ import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
   ],
   declarations: [
     PlayerSelectionComponent,
-    CurrentPlayerStatusComponent
+    CurrentPlayerStatusComponent,
+    WebPlayerComponent
   ],
   providers: [
     PlayerService,
@@ -33,5 +34,6 @@ export class PlayerModule {
   {
     navService.registerNavItem(new NavItem("home","Home","home"));
     navService.registerNavItem(new NavItem("player/select","Select Player","player/select"));
+    navService.registerNavItem(new NavItem("player/web","Player","player/web"));
   }
 }
