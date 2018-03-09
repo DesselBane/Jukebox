@@ -11,9 +11,10 @@ using System;
 namespace Jukebox.Database.SqLite.Migrations
 {
     [DbContext(typeof(SqLiteDataContext))]
-    partial class SqLiteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20180309121503_AddedIndexonSongFilePath")]
+    partial class AddedIndexonSongFilePath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

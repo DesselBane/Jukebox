@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -8,8 +9,16 @@ namespace Jukebox.Common.Abstractions.DataModel
     {
         #region Configuration
 
+        private static void ConfigureSong(EntityTypeBuilder<Song> builder)
+        {
+            builder.HasIndex(x => x.FilePath)
+                   .IsUnique();
+        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ConfigureSong(modelBuilder.Entity<Song>());
+            
             base.OnModelCreating(modelBuilder);
         }
 
