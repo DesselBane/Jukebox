@@ -24,7 +24,7 @@ namespace Jukebox.Database.SqLite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsActive");
+                    b.Property<Guid?>("AccessGuid");
 
                     b.Property<string>("Name");
 

@@ -11,8 +11,8 @@ using System;
 namespace Jukebox.Database.SqLite.Migrations
 {
     [DbContext(typeof(SqLiteDataContext))]
-    [Migration("20180308110547_AddedBasicPlayer")]
-    partial class AddedBasicPlayer
+    [Migration("20180312134308_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,7 @@ namespace Jukebox.Database.SqLite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("IsActive");
+                    b.Property<Guid?>("AccessGuid");
 
                     b.Property<string>("Name");
 
@@ -50,6 +50,9 @@ namespace Jukebox.Database.SqLite.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FilePath")
+                        .IsUnique();
 
                     b.ToTable("Songs");
                 });

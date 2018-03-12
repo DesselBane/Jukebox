@@ -117,6 +117,7 @@ namespace Jukebox
         private static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<IndexOptions>(config.GetSection("Index"));
+            services.Configure<WebsocketOptions>(config.GetSection("Websocket"));
 
             return services;
         }
@@ -242,6 +243,7 @@ namespace Jukebox
         {
             builder.RegisterType<PlayerService>()
                    .As<IPlayerService>()
+                   .SingleInstance()
                    .EnableInterfaceInterceptors()
                    .InterceptedBy(typeof(PlayerServiceInterceptor));
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Jukebox.Common.Abstractions.DataModel
 {
@@ -11,7 +12,6 @@ namespace Jukebox.Common.Abstractions.DataModel
         [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
-        public bool IsActive { get; set; }
+        public Guid? AccessGuid { get; set; }
     }
 }

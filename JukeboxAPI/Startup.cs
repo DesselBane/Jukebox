@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using ExceptionMiddleware;
+using Jukebox.Common.Abstractions.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NSwag.AspNetCore;
 using SPAMiddleware;
 
@@ -40,6 +42,14 @@ namespace Jukebox
 
             app.UseSpaMiddleware();
 
+            var websocketOptions = app.ApplicationServices.GetService<IOptions<WebsocketOptions>>().Value;
+            
+            app.UseWebSockets(new WebSocketOptions
+                              {
+                                  KeepAliveInterval = websocketOptions.KeepAliveInterval,
+                                  ReceiveBufferSize = websocketOptions.BufferSize
+                              });
+            
             app.UseMvc();
             app.UseStaticFiles();
         }

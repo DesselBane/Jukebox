@@ -25,10 +25,7 @@ export class NavItemComponent implements OnInit {
 
     this.CurrentItem.subItems.forEach(item => {
       if(item.isVisible)
-      {
-        console.log("show item: " + this.CurrentItem.name);
         retVal = true;
-      }
     });
 
     return retVal;

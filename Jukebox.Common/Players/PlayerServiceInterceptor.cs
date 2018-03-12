@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Jukebox.Common.Abstractions.DataModel;
@@ -29,14 +30,6 @@ namespace Jukebox.Common.Players
                         {
                             nameof(CreatePlayerAsync),
                             x => CreatePlayerAsync((Player) x.Arguments[0])
-                        },
-                        {
-                            nameof(UpdatePlayerAsync),
-                            x => UpdatePlayerAsync((Player) x.Arguments[0])
-                        },
-                        {
-                            nameof(DeletePlayerAsync),
-                            x => DeletePlayerAsync((int) x.Arguments[0])
                         }
                     });
         }
@@ -49,7 +42,7 @@ namespace Jukebox.Common.Players
             return null;
         }
 
-        public Task<Player> CreatePlayerAsync(Player player)
+        public Task<Guid> CreatePlayerAsync(Player player)
         {
             _playerValidator.ValidateHasPermissionCreate();
             _playerValidator.ValidateNameDoesntExist(player.Name);
@@ -57,21 +50,9 @@ namespace Jukebox.Common.Players
             return null;
         }
 
-        public Task<Player> UpdatePlayerAsync(Player player)
+        public Task CreateSocketPlayerAsync(WebSocket socket, Guid playerId)
         {
-            _playerValidator.ValidateHasPermissionUpdate();
-            _playerValidator.ValidatePlayerExists(player.Id);
-            _playerValidator.ValidateNameDoesntExist(player.Name);
-
-            return null;
-        }
-
-        public Task DeletePlayerAsync(int playerId)
-        {
-            _playerValidator.ValidateHasPermissionDelete();
-            _playerValidator.ValidatePlayerExists(playerId);
-
-            return null;
+            throw new NotImplementedException();
         }
     }
 }
