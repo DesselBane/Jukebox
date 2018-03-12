@@ -9,6 +9,7 @@ import {PlayerRoutingModule} from "./player-routing.module";
 import { CurrentPlayerStatusComponent } from './current-player-status/current-player-status.component';
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 import { WebPlayerComponent } from './web-player/web-player.component';
+import {WebPlayerService} from "./web-player/web-player.service";
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { WebPlayerComponent } from './web-player/web-player.component';
   ],
   providers: [
     PlayerService,
-    ActivePlayerNeededGuard
+    ActivePlayerNeededGuard,
+    WebPlayerService
   ],
   exports: [
     CurrentPlayerStatusComponent

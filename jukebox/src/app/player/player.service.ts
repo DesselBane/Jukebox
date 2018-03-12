@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {AudioPlayer} from "./models/audio-player";
 import {Subject} from "rxjs/Subject";
 import {Song} from "../song/models/song";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class PlayerService {
@@ -24,8 +25,10 @@ export class PlayerService {
 
   private _activePlayer: AudioPlayer;
   private _activePlayerSubject = new Subject<AudioPlayer>();
+  private _http: HttpClient;
 
-  constructor() {
+  constructor(http: HttpClient) {
+    this._http = http;
     let lastPlayer = JSON.parse(localStorage.getItem("currentPlayer"));
     if(lastPlayer != null)
       this._activePlayer = new AudioPlayer(lastPlayer._playerId,lastPlayer._name);
@@ -50,6 +53,10 @@ export class PlayerService {
     }
   }
 
+  getNextSong(songId: number): Observable<string> {
+    return this._http.get(`api/song/${songId}`, { responseType: 'blob' })
+      .map(value => URL.createObjectURL(value));
+  }
 
 
 }

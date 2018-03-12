@@ -1,4 +1,4 @@
 <button mat-button (click)="previous()">Previous</button>
-<button mat-button (click)="playPause()" *ngIf="_paused">Play</button>
-<button mat-button (click)="playPause()" *ngIf="!_paused">Pause</button>
+<button mat-button (click)="playPause()" *ngIf="paused">Play</button>
+<button mat-button (click)="playPause()" *ngIf="!paused">Pause</button>
 <button mat-button (click)="next()">Next</button>

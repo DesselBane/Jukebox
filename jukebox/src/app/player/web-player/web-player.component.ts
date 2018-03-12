@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {WebPlayerService} from "./web-player.service";
 
 @Component({
   selector: 'app-web-player',
@@ -7,24 +7,15 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./web-player.component.css']
 })
 export class WebPlayerComponent implements OnInit {
-
-  private _audio;
-  private _currentId = 10;
-  private _paused = true;
-  private _http: HttpClient;
-
-  constructor(http: HttpClient) {
-    this._http = http;
-    this._audio = new Audio();
-   this.load();
+  get paused(): boolean {
+    return this._webPlayerService.paused;
   }
 
-  private load()
-  {
+  private _webPlayerService;
 
-    this._audio.src = `http://localhost:5000/api/song/${this._currentId}`;
+  constructor(webPlayerService: WebPlayerService) {
+    this._webPlayerService = webPlayerService;
 
-    this._audio.load();
   }
 
   ngOnInit() {
@@ -32,29 +23,17 @@ export class WebPlayerComponent implements OnInit {
 
   playPause()
   {
-    if(this._paused)
-    {
-      this._paused = false;
-      this._audio.play();
-    }else
-    {
-      this._paused = true;
-      this._audio.pause();
-    }
+    this._webPlayerService.playPause();
   }
 
   next()
   {
-    this._currentId += 1;
-    this.load();
-    this._audio.play();
+    this._webPlayerService.next();
   }
 
   previous()
   {
-    this._currentId -= 1;
-    this.load();
-    this._audio.play();
+    this._webPlayerService.previous();
   }
 
 }
