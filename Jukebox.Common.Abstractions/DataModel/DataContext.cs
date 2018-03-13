@@ -29,7 +29,6 @@ namespace Jukebox.Common.Abstractions.DataModel
         public virtual DbSet<User>      Users   { get; set; }
         public virtual DbSet<UserClaim> Claims  { get; set; }
         public virtual DbSet<Song>      Songs   { get; set; }
-        public virtual DbSet<Player>    Players { get; set; }
 
         #endregion
     }

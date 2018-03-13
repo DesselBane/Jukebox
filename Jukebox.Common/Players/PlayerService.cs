@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ExceptionMiddleware;
 using Jukebox.Common.Abstractions.DataModel;
+using Jukebox.Common.Abstractions.ErrorCodes;
 using Jukebox.Common.Abstractions.Options;
 using Jukebox.Common.Abstractions.Players;
 using Jukebox.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Org.BouncyCastle.Asn1.X9;
 
 
 namespace Jukebox.Common.Players
 {
     public class PlayerService : IPlayerService
     {
-        private Dictionary<Player, (WebSocket socket, Task waitForCloseTask, CancellationToken cancellationToken, object syncHandle)> _activePlayers = new Dictionary<Player, (WebSocket socket, Task waitForCloseTask, CancellationToken cancellationToken, object syncHandle)>();
-
         private readonly DataContext      _dataContext;
         private readonly WebsocketOptions _websocketOptions;
+        private readonly Dictionary<int,(Player player,WebSocket socket)> _activePlayers = new Dictionary<int, (Player player, WebSocket socket)>();
 
 
         public PlayerService(DataContext dataContext, IOptions<WebsocketOptions> websocketOptions)
@@ -28,21 +31,22 @@ namespace Jukebox.Common.Players
             _websocketOptions = websocketOptions.Value;
         }
 
-        public async Task<IEnumerable<Player>> GetAllPlayersAsync() => await _dataContext.Players.ToListAsync();
+        public Task<IEnumerable<Player>> GetAllPlayersAsync() => Task.FromResult(_activePlayers.Values.Select(x => x.player).ToList() as IEnumerable<Player>);
 
-        public Task<Player> GetPlayerByIdAsync(int playerId) => _dataContext.Players.FirstOrDefaultAsync(x => x.Id == playerId);
-
-        public async Task<Guid> CreatePlayerAsync(Player player)
+        public Task<Player> GetPlayerByIdAsync(int playerId)
         {
-            player.Id = 0;
-            player.AccessGuid = Guid.NewGuid();
-
-            _dataContext.Players.Add(player);
-            await _dataContext.SaveChangesAsync();
-            return player.AccessGuid.Value;
+            if (_activePlayers.ContainsKey(playerId))
+                return Task.FromResult(_activePlayers[playerId].player);
+            throw new NotFoundException(playerId,nameof(Player),Guid.Parse(PlayerErrorCodes.PLAYER_NOT_FOUND));
         }
 
-        public async Task CreateSocketPlayerAsync(WebSocket socket, Guid playerId)
+        public async Task CreateSocketPlayerAsync(WebSocket socket)
+        {
+
+        }
+
+        
+        /*public async Task CreateSocketPlayerAsyncOLD(WebSocket socket, Guid playerId)
         {
             var dbPlayer = await _dataContext.Players.FirstOrDefaultAsync(x => x.AccessGuid == playerId);
             dbPlayer.AccessGuid = null;
@@ -51,7 +55,7 @@ namespace Jukebox.Common.Players
             var cancelToken = new CancellationToken();
             var waitForCloseTask = CreateWaitForCloseTask(socket,cancelToken);
 
-            _activePlayers.Add(dbPlayer, (socket,waitForCloseTask,cancelToken, new object()));
+            //_activePlayers.Add(dbPlayer, (socket,waitForCloseTask,cancelToken, new object()));
             var data = Encoding.ASCII.GetBytes("Hello there web player");
             await socket.SendAsync(new ArraySegment<byte>(data, 0, data.Length), WebSocketMessageType.Text, true, CancellationToken.None);
             
@@ -87,6 +91,6 @@ namespace Jukebox.Common.Players
                     throw;
                 }
             }
-        }
+        }*/
     }
 }

@@ -243,12 +243,7 @@ namespace Jukebox
         {
             builder.RegisterType<PlayerService>()
                    .As<IPlayerService>()
-                   .SingleInstance()
-                   .EnableInterfaceInterceptors()
-                   .InterceptedBy(typeof(PlayerServiceInterceptor));
-
-            builder.RegisterType<PlayerServiceInterceptor>();
-            builder.RegisterType<PlayerValidator>();
+                   .SingleInstance();
 
             return builder;
         }

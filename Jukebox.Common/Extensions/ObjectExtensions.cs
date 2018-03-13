@@ -6,7 +6,10 @@ namespace Jukebox.Common.Extensions
     {
         public static string ToJsonString(this object data)
         {
-            return JsonConvert.SerializeObject(data);
+            return JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
+                                                                          {
+                                                                              ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                                          });
         }
     }
 }

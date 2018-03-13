@@ -25,19 +25,22 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jukebox.Common.Abstractions\Jukebox.Common.Abstractions.csproj">
-      <Project>{B2DBFF04-FB85-4517-AE34-E7068C2499C4}</Project>
-      <Name>Jukebox.Common.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Jukebox.Common\Jukebox.Common.csproj">
-      <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
-      <Name>Jukebox.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SqLite\SqLite.csproj">
-      <Project>{45F7B087-F726-4767-9C14-6FD8767FFE8E}</Project>
-      <Name>SqLite</Name>
-    </ProjectReference>
+      <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0"/>
   </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Jukebox.Common.Abstractions\Jukebox.Common.Abstractions.csproj">
+            <Project>{B2DBFF04-FB85-4517-AE34-E7068C2499C4}</Project>
+            <Name>Jukebox.Common.Abstractions</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\Jukebox.Common\Jukebox.Common.csproj">
+            <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
+            <Name>Jukebox.Common</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\SqLite\SqLite.csproj">
+            <Project>{45F7B087-F726-4767-9C14-6FD8767FFE8E}</Project>
+            <Name>SqLite</Name>
+        </ProjectReference>
+    </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

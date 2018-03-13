@@ -56,7 +56,7 @@ export class WebPlayerService {
   {
     if(this._websocket)
     {
-      console.log("Closing websocket");
+      console.log("Closing websocket 2");
       this._websocket.close();
       this._websocket = null;
     }
@@ -81,7 +81,29 @@ export class WebPlayerService {
     if(this._websocket)
       return;
 
-    return this._http.put<string>("/api/player",JSON.stringify({
+    this._websocket = new WebSocket(this.serverUrl);
+    let observable = Rx.Observable.create((obs: Rx.Observer<MessageEvent>) => {
+      this._websocket.onmessage = obs.next.bind(obs);
+      this._websocket.onerror = obs.error.bind(obs);
+      this._websocket.onclose = obs.complete.bind(obs);
+      return this._websocket.close.bind(this._websocket);
+    });
+
+    let observer = {
+      next: (data: Object) => {
+        if (this._websocket.readyState === WebSocket.OPEN) {
+          this._websocket.send(JSON.stringify(data));
+        }
+      }
+    };
+
+    this.wsObservable = Rx.Subject.create(observer,observable);
+
+    this.wsObservable.subscribe(value => console.log(value.data)
+      , error => console.log(error)
+      , () => console.log("Completed"));
+
+    /*return this._http.put<string>("/api/player",JSON.stringify({
       id: 0,
       name: name
     }))
@@ -109,7 +131,7 @@ export class WebPlayerService {
             , () => console.log("Completed"));
         },
         error => {console.log(error)},
-        () => console.log("Create Player done"));
+        () => console.log("Create Player done"));*/
   }
 
 }

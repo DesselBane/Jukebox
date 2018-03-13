@@ -10,7 +10,6 @@ namespace Jukebox.Common.Abstractions.Players
     {
         Task<IEnumerable<Player>> GetAllPlayersAsync();
         Task<Player>              GetPlayerByIdAsync(int   playerId);
-        Task<Guid>              CreatePlayerAsync(Player player);
-        Task CreateSocketPlayerAsync(WebSocket socket, Guid playerId);
+        Task CreateSocketPlayerAsync(WebSocket socket);
     }
 }
