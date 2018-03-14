@@ -20,16 +20,16 @@ namespace Jukebox.Common.Security
         #region Constructors
 
         public JwtAuthenticationService(JwtTokenOptions options,
-                                        DataContext     securityContext,
-                                        IEmailService   mailService,
-                                        ClaimsIdentity  identity,
+                                        DataContext securityContext,
+                                        IEmailService mailService,
+                                        ClaimsIdentity identity,
                                         IHostingOptions hostingOptions)
         {
-            _options         = options;
+            _options = options;
             _securityContext = securityContext;
-            _mailService     = mailService;
-            _identity        = identity;
-            _hostingOptions  = hostingOptions;
+            _mailService = mailService;
+            _identity = identity;
+            _hostingOptions = hostingOptions;
 
             options.ThrowIfInvalidOptions();
         }
@@ -56,7 +56,7 @@ namespace Jukebox.Common.Security
         public async Task<AuthToken> AuthenticateTokenAsync(AuthToken token)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
-            var jwtToken   = jwtHandler.ReadJwtToken(token.AccessToken);
+            var jwtToken = jwtHandler.ReadJwtToken(token.AccessToken);
 
             var user = await _securityContext.Users
                                              .Include(x => x.Claims)
@@ -101,10 +101,10 @@ namespace Jukebox.Common.Security
 
             await _mailService.SendMessageAsync(new SimpleEmail
                                                 {
-                                                    To      = user.EMail,
-                                                    From    = "No-reply@EventSystemWebmaster.de",
+                                                    To = user.EMail,
+                                                    From = "No-reply@EventSystemWebmaster.de",
                                                     Subject = "You requested a password reset.",
-                                                    Body    = $"Please click this link to set your new Password: {_hostingOptions.Url}/auth/changePassword?user={user.ResetHash}"
+                                                    Body = $"Please click this link to set your new Password: {_hostingOptions.Url}/auth/changePassword?user={user.ResetHash}"
                                                 });
         }
 
@@ -133,12 +133,12 @@ namespace Jukebox.Common.Security
 
         #region Vars
 
-        private readonly ClaimsIdentity  _identity;
+        private readonly ClaimsIdentity _identity;
         private readonly IHostingOptions _hostingOptions;
-        private readonly IEmailService   _mailService;
+        private readonly IEmailService _mailService;
 
         private readonly JwtTokenOptions _options;
-        private readonly DataContext     _securityContext;
+        private readonly DataContext _securityContext;
 
         #endregion
 
@@ -147,8 +147,8 @@ namespace Jukebox.Common.Security
         public static void UpdatePassword(User user, string newPassword)
         {
             var pwSalt = newPassword.HashPassword();
-            user.Password  = pwSalt.Item1;
-            user.Salt      = pwSalt.Item2;
+            user.Password = pwSalt.Item1;
+            user.Salt = pwSalt.Item2;
             user.ResetHash = null;
         }
 
@@ -156,7 +156,7 @@ namespace Jukebox.Common.Security
         {
             var user = new User
                        {
-                           EMail    = username,
+                           EMail = username,
                            Password = null
                        };
 
@@ -173,7 +173,10 @@ namespace Jukebox.Common.Security
             user.Claims.Add(new UsernameClaim(newUsername));
         }
 
-        private static string GenerateResetHash() => Guid.NewGuid().ToString().HashPassword().Item1;
+        private static string GenerateResetHash()
+        {
+            return Guid.NewGuid().ToString().HashPassword().Item1;
+        }
 
         private async Task<AuthToken> GenerateTokenAsync(ClaimsIdentity identity)
         {
@@ -199,16 +202,16 @@ namespace Jukebox.Common.Security
             var refreshToken = Guid.NewGuid().ToString();
 
             var user = await _securityContext.Users.FirstOrDefaultAsync(x => x.EMail == identity.Name);
-            user.RefreshToken           = refreshToken;
+            user.RefreshToken = refreshToken;
             user.RefreshTokenExpiration = now.Add(_options.RefreshTokenExpiration);
             await _securityContext.SaveChangesAsync();
 
 
             return new AuthToken
                    {
-                       RefreshToken            = user.RefreshToken,
-                       AccessToken             = new JwtSecurityTokenHandler().WriteToken(token),
-                       AccessToken_ValidUntil  = now.Add(_options.Expiration),
+                       RefreshToken = user.RefreshToken,
+                       AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                       AccessToken_ValidUntil = now.Add(_options.Expiration),
                        RefreshToken_ValidUntil = user.RefreshTokenExpiration.Value
                    };
         }

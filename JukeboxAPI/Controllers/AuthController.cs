@@ -31,25 +31,31 @@ namespace Jukebox.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(AuthToken), Description              = "Returns serialized JWT Token")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(AuthToken), Description = "Returns serialized JWT Token")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.INVALID_USERNAME_OR_PASSWORD + "\n\nInvalid Username or Password")]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                         = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                         = "\n" + AuthenticationErrorCodes.USERACCOUNT_NOT_ACTIVATED + "\n\nUseraccount not activated")]
-        public virtual Task<AuthToken> Login([FromBody] LoginDTO loginDto) => _authService.AuthenticateAsync(loginDto.Username, loginDto.Password);
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = "\n" + AuthenticationErrorCodes.USERACCOUNT_NOT_ACTIVATED + "\n\nUseraccount not activated")]
+        public virtual Task<AuthToken> Login([FromBody] LoginDTO loginDto)
+        {
+            return _authService.AuthenticateAsync(loginDto.Username, loginDto.Password);
+        }
 
         [AllowAnonymous]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.OK, typeof(AuthToken))]
-        [SwaggerResponse(HttpStatusCode.NotFound, typeof(AuthToken), Description        = AuthenticationErrorCodes.USER_NOT_FOUND + "\n\nNo User matching this access token user email claim was found")]
+        [SwaggerResponse(HttpStatusCode.NotFound, typeof(AuthToken), Description = AuthenticationErrorCodes.USER_NOT_FOUND + "\n\nNo User matching this access token user email claim was found")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.REFRESH_TOKENS_DIDNT_MATCH + "\n\n Refresh Tokens didnt match")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(ExceptionDTO), Description = "\n" + AuthenticationErrorCodes.REFRESH_TOKEN_EXPIRED + "\n\n Refresh Token expired")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(ExceptionDTO), Description = "\n" + AuthenticationErrorCodes.ACCESS_TOKEN_INVALID + "\n\n Access Token is invalid")]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                         = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
-        public virtual Task<AuthToken> RefreshToken([FromBody] AuthToken token) => _authService.AuthenticateTokenAsync(token);
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
+        public virtual Task<AuthToken> RefreshToken([FromBody] AuthToken token)
+        {
+            return _authService.AuthenticateTokenAsync(token);
+        }
 
         [AllowAnonymous]
         [HttpPut]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                     = AuthenticationErrorCodes.USERNAME_NO_EMAIL + "\n\nOccures if the Username is not an EMail")]
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USERNAME_NO_EMAIL + "\n\nOccures if the Username is not an EMail")]
         [SwaggerResponse(HttpStatusCode.Conflict, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USERNAME_EXISTS_ALREADY + "\n\nOccurs if the username already exists")]
         public virtual async Task Register(string username)
         {
@@ -59,7 +65,7 @@ namespace Jukebox.Controllers
         [AllowAnonymous]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.RESET_HAST_DOESNT_EXIST + "\n\nResetHash doesnt Exist")]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                     = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = GlobalErrorCodes.NO_DATA + "\n\n Body Argument was null")]
         public virtual async Task ChangePassword([FromBody] PasswordUpdateDTO password)
         {
             await _authService.ChangePasswordAsync(password.Password, password.ResetHash);
@@ -74,10 +80,13 @@ namespace Jukebox.Controllers
         }
 
         [HttpPost]
-        [SwaggerResponse(422, typeof(ExceptionDTO), Description                     = AuthenticationErrorCodes.USERNAME_NO_EMAIL + "\n\nUsername has no EMail Format")]
+        [SwaggerResponse(422, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USERNAME_NO_EMAIL + "\n\nUsername has no EMail Format")]
         [SwaggerResponse(HttpStatusCode.Conflict, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USERNAME_EXISTS_ALREADY + "\n\nUsername already exists")]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USER_NOT_FOUND + "\n\n Occures if a valid AccessToken is provided which points to a non existing user")]
-        public virtual Task<AuthToken> ChangeUsername(string username) => _authService.ChangeUsernameAsync(username, HttpContext.User.Identity as ClaimsIdentity);
+        public virtual Task<AuthToken> ChangeUsername(string username)
+        {
+            return _authService.ChangeUsernameAsync(username, HttpContext.User.Identity as ClaimsIdentity);
+        }
 
         [HttpDelete]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = AuthenticationErrorCodes.USER_NOT_FOUND + "\n\nUser doesnt exist anymore")]

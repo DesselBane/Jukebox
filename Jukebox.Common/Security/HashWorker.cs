@@ -17,14 +17,14 @@ namespace Jukebox.Common.Security
             //generate randome salt
             if (salt == null)
             {
-                var rng       = new Random(DateTime.Now.Millisecond);
+                var rng = new Random(DateTime.Now.Millisecond);
                 var saltBytes = new byte[16];
                 rng.NextBytes(saltBytes);
                 salt = Convert.ToBase64String(saltBytes);
             }
 
             //generate salted and hashed password
-            var sha            = SHA512.Create();
+            var sha = SHA512.Create();
             var saltedPassword = password + salt;
             var saltedHashedPassword =
                 Convert.ToBase64String(sha.ComputeHash(Encoding.Unicode.GetBytes(saltedPassword)));

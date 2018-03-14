@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Jukebox.Common.Abstractions.DataModel
@@ -7,9 +8,18 @@ namespace Jukebox.Common.Abstractions.DataModel
     public class Player
     {
         [DataMember]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }
+        
+        [DataMember]
+        public bool IsPlaying { get; set; }
+
+        [DataMember]
+        public List<Song> Playlist { get; set; } = new List<Song>();
+
+        [DataMember]
+        public int PlaylistIndex { get; set; }
     }
 }

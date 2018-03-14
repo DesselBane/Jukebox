@@ -14,11 +14,11 @@ namespace Jukebox.Common.Abstractions.DataModel
             builder.HasIndex(x => x.FilePath)
                    .IsUnique();
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureSong(modelBuilder.Entity<Song>());
-            
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -26,9 +26,9 @@ namespace Jukebox.Common.Abstractions.DataModel
 
         #region DbSets
 
-        public virtual DbSet<User>      Users   { get; set; }
-        public virtual DbSet<UserClaim> Claims  { get; set; }
-        public virtual DbSet<Song>      Songs   { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserClaim> Claims { get; set; }
+        public virtual DbSet<Song> Songs { get; set; }
 
         #endregion
     }

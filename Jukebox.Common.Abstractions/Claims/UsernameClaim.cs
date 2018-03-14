@@ -13,23 +13,33 @@ namespace Jukebox.Common.Abstractions.Claims
         #region Constructors
 
         public UsernameClaim(string value)
-            : base(USERNAME_CLAIM_TYPE, value) { }
+            : base(USERNAME_CLAIM_TYPE, value)
+        {
+        }
 
         public UsernameClaim(string value, string valueType)
-            : base(USERNAME_CLAIM_TYPE, value, valueType) { }
+            : base(USERNAME_CLAIM_TYPE, value, valueType)
+        {
+        }
 
         public UsernameClaim(string value, string valueType, string issuer)
-            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer) { }
+            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer)
+        {
+        }
 
         public UsernameClaim(string value, string valueType, string issuer, string originalIssuer)
-            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer, originalIssuer) { }
+            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer, originalIssuer)
+        {
+        }
 
-        public UsernameClaim(string         value,
-                             string         valueType,
-                             string         issuer,
-                             string         originalIssuer,
+        public UsernameClaim(string value,
+                             string valueType,
+                             string issuer,
+                             string originalIssuer,
                              ClaimsIdentity subject)
-            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer, originalIssuer, subject) { }
+            : base(USERNAME_CLAIM_TYPE, value, valueType, issuer, originalIssuer, subject)
+        {
+        }
 
         #endregion
     }

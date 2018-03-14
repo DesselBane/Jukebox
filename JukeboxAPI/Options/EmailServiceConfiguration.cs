@@ -25,7 +25,10 @@ namespace Jukebox.Options
             }
         }
 
-        public override string ToString() => JsonConvert.SerializeObject(this);
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
 
         #region Properties
 

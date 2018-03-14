@@ -64,7 +64,10 @@ namespace Jukebox.Common.Security
 
         #region Implementation of IAuthenticationService
 
-        public Task<AuthToken> AuthenticateAsync(string username, string password) => null;
+        public Task<AuthToken> AuthenticateAsync(string username, string password)
+        {
+            return null;
+        }
 
         public Task<AuthToken> AuthenticateTokenAsync(AuthToken token)
         {
@@ -108,7 +111,10 @@ namespace Jukebox.Common.Security
             return null;
         }
 
-        public Task<User> GetCurrentUserAsync() => null;
+        public Task<User> GetCurrentUserAsync()
+        {
+            return null;
+        }
 
         #endregion
     }

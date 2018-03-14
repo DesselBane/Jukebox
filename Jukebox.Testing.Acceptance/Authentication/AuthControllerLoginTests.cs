@@ -64,7 +64,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         {
             var user = AuthExtensions.CreateUser();
             user.Password = null;
-            user.Salt     = null;
+            user.Salt = null;
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 
@@ -131,14 +131,14 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task RefreshToken_Success()
         {
             var user = AuthExtensions.CreateUser();
-            user.RefreshToken           = Guid.NewGuid().ToString();
+            user.RefreshToken = Guid.NewGuid().ToString();
             user.RefreshTokenExpiration = DateTime.Now.AddDays(60);
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
 
             var r = await _Client.PostAsync("api/auth/refreshToken", new AuthToken
                                                                      {
-                                                                         AccessToken  = await CreateAccessTokenAsync(user.EMail),
+                                                                         AccessToken = await CreateAccessTokenAsync(user.EMail),
                                                                          RefreshToken = user.RefreshToken
                                                                      }.ToStringContent());
 
@@ -151,9 +151,9 @@ namespace Jukebox.Testing.Acceptance.Authentication
             Assert.NotNull(result);
             Assert.Equal(dbUser.RefreshToken, result.RefreshToken);
 
-            var handler               = new JwtSecurityTokenHandler();
+            var handler = new JwtSecurityTokenHandler();
             var tokenValidationParams = _Server.Host.Services.GetService(typeof(TokenValidationParameters)) as TokenValidationParameters;
-            var principal             = handler.ValidateToken(result.AccessToken, tokenValidationParams, out _);
+            var principal = handler.ValidateToken(result.AccessToken, tokenValidationParams, out _);
             Assert.True(principal.Identity.IsAuthenticated);
         }
 
@@ -162,7 +162,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         {
             var r = await _Client.PostAsync("api/auth/refreshToken", new AuthToken
                                                                      {
-                                                                         AccessToken  = Guid.NewGuid().ToString(),
+                                                                         AccessToken = Guid.NewGuid().ToString(),
                                                                          RefreshToken = Guid.NewGuid().ToString()
                                                                      }.ToStringContent());
 
@@ -176,7 +176,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task RefreshToken_Unauthorized_RefreshTokenExpired()
         {
             var user = AuthExtensions.CreateUser();
-            user.RefreshToken           = Guid.NewGuid().ToString();
+            user.RefreshToken = Guid.NewGuid().ToString();
             user.RefreshTokenExpiration = DateTime.UtcNow.AddDays(-1);
 
             _Context.Users.Add(user);
@@ -185,7 +185,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
             var r = await _Client.PostAsync("api/auth/refreshtoken", new AuthToken
                                                                      {
                                                                          RefreshToken = user.RefreshToken,
-                                                                         AccessToken  = await CreateAccessTokenAsync(user.EMail)
+                                                                         AccessToken = await CreateAccessTokenAsync(user.EMail)
                                                                      }.ToStringContent());
 
             Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode);
@@ -197,12 +197,12 @@ namespace Jukebox.Testing.Acceptance.Authentication
         [Fact]
         public async Task RefreshToken_Unauthorized_TokenDidntMatch()
         {
-            var user  = await _Client.SetupAuthenticationAsync(_Context);
+            var user = await _Client.SetupAuthenticationAsync(_Context);
             var token = await CreateAccessTokenAsync(user.EMail);
 
             var r = await _Client.PostAsync("api/auth/refreshtoken", new AuthToken
                                                                      {
-                                                                         AccessToken  = token,
+                                                                         AccessToken = token,
                                                                          RefreshToken = Guid.NewGuid().ToString()
                                                                      }.ToStringContent());
 

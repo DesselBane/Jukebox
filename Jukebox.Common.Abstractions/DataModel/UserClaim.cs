@@ -8,21 +8,32 @@ namespace Jukebox.Common.Abstractions.DataModel
     [DataContract]
     public class UserClaim
     {
-        public Claim ToClaim() => new Claim(Type, Value, ValueType, Issuer, OriginalIssuer);
+        public Claim ToClaim()
+        {
+            return new Claim(Type, Value, ValueType, Issuer, OriginalIssuer);
+        }
 
-        public static explicit operator Claim(UserClaim userClaim) => userClaim.ToClaim();
+        public static explicit operator Claim(UserClaim userClaim)
+        {
+            return userClaim.ToClaim();
+        }
 
-        public static implicit operator UserClaim(Claim claim) => FromClaim(claim);
+        public static implicit operator UserClaim(Claim claim)
+        {
+            return FromClaim(claim);
+        }
 
-        public static UserClaim FromClaim(Claim claim) =>
-            new UserClaim
-            {
-                Issuer         = claim.Issuer,
-                OriginalIssuer = claim.OriginalIssuer,
-                Type           = claim.Type,
-                Value          = claim.Value,
-                ValueType      = claim.ValueType
-            };
+        public static UserClaim FromClaim(Claim claim)
+        {
+            return new UserClaim
+                   {
+                       Issuer = claim.Issuer,
+                       OriginalIssuer = claim.OriginalIssuer,
+                       Type = claim.Type,
+                       Value = claim.Value,
+                       ValueType = claim.ValueType
+                   };
+        }
 
         #region Properties
 

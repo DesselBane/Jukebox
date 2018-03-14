@@ -27,14 +27,14 @@ namespace Jukebox.Testing.Acceptance.Extensions
 
         public static User CreateUser()
         {
-            var username     = Guid.NewGuid() + "@gmx.de";
-            var password     = TestBase.ALL_TIME_PASSWORD;
+            var username = Guid.NewGuid() + "@gmx.de";
+            var password = TestBase.ALL_TIME_PASSWORD;
             var passwordHash = password.HashPassword();
             var user = new User
                        {
-                           EMail    = username,
+                           EMail = username,
                            Password = passwordHash.Item1,
-                           Salt     = passwordHash.Item2
+                           Salt = passwordHash.Item2
                        };
 
             user.Claims.Add(new UsernameClaim(username));
@@ -60,7 +60,10 @@ namespace Jukebox.Testing.Acceptance.Extensions
             return user;
         }
 
-        public static async Task<ExceptionDTO> GetErrorObjectAsync(this HttpResponseMessage httpResponseMessage) => JsonConvert.DeserializeObject<ExceptionDTO>(await httpResponseMessage.Content.ReadAsStringAsync());
+        public static async Task<ExceptionDTO> GetErrorObjectAsync(this HttpResponseMessage httpResponseMessage)
+        {
+            return JsonConvert.DeserializeObject<ExceptionDTO>(await httpResponseMessage.Content.ReadAsStringAsync());
+        }
 
         public static async Task GrantSystemAdminRoleAsync(this DataContext dataContext, User user)
         {

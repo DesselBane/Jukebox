@@ -43,7 +43,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task ChangePassword_Success()
         {
             const string NEW_PW = "newPassword";
-            var          user   = AuthExtensions.CreateUser();
+            var user = AuthExtensions.CreateUser();
             user.ResetHash = "1234ResetHash";
             _Context.Users.Add(user);
             await _Context.SaveChangesAsync();
@@ -104,7 +104,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
         public async Task ChangeUsername_Success()
         {
             var newUsername = Guid.NewGuid() + "@gmx.de";
-            var user        = await _Client.SetupAuthenticationAsync(_Context);
+            var user = await _Client.SetupAuthenticationAsync(_Context);
 
             var r = await _Client.PostAsync($"/api/auth/changeusername?username={newUsername}", null);
             r.EnsureSuccessStatusCode();

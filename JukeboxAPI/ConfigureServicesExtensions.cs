@@ -48,20 +48,24 @@ namespace Jukebox
             return new AutofacServiceProvider(builder.Build());
         }
 
-        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config) =>
-            services.AddSpaMiddleware("", new[] {"/api", "/swagger"})
-                    .ConfigureAuthService()
-                    .ConfigureMvc()
-                    .ConfigureOptions(config);
+        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
+        {
+            return services.AddSpaMiddleware("", new[] {"/api", "/swagger"})
+                           .ConfigureAuthService()
+                           .ConfigureMvc()
+                           .ConfigureOptions(config);
+        }
 
-        public static ContainerBuilder ConfigureContainerBuilder(this ContainerBuilder builder, IConfiguration config) =>
-            builder.ConfigureAuth()
-                   .ConfigureDatabase()
-                   .ConfigureEMail(config)
-                   .ConfigureHosting(config)
-                   .ConfigureIndexing()
-                   .ConfigureSongSearch()
-                   .ConfigurePlayers();
+        public static ContainerBuilder ConfigureContainerBuilder(this ContainerBuilder builder, IConfiguration config)
+        {
+            return builder.ConfigureAuth()
+                          .ConfigureDatabase()
+                          .ConfigureEMail(config)
+                          .ConfigureHosting(config)
+                          .ConfigureIndexing()
+                          .ConfigureSongSearch()
+                          .ConfigurePlayers();
+        }
 
         #endregion
 
@@ -90,15 +94,15 @@ namespace Jukebox
                                         {
                                             // The signing key must match!
                                             ValidateIssuerSigningKey = true,
-                                            IssuerSigningKey         = signingKey,
+                                            IssuerSigningKey = signingKey,
 
                                             // Validate the JWT Issuer (iss) claim
                                             ValidateIssuer = true,
-                                            ValidIssuer    = "JB_AUTHORITY",
+                                            ValidIssuer = "JB_AUTHORITY",
 
                                             // Validate the JWT Audience (aud) claim
                                             ValidateAudience = true,
-                                            ValidAudience    = "JB_AUDIENCE",
+                                            ValidAudience = "JB_AUDIENCE",
 
                                             // Validate the token expiry
                                             ValidateLifetime = true,
@@ -140,11 +144,11 @@ namespace Jukebox
 
             builder.RegisterInstance(new JwtTokenOptions
                                      {
-                                         Issuer                 = "JB_AUTHORITY",
-                                         Audience               = "JB_AUDIENCE",
-                                         Expiration             = TimeSpan.FromHours(1),
+                                         Issuer = "JB_AUTHORITY",
+                                         Audience = "JB_AUDIENCE",
+                                         Expiration = TimeSpan.FromHours(1),
                                          RefreshTokenExpiration = TimeSpan.FromDays(30),
-                                         SigningCredentials     = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                                         SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
                                      }).SingleInstance();
 
             //Injecting Current ClaimsIdentity
@@ -189,7 +193,7 @@ namespace Jukebox
         }
 
         private static ContainerBuilder ConfigureHosting(this ContainerBuilder builder,
-                                                         IConfiguration        configurationRoot)
+                                                         IConfiguration configurationRoot)
         {
             var hostingOptions = configurationRoot.GetSection("hosting").Get<HostingOptions>();
 
@@ -214,7 +218,7 @@ namespace Jukebox
             builder.RegisterType<PlayerController>()
                    .EnableClassInterceptors()
                    .InterceptedBy(typeof(ControllerInterceptor));
-            
+
             return builder;
         }
 
@@ -247,7 +251,7 @@ namespace Jukebox
 
             return builder;
         }
-        
+
         #endregion
     }
 }

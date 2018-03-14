@@ -23,7 +23,10 @@ namespace Jukebox
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public virtual IServiceProvider ConfigureServices(IServiceCollection services) => services.ConfigureJukebox(Configuration);
+        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            return services.ConfigureJukebox(Configuration);
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -43,13 +46,13 @@ namespace Jukebox
             app.UseSpaMiddleware();
 
             var websocketOptions = app.ApplicationServices.GetService<IOptions<WebsocketOptions>>().Value;
-            
+
             app.UseWebSockets(new WebSocketOptions
                               {
                                   KeepAliveInterval = websocketOptions.KeepAliveInterval,
                                   ReceiveBufferSize = websocketOptions.BufferSize
                               });
-            
+
             app.UseMvc();
             app.UseStaticFiles();
         }

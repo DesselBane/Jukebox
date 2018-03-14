@@ -7,5 +7,8 @@ namespace Jukebox.Common.Abstractions.DataModel
     {
         [DataMember]
         public string PlayerName { get; set; }
+        
+        [DataMember]
+        public string AccessToken { get; set; }
     }
 }

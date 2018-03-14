@@ -23,7 +23,8 @@ namespace Jukebox.Common.Extensions
                 // ReSharper disable once UnusedVariable
                 // Used to determine if the File path is a valid input for the FileInfo class
                 var info = new FileInfo(path);
-            } catch
+            }
+            catch
             {
                 return false;
             }

@@ -11,7 +11,9 @@ namespace Jukebox.Testing.Acceptance
     public class IntStartup : Startup
     {
         public IntStartup(IConfiguration configuration)
-            : base(configuration) { }
+            : base(configuration)
+        {
+        }
 
         #region Overrides of Startup
 

@@ -16,14 +16,14 @@ namespace Jukebox.Common.Songs
 {
     public class IndexingService : IIndexingService
     {
-        private static          bool         _IS_INDEXING;
-        private static readonly object       _IS_INDEXING_SYNC_HANDLE = new object();
-        private readonly        DataContext  _dataContext;
-        private readonly        IndexOptions _indexOptions;
+        private static bool _IS_INDEXING;
+        private static readonly object _IS_INDEXING_SYNC_HANDLE = new object();
+        private readonly DataContext _dataContext;
+        private readonly IndexOptions _indexOptions;
 
         public IndexingService(DataContext dataContext, IOptions<IndexOptions> indexOptions)
         {
-            _dataContext  = dataContext;
+            _dataContext = dataContext;
             _indexOptions = indexOptions.Value;
         }
 
@@ -71,7 +71,8 @@ namespace Jukebox.Common.Songs
                 try
                 {
                     tagLibFile = TagLibFile.Create(directoryContent.PhysicalPath);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     continue;
                 }
@@ -85,14 +86,12 @@ namespace Jukebox.Common.Songs
                 }
 
                 song.FilePath = info.FullName;
-                song.Title    = tagLibFile.Tag.Title;
-                song.Album    = tagLibFile.Tag.Album;
+                song.Title = tagLibFile.Tag.Title;
+                song.Album = tagLibFile.Tag.Album;
 
                 foreach (var artist in tagLibFile.Tag.Artists)
-                {
                     if (!song.Artists.Contains(artist))
                         song.Artists.Add(artist);
-                }
 
                 song.LastTimeIndexed = indexingStart;
                 await _dataContext.SaveChangesAsync();
