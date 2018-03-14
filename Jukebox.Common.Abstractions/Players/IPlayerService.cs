@@ -9,7 +9,7 @@ namespace Jukebox.Common.Abstractions.Players
     public interface IPlayerService
     {
         Task<IEnumerable<Player>> GetAllPlayersAsync();
-        Task<Player>              GetPlayerByIdAsync(int   playerId);
+        Task<Player> GetPlayerByIdAsync(Guid playerId);
         Task CreateSocketPlayerAsync(WebSocket socket);
     }
 }

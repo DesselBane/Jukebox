@@ -7,11 +7,9 @@ namespace Jukebox.Common.Abstractions.DataModel
     public class Player
     {
         [DataMember]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }
-
-        public Guid? AccessGuid { get; set; }
     }
 }

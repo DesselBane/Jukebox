@@ -31,11 +31,11 @@ namespace Jukebox.Controllers
         [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<Player>))]
         public Task<IEnumerable<Player>> GetAllPlayersAsync() => _playerService.GetAllPlayersAsync();
 
-        [HttpGet("{playerId}")]
+        [HttpGet("single")]
         [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK, typeof(Player))]
         [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = PlayerErrorCodes.PLAYER_NOT_FOUND + "\nPlayer not found")]
-        public Task<Player> GetPlayerByIdAsync(int playerId) => _playerService.GetPlayerByIdAsync(playerId);
+        public Task<Player> GetPlayerByIdAsync([FromQuery]Guid playerId) => _playerService.GetPlayerByIdAsync(playerId);
 
         [HttpGet("ws")]
         [AllowAnonymous]

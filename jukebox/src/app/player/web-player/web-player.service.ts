@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {PlayerService} from "../player.service";
 import * as Rx from 'rxjs/Rx';
 import {HttpClient} from "@angular/common/http";
@@ -18,7 +18,7 @@ export class WebPlayerService {
   private serverUrl = "ws://localhost:5000/api/player/ws";
   private _http: HttpClient;
 
-  private _websocket : WebSocket;
+  private _websocket: WebSocket;
 
   constructor(playerService: PlayerService, http: HttpClient) {
     this._playerService = playerService;
@@ -28,18 +28,17 @@ export class WebPlayerService {
     this.load();
   }
 
-  private load() : Rx.Observable<void>
-  {
+  private load(): Rx.Observable<void> {
     return this._playerService.getNextSong(this._currentId)
       .do(x => {
         this._audio.src = x;
         this._audio.load();
       })
-      .map(() => {});
+      .map(() => {
+      });
   }
 
-  public playPause()
-  {
+  public playPause() {
     this.testWebsocket("Test Player");
     /*if(this._paused)
     {
@@ -52,36 +51,38 @@ export class WebPlayerService {
     }*/
   }
 
-  public next()
-  {
-    if(this._websocket)
-    {
+  public next() {
+    if (this._websocket) {
       console.log("Closing websocket 2");
       this._websocket.close();
       this._websocket = null;
     }
 
-   /* this._currentId += 1;
-    this.load().subscribe(() => {
-      this._audio.play();
-    });
-*/
+    /* this._currentId += 1;
+     this.load().subscribe(() => {
+       this._audio.play();
+     });
+ */
   }
 
-  public previous()
-  {
-    this._currentId -= 1;
+  public previous() {
+    /*this._currentId -= 1;
     this.load().subscribe(() => {
       this._audio.play();
-    });
+    });*/
+
+    return this._http.get<PlayerResponse>("api/player")
+      .subscribe(value => {
+        console.log(value);
+      });
   }
 
-  public testWebsocket(name: string)
-  {
-    if(this._websocket)
+  public testWebsocket(name: string) {
+    if (this._websocket)
       return;
 
     this._websocket = new WebSocket(this.serverUrl);
+
     let observable = Rx.Observable.create((obs: Rx.Observer<MessageEvent>) => {
       this._websocket.onmessage = obs.next.bind(obs);
       this._websocket.onerror = obs.error.bind(obs);
@@ -92,16 +93,25 @@ export class WebPlayerService {
     let observer = {
       next: (data: Object) => {
         if (this._websocket.readyState === WebSocket.OPEN) {
+          console.log("Sending data");
+          console.log(data);
           this._websocket.send(JSON.stringify(data));
         }
       }
     };
 
-    this.wsObservable = Rx.Subject.create(observer,observable);
+    this.wsObservable = Rx.Subject.create(observer, observable);
 
     this.wsObservable.subscribe(value => console.log(value.data)
       , error => console.log(error)
       , () => console.log("Completed"));
+
+    this._websocket.onopen = () => {
+      this._websocket.send(JSON.stringify({
+        PlayerName: "Test Player tha first"
+      }));
+    };
+
 
     /*return this._http.put<string>("/api/player",JSON.stringify({
       id: 0,
@@ -134,4 +144,9 @@ export class WebPlayerService {
         () => console.log("Create Player done"));*/
   }
 
+}
+
+export interface PlayerResponse{
+  id: string,
+  name: string
 }

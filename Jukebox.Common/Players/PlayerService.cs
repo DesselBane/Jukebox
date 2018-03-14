@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
@@ -13,6 +14,7 @@ using Jukebox.Common.Abstractions.Players;
 using Jukebox.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.X9;
 
 
@@ -22,7 +24,7 @@ namespace Jukebox.Common.Players
     {
         private readonly DataContext      _dataContext;
         private readonly WebsocketOptions _websocketOptions;
-        private readonly Dictionary<int,(Player player,WebSocket socket)> _activePlayers = new Dictionary<int, (Player player, WebSocket socket)>();
+        private readonly IDictionary<Guid,(Player player,WebSocket socket)> _activePlayers = new ConcurrentDictionary<Guid, (Player player, WebSocket socket)>();
 
 
         public PlayerService(DataContext dataContext, IOptions<WebsocketOptions> websocketOptions)
@@ -33,18 +35,79 @@ namespace Jukebox.Common.Players
 
         public Task<IEnumerable<Player>> GetAllPlayersAsync() => Task.FromResult(_activePlayers.Values.Select(x => x.player).ToList() as IEnumerable<Player>);
 
-        public Task<Player> GetPlayerByIdAsync(int playerId)
+        public Task<Player> GetPlayerByIdAsync(Guid playerId)
         {
             if (_activePlayers.ContainsKey(playerId))
                 return Task.FromResult(_activePlayers[playerId].player);
-            throw new NotFoundException(playerId,nameof(Player),Guid.Parse(PlayerErrorCodes.PLAYER_NOT_FOUND));
+            throw new NotFoundException(playerId.ToString(),nameof(Player),Guid.Parse(PlayerErrorCodes.PLAYER_NOT_FOUND));
         }
 
         public async Task CreateSocketPlayerAsync(WebSocket socket)
         {
+            var player = await InitializePlayer(socket);
+            
+            if(player == null)
+                return;
+            
+            _activePlayers.Add(player.Id,(player, socket));
 
+            await HandlePlayerOwnerWebsocket(player, socket);
+
+            _activePlayers.Remove(player.Id);
         }
 
+        private async Task<Player> InitializePlayer(WebSocket socket)
+        {
+            var buffer = new byte[_websocketOptions.BufferSize];
+            
+            while (true)
+            {
+                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                if (result.CloseStatus.HasValue)
+                {
+                    await socket.CloseAsync(result.CloseStatus.Value, socket.CloseStatusDescription, CancellationToken.None);
+                    return null;
+                }
+
+                var msg = JsonConvert.DeserializeObject<PlayerInitMessage>(Encoding.ASCII.GetString(buffer));
+
+                Console.WriteLine("got Message");
+                Console.WriteLine(Encoding.ASCII.GetString(buffer));
+                
+                if (msg != null)
+                {
+                    return new Player
+                           {
+                               Name = msg.PlayerName,
+                               Id = Guid.NewGuid()
+                           };
+                }
+            }
+        }
+
+        private async Task HandlePlayerOwnerWebsocket(Player player, WebSocket socket)
+        {
+            var buffer = new byte[_websocketOptions.BufferSize];
+
+            while (true)
+            {
+                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                if (result.CloseStatus.HasValue)
+                {
+                    await socket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+                    return;
+                }
+                
+                HandlePlayerMessage(Encoding.ASCII.GetString(buffer));
+            }
+        }
+
+        private void HandlePlayerMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
         
         /*public async Task CreateSocketPlayerAsyncOLD(WebSocket socket, Guid playerId)
         {

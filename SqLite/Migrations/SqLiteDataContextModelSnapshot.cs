@@ -19,20 +19,6 @@ namespace Jukebox.Database.SqLite.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("Jukebox.Common.Abstractions.DataModel.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("AccessGuid");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Players");
-                });
-
             modelBuilder.Entity("Jukebox.Common.Abstractions.DataModel.Song", b =>
                 {
                     b.Property<int>("Id")
