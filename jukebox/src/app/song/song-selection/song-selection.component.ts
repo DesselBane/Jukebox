@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Song} from "../models/song";
+import { SongResponse} from "../models/song-response";
 import {PlayerService} from "../../player/player.service";
 import {SongService} from "../song.service";
 import {Subject} from "rxjs/Subject";
@@ -12,7 +12,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class SongSelectionComponent implements OnInit {
 
-  private _availableSongs: Song[];
+  private _availableSongs: SongResponse[];
   private _playerService: PlayerService;
   private _songService: SongService;
 
@@ -36,9 +36,9 @@ export class SongSelectionComponent implements OnInit {
   ngOnInit() {
   }
 
-  songSelected(song: Song) : void
+  songSelected(song: SongResponse) : void
   {
-    this._playerService.addSongToPlaylist(song);
+    this._playerService.addSongToPlaylist(song.id).subscribe();
   }
 
   searchBarTyped(searchString: string)

@@ -74,6 +74,12 @@ namespace Jukebox.Common.Players
         private Task NotifyClients(int playerId)
         {
             //TODO
+            if (_activePlayers.ContainsKey(playerId))
+                return _activePlayers[playerId].socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new
+                                                                                                                                            {
+                                                                                                                                                type = "update"
+                                                                                                                                            }))), WebSocketMessageType.Text, true, CancellationToken.None);
+            
             return Task.CompletedTask;
         }
         
@@ -113,9 +119,11 @@ namespace Jukebox.Common.Players
                     return null;
                 }
 
+                Player player;
+                
                 lock (ID_COUNTER_SYNC_HANDLE)
                 {
-                    return new Player
+                    player = new Player
                            {
                                Name = msg.PlayerName,
                                Id = _idCounter++,
@@ -123,6 +131,14 @@ namespace Jukebox.Common.Players
                                PlaylistIndex = 0
                            };
                 }
+
+                await socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new
+                                                                                                                  {
+                                                                                                                      type = "init",
+                                                                                                                      playerId = player.Id
+                                                                                                                  }))), WebSocketMessageType.Text, true, CancellationToken.None);
+
+                return player;
             }
         }
 

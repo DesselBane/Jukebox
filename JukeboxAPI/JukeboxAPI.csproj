@@ -25,22 +25,22 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-      <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0"/>
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
   </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Jukebox.Common.Abstractions\Jukebox.Common.Abstractions.csproj">
-            <Project>{B2DBFF04-FB85-4517-AE34-E7068C2499C4}</Project>
-            <Name>Jukebox.Common.Abstractions</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\Jukebox.Common\Jukebox.Common.csproj">
-            <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
-            <Name>Jukebox.Common</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\SqLite\SqLite.csproj">
-            <Project>{45F7B087-F726-4767-9C14-6FD8767FFE8E}</Project>
-            <Name>SqLite</Name>
-        </ProjectReference>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jukebox.Common.Abstractions\Jukebox.Common.Abstractions.csproj">
+      <Project>{B2DBFF04-FB85-4517-AE34-E7068C2499C4}</Project>
+      <Name>Jukebox.Common.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jukebox.Common\Jukebox.Common.csproj">
+      <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
+      <Name>Jukebox.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqLite\SqLite.csproj">
+      <Project>{45F7B087-F726-4767-9C14-6FD8767FFE8E}</Project>
+      <Name>SqLite</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -51,6 +51,7 @@
     <Content Update="appsettings.HDS037.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Remove="wwwroot\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\**" />
@@ -60,5 +61,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="wwwroot\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\codepoints" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\material-icons.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.ijmap" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\MaterialIcons-Regular.woff2" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\iconfont\README.md" />
+    <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+    <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\inline.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\inline.bundle.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\main.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\main.bundle.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\MaterialIcons-Regular.012cf6a10129e2275d79.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\MaterialIcons-Regular.570eb83859dc23dd0eec.woff2" />
+    <_ContentIncludedByDefault Remove="wwwroot\MaterialIcons-Regular.a37b0c01c0baf1888ca8.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\MaterialIcons-Regular.e79bfd88537def476913.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\polyfills.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\polyfills.bundle.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\styles.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\styles.bundle.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\styles.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\vendor.bundle.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\vendor.bundle.js.map" />
   </ItemGroup>
 </Project>

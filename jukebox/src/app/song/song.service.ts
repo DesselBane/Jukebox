@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {Song} from "./models/song";
+import {SongResponse} from "./models/song-response";
 
 @Injectable()
 export class SongService {
@@ -11,16 +11,17 @@ export class SongService {
     this._http = http;
   }
 
-  public searchForSongs(searchTerm: string) : Observable<Song[]>
+  public searchForSongs(searchTerm: string) : Observable<SongResponse[]>
   {
-    return this._http.get<any[]>(`api/song/search?searchTerm=${searchTerm}`)
-      .map(x => {
-        let songs = [];
-        x.forEach(function (song: any) {
-          songs.push(new Song(song.id,song.title,song.artists[0], song.album))
-        });
-        return songs;
-      });
+    return this._http.get<any[]>(`api/song/search?searchTerm=${searchTerm}`);
   }
+
+  public getSongByIdAsBlob(songId: number) : Observable<string>
+  {
+    return this._http.get(`api/song/${songId}`, { responseType: 'blob' })
+      .map(value => URL.createObjectURL(value));
+  }
+
+
 
 }

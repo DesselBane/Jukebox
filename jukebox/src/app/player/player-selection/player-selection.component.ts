@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AudioPlayer} from "../models/audio-player";
 import {PlayerService} from "../player.service";
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
+import {PlayerResponse} from "../models/player-response";
 
 @Component({
   selector: 'app-player-selection',
@@ -11,8 +11,8 @@ import {Router} from "@angular/router";
 })
 export class PlayerSelectionComponent implements OnInit {
 
-  _activePlayer: AudioPlayer;
-  _availalbePlayers: AudioPlayer[];
+  _activePlayer: PlayerResponse;
+  _availalbePlayers: PlayerResponse[];
   private _playerService: PlayerService;
   private _router: Router;
 
@@ -29,14 +29,10 @@ export class PlayerSelectionComponent implements OnInit {
   {
     this._activePlayer = this._playerService.activePlayer;
     this._playerService.getAvailablePlayers()
-      .catch(err => {
-        console.log(err);
-        return Observable.of([new AudioPlayer("Fallback","Fallback")]);
-      })
       .subscribe(value => this._availalbePlayers = value);
   }
 
-  private selectPlayer(player: AudioPlayer)
+  private selectPlayer(player: PlayerResponse)
   {
     this._activePlayer = player;
     this._playerService.activePlayer = player;

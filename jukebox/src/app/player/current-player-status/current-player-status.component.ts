@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PlayerService} from "../player.service";
-import {AudioPlayer} from "../models/audio-player";
+import {PlayerResponse} from "../models/player-response";
 
 @Component({
   selector: 'app-current-player-status',
@@ -10,7 +10,7 @@ import {AudioPlayer} from "../models/audio-player";
 export class CurrentPlayerStatusComponent implements OnInit {
   private _playerService: PlayerService;
 
-  private _activePlayer: AudioPlayer;
+  private _activePlayer: PlayerResponse;
 
   constructor(playerService: PlayerService) {
     this._playerService = playerService;

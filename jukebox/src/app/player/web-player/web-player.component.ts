@@ -28,12 +28,17 @@ export class WebPlayerComponent implements OnInit {
 
   next()
   {
-    this._webPlayerService.next();
+
   }
 
   previous()
   {
-    this._webPlayerService.previous();
+
+  }
+
+  createPlayer()
+  {
+    this._webPlayerService.createPlayer("Test Player tha second");
   }
 
 }

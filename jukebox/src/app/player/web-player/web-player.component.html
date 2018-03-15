@@ -1,4 +1,8 @@
+<h1>Player: {{_webPlayerService.player?.name}}</h1>
+<p>Is Playing: {{_webPlayerService.player?.isPlaying}}</p>
+
 <button mat-button (click)="previous()">Previous</button>
 <button mat-button (click)="playPause()" *ngIf="paused">Play</button>
 <button mat-button (click)="playPause()" *ngIf="!paused">Pause</button>
 <button mat-button (click)="next()">Next</button>
+<button mat-button (click)="createPlayer()">Create Player</button>
