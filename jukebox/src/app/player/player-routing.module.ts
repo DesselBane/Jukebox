@@ -4,6 +4,7 @@ import {PlayerSelectionComponent} from "./player-selection/player-selection.comp
 import {SongSelectionComponent} from "../song/song-selection/song-selection.component";
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 import {WebPlayerComponent} from "./web-player/web-player.component";
+import {AuthGuard} from "../security/auth.guard";
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import {WebPlayerComponent} from "./web-player/web-player.component";
         path: 'player',
         children: [
           {path: 'select', component: PlayerSelectionComponent},
-          {path: 'web', component: WebPlayerComponent}
+          {path: 'web', component: WebPlayerComponent, canActivate: [AuthGuard]}
         ]
       },
       {
