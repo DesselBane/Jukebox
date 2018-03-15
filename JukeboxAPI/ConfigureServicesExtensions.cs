@@ -219,6 +219,8 @@ namespace Jukebox
                    .EnableClassInterceptors()
                    .InterceptedBy(typeof(ControllerInterceptor));
 
+            builder.RegisterType<PingController>();
+            
             return builder;
         }
 
