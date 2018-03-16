@@ -52,6 +52,7 @@ export class AuthenticationService {
       throw new Error("Cannot set expired Token");
 
     localStorage.setItem('loginToken', JSON.stringify(newToken));
+    this._loginToken = newToken;
   }
 
   static isAuthenticated(): boolean {
@@ -63,6 +64,7 @@ export class AuthenticationService {
   }
 
   static isLoggedIn(): boolean {
+    console.log(this.loginToken);
     this.updateNavItems();
     return AuthenticationService.loginToken != null;
   }
@@ -104,8 +106,8 @@ export class AuthenticationService {
 
   refreshToken() : Observable<void>
   {
-    return this.http.get('/api/ping', {responseType: 'text'}).map(() => {
-    });
+    return this.http.get('/api/ping', {responseType: 'text'})
+      .map(() => { });
   }
 
   changePassword(password: string, resetHash: string): Observable<void> {

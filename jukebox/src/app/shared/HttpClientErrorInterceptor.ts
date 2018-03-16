@@ -46,8 +46,10 @@ export class HttpClientErrorInterceptor implements HttpInterceptor {
         throw error;
       })
         .mergeMap((value) => {
+          console.log(value);
         // Checking if a HttpResponse came back
         if (value instanceof HttpResponse) {
+          console.log("Set new token");
           // Setting the new Token an retrying the old request
           AuthenticationService.loginTokenResponse = value.body;
           return next.handle(req.clone());
