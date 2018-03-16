@@ -110,6 +110,9 @@ export class WebPlayerService {
 
     switch (msg.type)
     {
+      default:{
+        console.log(msg);
+      }
       case "init":{
         console.log(this);
         this.handlePlayerInit(msg);
@@ -119,6 +122,8 @@ export class WebPlayerService {
         this.handlePlayerUpdate(msg);
         break;
       }
+
+
     }
   }
 
@@ -153,5 +158,7 @@ export class WebPlayerService {
     this._audio.pause();
     this._paused = true;
   }
+
+
 }
 

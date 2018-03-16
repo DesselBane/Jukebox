@@ -41,6 +41,8 @@ namespace Jukebox.Controllers
         }
 
         [HttpGet("{songId}")]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(byte[]))]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = SongErrorCodes.SONG_NOT_FOUND + "\nSong not found")]
         public Task<IActionResult> GetSongById(int songId)
         {
             return _songService.GetSongById(songId);

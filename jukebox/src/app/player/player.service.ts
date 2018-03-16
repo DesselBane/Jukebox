@@ -3,6 +3,7 @@ import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "./models/player-response";
+import {PlayerCommandResponse} from "./models/player-command-response";
 
 @Injectable()
 export class PlayerService {
@@ -44,5 +45,13 @@ export class PlayerService {
 
     return this._http.post(`api/player/${this._activePlayer.id}/addSong/${songId}`,"")
       .map(() =>{});
+  }
+
+  public executePlayerCommand(cmd: PlayerCommandResponse) : Observable<void>
+  {
+    console.log(JSON.stringify(cmd));
+
+    return this._http.post(`api/player/${this.activePlayer.id}/executeCommand`,JSON.stringify(cmd), {responseType: 'text'})
+      .map(() => {});
   }
 }

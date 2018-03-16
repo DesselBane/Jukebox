@@ -1,4 +1,5 @@
 <div class="gridWrapper">
+  <button mat-button (click)="btn_click()">Click Me</button>
   <form>
     <mat-form-field>
       <input type="text" matInput placeholder="Search here..." (keyup)="searchBarTyped($event.target.value)">

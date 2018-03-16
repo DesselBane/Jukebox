@@ -57,9 +57,21 @@ namespace Jukebox.Controllers
 
         [HttpPost("{playerId}/addSong/{songId}")]
         [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(void))]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = PlayerErrorCodes.PLAYER_NOT_FOUND + "\nPlayer not found")]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = SongErrorCodes.SONG_NOT_FOUND + "\nSong not found")]
         public Task AddSongToPlayer(int playerId, int songId)
         {
             return _playerService.AddSongToPlayerAsync(playerId, songId);
+        }
+
+        [HttpPost("{playerId}/executeCommand")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Command executed successfully")]
+        [SwaggerResponse(HttpStatusCode.Forbidden, typeof(ExceptionDTO), Description = PlayerErrorCodes.NO_PERMISSION_TO_UPDATE_PLAYER + "\nNo permission to update player.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = PlayerErrorCodes.PLAYER_NOT_FOUND + "\nPlayer not found.")]
+        public virtual Task ExecutePlayerCommand([FromBody] PlayerCommand cmd, int playerId)
+        {
+            return _playerService.ExecuteCommandAsync(playerId,cmd);
         }
     }
 }

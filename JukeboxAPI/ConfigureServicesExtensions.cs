@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Security.Claims;
 using System.Text;
 using Autofac;
@@ -27,6 +29,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SPAMiddleware;
+using System.Linq;
+using Jukebox.Data.InMemory;
 
 namespace Jukebox
 {
@@ -240,7 +244,12 @@ namespace Jukebox
         private static ContainerBuilder ConfigureSongSearch(this ContainerBuilder builder)
         {
             builder.RegisterType<SongService>()
-                   .As<ISongService>();
+                   .As<ISongService>()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(SongServiceInterceptor));
+
+            builder.RegisterType<SongServiceInterceptor>();
+            builder.RegisterType<SongValidator>();
 
             return builder;
         }
@@ -249,8 +258,18 @@ namespace Jukebox
         {
             builder.RegisterType<PlayerService>()
                    .As<IPlayerService>()
-                   .SingleInstance();
+                   .SingleInstance()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(PlayerServiceInterceptor));
 
+            builder.RegisterType<PlayerServiceInterceptor>();
+            builder.RegisterType<PlayerValidator>();
+            
+            builder.RegisterType<PlayerRepository>()
+                   .As<IPlayerRepository>()
+                   .SingleInstance();
+                
+            
             return builder;
         }
 

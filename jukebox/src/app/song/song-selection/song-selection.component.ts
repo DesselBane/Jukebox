@@ -4,6 +4,8 @@ import {PlayerService} from "../../player/player.service";
 import {SongService} from "../song.service";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
+import {PlayerCommandResponse} from "../../player/models/player-command-response";
+import {PlayerCommandTypes} from "../../player/models/player-command-types.enum";
 
 @Component({
   selector: 'app-song-selection',
@@ -44,5 +46,14 @@ export class SongSelectionComponent implements OnInit {
   searchBarTyped(searchString: string)
   {
     this.searchSubject.next(searchString);
+  }
+
+  btn_click()
+  {
+    let cmd = new PlayerCommandResponse();
+    cmd.type = PlayerCommandTypes.JumpToIndex;
+    cmd.arguments.push(["index","1"]);
+    this._playerService.executePlayerCommand(cmd)
+      .subscribe();
   }
 }

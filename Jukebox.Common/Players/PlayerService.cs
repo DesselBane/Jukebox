@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
@@ -11,6 +10,7 @@ using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.ErrorCodes;
 using Jukebox.Common.Abstractions.Options;
 using Jukebox.Common.Abstractions.Players;
+using Jukebox.Common.Extensions;
 using Jukebox.Common.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -20,32 +20,33 @@ namespace Jukebox.Common.Players
 {
     public class PlayerService : IPlayerService
     {
-        private static int _idCounter = 0;
-        private static readonly object ID_COUNTER_SYNC_HANDLE = new object();
-        
         private readonly AuthenticationValidator _authValidator;
         private readonly DataContext _dataContext;
-        private readonly IDictionary<int, (Player player, WebSocket socket)> _activePlayers = new ConcurrentDictionary<int, (Player player, WebSocket socket)>();
+        private readonly IPlayerRepository _playerRepository;
         private readonly WebsocketOptions _websocketOptions;
 
 
-        public PlayerService(IOptions<WebsocketOptions> websocketOptions, AuthenticationValidator authValidator, DataContext dataContext)
+        public PlayerService(IOptions<WebsocketOptions> websocketOptions, AuthenticationValidator authValidator, DataContext dataContext, IPlayerRepository playerRepository)
         {
             _authValidator = authValidator;
             _dataContext = dataContext;
+            _playerRepository = playerRepository;
             _websocketOptions = websocketOptions.Value;
         }
 
         public Task<IEnumerable<Player>> GetAllPlayersAsync()
         {
-            return Task.FromResult(_activePlayers.Values.Select(x => x.player).ToList() as IEnumerable<Player>);
+            return Task.FromResult(_playerRepository.Select(x => x.player)
+                                                    .AsEnumerable());
         }
 
         public Task<Player> GetPlayerByIdAsync(int playerId)
         {
-            if (_activePlayers.ContainsKey(playerId))
-                return Task.FromResult(_activePlayers[playerId].player);
-            throw new NotFoundException(playerId.ToString(), nameof(Player), Guid.Parse(PlayerErrorCodes.PLAYER_NOT_FOUND));
+            return Task.FromResult(_playerRepository.Select(x => x.player)
+                                                    .FirstOrDefault(x => x.Id == playerId));
+            
+            
+            
         }
 
         public async Task CreateSocketPlayerAsync(WebSocket socket)
@@ -55,32 +56,39 @@ namespace Jukebox.Common.Players
             if (player == null)
                 return;
 
-            _activePlayers.Add(player.Id, (player, socket));
 
             await HandlePlayerOwnerWebsocket(player, socket);
 
-            _activePlayers.Remove(player.Id);
+            _playerRepository.RemoveByPlayerId(player.Id);
         }
 
         public async Task AddSongToPlayerAsync(int playerId, int songId)
         {
-            var player = _activePlayers[playerId].player;
+            var player = _playerRepository[playerId].player;
             var song = await _dataContext.Songs.FirstOrDefaultAsync(x => x.Id == songId);
             
             player.Playlist.Add(song);
             NotifyClients(playerId);
         }
 
-        private Task NotifyClients(int playerId)
+        public async Task ExecuteCommandAsync(int playerId, PlayerCommand cmd)
+        {
+            var player = _playerRepository.First(x => x.player.Id == playerId);
+
+            await player.socket.SendShortAsync(cmd);
+        }
+
+        private async Task NotifyClients(int playerId)
         {
             //TODO
-            if (_activePlayers.ContainsKey(playerId))
-                return _activePlayers[playerId].socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new
-                                                                                                                                            {
-                                                                                                                                                type = "update"
-                                                                                                                                            }))), WebSocketMessageType.Text, true, CancellationToken.None);
-            
-            return Task.CompletedTask;
+            var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId);
+
+            if (player.socket != null)
+                await player.socket.SendShortAsync(new
+                                                   {
+                                                       type = "update"
+                                                   });
+
         }
         
         private async Task<Player> InitializePlayer(WebSocket socket)
@@ -119,24 +127,21 @@ namespace Jukebox.Common.Players
                     return null;
                 }
 
-                Player player;
+                var player = new Player
+                                {
+                                    Name = msg.PlayerName,
+                                    Id = 0,
+                                    IsPlaying = false,
+                                    PlaylistIndex = 0
+                                };
                 
-                lock (ID_COUNTER_SYNC_HANDLE)
-                {
-                    player = new Player
-                           {
-                               Name = msg.PlayerName,
-                               Id = _idCounter++,
-                               IsPlaying = false,
-                               PlaylistIndex = 0
-                           };
-                }
+                _playerRepository.Add((player, socket));
 
-                await socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(new
-                                                                                                                  {
-                                                                                                                      type = "init",
-                                                                                                                      playerId = player.Id
-                                                                                                                  }))), WebSocketMessageType.Text, true, CancellationToken.None);
+                await socket.SendShortAsync(new
+                                            {
+                                                type = "init",
+                                                playerId = player.Id
+                                            });
 
                 return player;
             }
