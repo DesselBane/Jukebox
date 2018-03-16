@@ -37,6 +37,7 @@ export class WebPlayerService {
     this._songService = songService;
     this._audio = new Audio();
     this._audio.autostart = false;
+    this._audio.onended = () => this.handleOnPlaylistEnded();
   }
 
   public createPlayer(name: string)
@@ -160,5 +161,11 @@ export class WebPlayerService {
   }
 
 
+  private handleOnPlaylistEnded() {
+    this._paused = true;
+    this._player.playlistIndex++;
+    this.loadAudio().subscribe(() => this.playPause());
+
+  }
 }
 
