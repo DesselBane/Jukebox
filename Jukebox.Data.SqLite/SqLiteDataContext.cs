@@ -1,7 +1,7 @@
 ﻿using Jukebox.Common.Abstractions.DataModel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jukebox.Database.SqLite
+namespace Jukebox.Data.SqLite
 {
     public class SqLiteDataContext : DataContext
     {

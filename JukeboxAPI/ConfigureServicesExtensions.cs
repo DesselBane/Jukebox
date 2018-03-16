@@ -16,7 +16,7 @@ using Jukebox.Common.Players;
 using Jukebox.Common.Security;
 using Jukebox.Common.Songs;
 using Jukebox.Controllers;
-using Jukebox.Database.SqLite;
+using Jukebox.Data.SqLite;
 using Jukebox.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

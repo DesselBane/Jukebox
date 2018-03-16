@@ -2,7 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Jukebox.Common.Abstractions.DataModel;
-using Jukebox.Database.SqLite;
+using Jukebox.Data.SqLite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

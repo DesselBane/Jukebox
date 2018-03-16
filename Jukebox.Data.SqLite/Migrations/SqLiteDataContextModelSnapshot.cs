@@ -4,7 +4,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Jukebox.Database.SqLite.Migrations
+namespace Jukebox.Data.SqLite.Migrations
 {
     [DbContext(typeof(SqLiteDataContext))]
     internal class SqLiteDataContextModelSnapshot : ModelSnapshot

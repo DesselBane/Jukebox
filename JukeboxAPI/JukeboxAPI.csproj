@@ -36,10 +36,7 @@
       <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
       <Name>Jukebox.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SqLite\SqLite.csproj">
-      <Project>{45F7B087-F726-4767-9C14-6FD8767FFE8E}</Project>
-      <Name>SqLite</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Jukebox.Data.SqLite\Jukebox.Data.SqLite.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

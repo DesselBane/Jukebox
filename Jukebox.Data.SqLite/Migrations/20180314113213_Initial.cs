@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Jukebox.Database.SqLite.Migrations
+namespace Jukebox.Data.SqLite.Migrations
 {
     public partial class Initial : Migration
     {
