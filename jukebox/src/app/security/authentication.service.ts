@@ -52,7 +52,7 @@ export class AuthenticationService {
       throw new Error("Cannot set expired Token");
 
     localStorage.setItem('loginToken', JSON.stringify(newToken));
-    this._loginToken = newToken;
+    AuthenticationService._loginToken = newToken;
   }
 
   static isAuthenticated(): boolean {
