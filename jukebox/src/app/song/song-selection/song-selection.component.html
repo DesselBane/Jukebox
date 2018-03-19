@@ -7,7 +7,7 @@
   </form>
   <mat-list>
     <mat-list-item *ngFor="let item of _availableSongs">
-        <p>{{item.title}} - {{item.artist}}</p>
+        <p>{{item.title}} - {{item.artists[0]}}</p>
         <button mat-icon-button (click)="songSelected(item)">
           <mat-icon>playlist_add</mat-icon>
         </button>

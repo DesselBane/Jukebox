@@ -38,6 +38,7 @@ export class WebPlayerService {
   private _wsObservable: Subject<MessageEvent>;
   private _websocket: WebSocket;
   private _player: PlayerResponse;
+  private _songCache: [number,string][] = [];
 
   //TODO export to environment
   private serverUrl = "ws://localhost:5000/api/player/ws";
@@ -49,8 +50,18 @@ export class WebPlayerService {
     this._http = http;
     this._songService = songService;
     this._audio = new Audio();
-    this._audio.autostart = false;
-    this._audio.onended = () => this.next();
+    this._audio.autoplay = false;
+    this._audio.onended = () => {
+      console.log("ended");
+      this.next();
+    };
+
+    this._audio.onwaiting = () => console.log("waiting");
+    this._audio.onerror = () => this.next();
+    this._audio.onabort = () => console.log("abort");
+    this._audio.onstalled = () => console.log("stalled");
+
+    setInterval(() => console.log(`Duration: ${this._audio.duration}`), 1000);
   }
 
   public createPlayer(name: string)
@@ -93,43 +104,75 @@ export class WebPlayerService {
 
   public playPause()
   {
-    if(this.state === WebPlayerState.Paused || this.state === WebPlayerState.Stopped)
-    {
-      let previousState = this.state;
-      this.setState(WebPlayerState.Loading);
-      return this.loadNextTrack()
-        .subscribe(() =>{
+    switch(this.state){
+      case WebPlayerState.Stopped: {
+        let previousState = this.state;
+        this.setState(WebPlayerState.Loading);
+        return this.loadNextTrack()
+          .subscribe(() => {
+            this._audio.play();
+            this.setState(WebPlayerState.Playing);
+            console.log(`Duration: ${this._audio.duration}`);
+
+          }, () => {
+            this.setState(previousState);
+          });
+      }
+        case WebPlayerState.Paused: {
           this._audio.play();
           this.setState(WebPlayerState.Playing);
-        }, () => {
-          this.setState(previousState);
-        });
+          break;
+        }
+
+        case WebPlayerState.Playing:{
+          this._audio.pause();
+          this.setState(WebPlayerState.Paused);
+          break;
+        }
+      }
     }
-    else
-    {
-      this._audio.pause();
-      this.setState(WebPlayerState.Paused);
-    }
-  }
 
   private loadNextTrack() : Observable<void>
   {
     if(this._player.playlistIndex >= this._player.playlist.length)
       return Observable.throw("Playlist end reached");
 
-    let canPreload = this._player.playlistIndex +1 >= this._player.playlist.length;
+    let canPreload = this._player.playlistIndex +1 < this._player.playlist.length;
 
-    return this._songService.getSongByIdAsBlob(this._player.playlist[this._player.playlistIndex].id)
-      .map(value => {
-        this._audio.src = value;
-        this._audio.load();
-      })
+    let currentId = this._player.playlist[this._player.playlistIndex].id;
+
+    let nextId = undefined;
+
+    if(canPreload)
+      nextId = this._player.playlist[this._player.playlistIndex + 1].id;
+
+    return this.loadTrackWithId(currentId)
       .do(() => {
         if(canPreload)
-          this._songService.getSongByIdAsBlob(this._player.playlist[this._player.playlistIndex].id)
+          this.loadTrackWithId(nextId)
             .subscribe();
+      })
+      .map(value => {
+        this._songCache.push([currentId,value]);
+        this._audio.src = value;
+        this._audio.load();
       });
 
+  }
+
+  private loadTrackWithId(songId: number) : Observable<string>
+  {
+    let song = this._songCache.find(x => x[0] === songId);
+
+    console.log(song);
+
+    if(song === undefined)
+      return this._songService.getSongByIdAsBlob(songId)
+        .do(value => {
+          this._songCache.push([songId,value]);
+        });
+    else
+      return Observable.of(song[1]);
   }
 
   public stop()
@@ -153,6 +196,12 @@ export class WebPlayerService {
     }, () => {
       stop();
     })
+  }
+
+  public previous()
+  {
+    this._player.playlistIndex -= 1;
+    this.loadNextTrack().subscribe(() => this._audio.play(), () => stop());
   }
 
   private handleSocketResponse(event: MessageEvent)

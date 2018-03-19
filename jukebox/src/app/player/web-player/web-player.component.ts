@@ -10,7 +10,7 @@ import {WebPlayerState} from "./web-player-state.enum";
 export class WebPlayerComponent implements OnInit {
 
   private _webPlayerService;
-  private _state = WebPlayerState.Closed;
+  private _state: WebPlayerState;
   private _canPrevious = false;
   private _canNext = false;
   private _canPlay = false;
@@ -19,61 +19,64 @@ export class WebPlayerComponent implements OnInit {
 
   constructor(webPlayerService: WebPlayerService) {
     this._webPlayerService = webPlayerService;
+    this.updatePlayerState(this._webPlayerService.state);
     this._webPlayerService.stateChanged
-      .subscribe(value => {
-        this._state = value;
-
-        switch (value){
-          case WebPlayerState.Closed:
-          case WebPlayerState.Initializing:{
-            this._canPrevious = false;
-            this._canNext = false;
-            this._canPlay = false;
-            this._canPause = false;
-            this._canStop = false;
-            break;
-          }
-          case WebPlayerState.Loading:{
-            this._canPrevious = true;
-            this._canNext = true;
-            this._canPlay = false;
-            this._canPause = false;
-            this._canStop = true;
-            break;
-          }
-          case WebPlayerState.Playing: {
-            this._canPrevious = true;
-            this._canNext = true;
-            this._canPlay = false;
-            this._canPause = true;
-            this._canStop = true;
-            break;
-          }
-
-          case WebPlayerState.Paused:
-          {
-            this._canPrevious = true;
-            this._canNext = true;
-            this._canPlay = true;
-            this._canPause = false;
-            this._canStop = true;
-            break;
-          }
-          case WebPlayerState.Stopped:{
-            this._canPrevious = true;
-            this._canNext = true;
-            this._canPlay = true;
-            this._canPause = false;
-            this._canStop = false;
-            break;
-          }
-        }
-
-      });
+      .subscribe(value => this.updatePlayerState(value));
 
   }
 
   ngOnInit() {
+  }
+
+  private updatePlayerState(value: WebPlayerState)
+  {
+    this._state = value;
+
+    switch (value){
+      case WebPlayerState.Closed:
+      case WebPlayerState.Initializing:{
+        this._canPrevious = false;
+        this._canNext = false;
+        this._canPlay = false;
+        this._canPause = false;
+        this._canStop = false;
+        break;
+      }
+      case WebPlayerState.Loading:{
+        this._canPrevious = true;
+        this._canNext = true;
+        this._canPlay = false;
+        this._canPause = false;
+        this._canStop = true;
+        break;
+      }
+      case WebPlayerState.Playing: {
+        this._canPrevious = true;
+        this._canNext = true;
+        this._canPlay = false;
+        this._canPause = true;
+        this._canStop = true;
+        break;
+      }
+
+      case WebPlayerState.Paused:
+      {
+        this._canPrevious = true;
+        this._canNext = true;
+        this._canPlay = true;
+        this._canPause = false;
+        this._canStop = true;
+        break;
+      }
+      case WebPlayerState.Stopped:{
+        this._canPrevious = true;
+        this._canNext = true;
+        this._canPlay = true;
+        this._canPause = false;
+        this._canStop = false;
+        break;
+      }
+    }
   }
 
   playPause()
@@ -83,12 +86,12 @@ export class WebPlayerComponent implements OnInit {
 
   next()
   {
-
+    this._webPlayerService.next();
   }
 
   previous()
   {
-
+    this._webPlayerService.previous();
   }
 
   stop()

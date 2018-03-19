@@ -64,7 +64,7 @@ namespace Jukebox.Common.Players
 
         public async Task AddSongToPlayerAsync(int playerId, int songId)
         {
-            var player = _playerRepository[playerId].player;
+            var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId).player;
             var song = await _dataContext.Songs.FirstOrDefaultAsync(x => x.Id == songId);
             
             player.Playlist.Add(song);
