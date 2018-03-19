@@ -134,6 +134,8 @@ export class WebPlayerService {
 
   private loadNextTrack() : Observable<void>
   {
+
+
     if(this._player.playlistIndex >= this._player.playlist.length)
       return Observable.throw("Playlist end reached");
 
@@ -194,7 +196,8 @@ export class WebPlayerService {
     this.loadNextTrack().subscribe(() =>{
       this._audio.play();
     }, () => {
-      stop();
+      console.log("error Thrown");
+      this.stop();
     })
   }
 
