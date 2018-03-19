@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
     if(AuthenticationService.isAuthenticated())
     {
-      console.log("navigated since logged in");
       this._router.navigateByUrl(this.returnUrl);
     }
 

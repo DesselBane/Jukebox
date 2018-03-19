@@ -64,7 +64,6 @@ export class AuthenticationService {
   }
 
   static isLoggedIn(): boolean {
-    console.log(this.loginToken);
     this.updateNavItems();
     return AuthenticationService.loginToken != null;
   }

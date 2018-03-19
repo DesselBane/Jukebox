@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {PlayerService} from "../player.service";
 import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "../models/player-response";
@@ -7,19 +7,33 @@ import {Subject} from "rxjs/Subject";
 import {Observer} from "rxjs/Observer";
 import {SongService} from "../../song/song.service";
 import {AuthenticationService} from "../../security/authentication.service";
+import {WebPlayerState} from "./web-player-state.enum";
 
 @Injectable()
 export class WebPlayerService {
+  get stateChanged(): EventEmitter<WebPlayerState> {
+    return this._stateChanged;
+  }
+
+  get state(): WebPlayerState {
+    return this._state;
+  }
+
+  private setState(value: WebPlayerState): void
+  {
+    this._state = value;
+    this._stateChanged.emit(this._state);
+    console.log(value);
+  }
+
   get player(): PlayerResponse {
     return this._player;
   }
-  get paused(): boolean {
-    return this._paused;
-  }
 
   private _audio;
-  private _paused = true;
   private _playerService: PlayerService;
+  private _state = WebPlayerState.Closed;
+  private _stateChanged = new EventEmitter<WebPlayerState>();
 
   private _wsObservable: Subject<MessageEvent>;
   private _websocket: WebSocket;
@@ -30,18 +44,19 @@ export class WebPlayerService {
   private _http: HttpClient;
   private _songService: SongService;
 
-
   constructor(playerService: PlayerService, http: HttpClient, songService: SongService) {
     this._playerService = playerService;
     this._http = http;
     this._songService = songService;
     this._audio = new Audio();
     this._audio.autostart = false;
-    this._audio.onended = () => this.handleOnPlaylistEnded();
+    this._audio.onended = () => this.next();
   }
 
   public createPlayer(name: string)
   {
+    this.setState(WebPlayerState.Initializing);
+
     if(this._websocket != null)
       throw "Player already created";
 
@@ -78,35 +93,70 @@ export class WebPlayerService {
 
   public playPause()
   {
-    if(this._paused)
+    if(this.state === WebPlayerState.Paused || this.state === WebPlayerState.Stopped)
     {
-      this._audio.play();
-      this._paused = false;
+      let previousState = this.state;
+      this.setState(WebPlayerState.Loading);
+      return this.loadNextTrack()
+        .subscribe(() =>{
+          this._audio.play();
+          this.setState(WebPlayerState.Playing);
+        }, () => {
+          this.setState(previousState);
+        });
     }
     else
     {
       this._audio.pause();
-      this._paused = true;
+      this.setState(WebPlayerState.Paused);
     }
   }
 
-  private loadAudio() : Observable<void>
+  private loadNextTrack() : Observable<void>
   {
-    if(this._player == null)
-      return Observable.of();
+    if(this._player.playlistIndex >= this._player.playlist.length)
+      return Observable.throw("Playlist end reached");
+
+    let canPreload = this._player.playlistIndex +1 >= this._player.playlist.length;
 
     return this._songService.getSongByIdAsBlob(this._player.playlist[this._player.playlistIndex].id)
       .map(value => {
         this._audio.src = value;
         this._audio.load();
+      })
+      .do(() => {
+        if(canPreload)
+          this._songService.getSongByIdAsBlob(this._player.playlist[this._player.playlistIndex].id)
+            .subscribe();
       });
+
+  }
+
+  public stop()
+  {
+    if(this.state === WebPlayerState.Playing || this.state === WebPlayerState.Loading)
+    {
+      this._audio.pause();
+      this._audio.currentTime = 0;
+      this.setState(WebPlayerState.Stopped);
+    }
+  }
+
+  public next()
+  {
+    this._player.playlistIndex += 1;
+
+    //TODO update upstream
+
+    this.loadNextTrack().subscribe(() =>{
+      this._audio.play();
+    }, () => {
+      stop();
+    })
   }
 
   private handleSocketResponse(event: MessageEvent)
   {
-    console.log(event);
-    console.log(event.data);
-
     let msg = JSON.parse(event.data);
 
     switch (msg.type)
@@ -115,7 +165,6 @@ export class WebPlayerService {
         console.log(msg);
       }
       case "init":{
-        console.log(this);
         this.handlePlayerInit(msg);
         break;
       }
@@ -131,7 +180,10 @@ export class WebPlayerService {
   private handlePlayerInit(msg)
   {
     this._http.get<PlayerResponse>(`api/player/${msg.playerId}`)
-      .subscribe(value => this._player = value);
+      .subscribe(value => {
+        this._player = value;
+        this.setState(WebPlayerState.Stopped);
+      });
   }
 
   private handlePlayerUpdate(msg: any)
@@ -141,7 +193,7 @@ export class WebPlayerService {
     this._http.get<PlayerResponse>(`api/player/${this._player.id}`)
       .subscribe(value => {
         this._player = value;
-        this.loadAudio().subscribe();
+        this.setState(WebPlayerState.Stopped);
       });
   }
 
@@ -157,15 +209,7 @@ export class WebPlayerService {
     this._wsObservable = null;
     this._player = null;
     this._audio.pause();
-    this._paused = true;
-  }
-
-
-  private handleOnPlaylistEnded() {
-    this._paused = true;
-    this._player.playlistIndex++;
-    this.loadAudio().subscribe(() => this.playPause());
-
+    this.setState(WebPlayerState.Closed)
   }
 }
 

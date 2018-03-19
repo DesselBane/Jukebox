@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {WebPlayerService} from "./web-player.service";
+import {WebPlayerState} from "./web-player-state.enum";
 
 @Component({
   selector: 'app-web-player',
@@ -7,14 +8,68 @@ import {WebPlayerService} from "./web-player.service";
   styleUrls: ['./web-player.component.css']
 })
 export class WebPlayerComponent implements OnInit {
-  get paused(): boolean {
-    return this._webPlayerService.paused;
-  }
 
   private _webPlayerService;
+  private _state = WebPlayerState.Closed;
+  private _canPrevious = false;
+  private _canNext = false;
+  private _canPlay = false;
+  private _canPause = false;
+  private _canStop = false;
 
   constructor(webPlayerService: WebPlayerService) {
     this._webPlayerService = webPlayerService;
+    this._webPlayerService.stateChanged
+      .subscribe(value => {
+        this._state = value;
+
+        switch (value){
+          case WebPlayerState.Closed:
+          case WebPlayerState.Initializing:{
+            this._canPrevious = false;
+            this._canNext = false;
+            this._canPlay = false;
+            this._canPause = false;
+            this._canStop = false;
+            break;
+          }
+          case WebPlayerState.Loading:{
+            this._canPrevious = true;
+            this._canNext = true;
+            this._canPlay = false;
+            this._canPause = false;
+            this._canStop = true;
+            break;
+          }
+          case WebPlayerState.Playing: {
+            this._canPrevious = true;
+            this._canNext = true;
+            this._canPlay = false;
+            this._canPause = true;
+            this._canStop = true;
+            break;
+          }
+
+          case WebPlayerState.Paused:
+          {
+            this._canPrevious = true;
+            this._canNext = true;
+            this._canPlay = true;
+            this._canPause = false;
+            this._canStop = true;
+            break;
+          }
+          case WebPlayerState.Stopped:{
+            this._canPrevious = true;
+            this._canNext = true;
+            this._canPlay = true;
+            this._canPause = false;
+            this._canStop = false;
+            break;
+          }
+        }
+
+      });
 
   }
 
@@ -34,6 +89,11 @@ export class WebPlayerComponent implements OnInit {
   previous()
   {
 
+  }
+
+  stop()
+  {
+    this._webPlayerService.stop();
   }
 
   createPlayer()

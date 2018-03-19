@@ -1,8 +1,9 @@
 <h1>Player: {{_webPlayerService.player?.name}}</h1>
-<p>Is Playing: {{_webPlayerService.player?.isPlaying}}</p>
+<p>Is Playing: {{_state == 2}}</p>
 
-<button mat-button (click)="previous()">Previous</button>
-<button mat-button (click)="playPause()" *ngIf="paused">Play</button>
-<button mat-button (click)="playPause()" *ngIf="!paused">Pause</button>
-<button mat-button (click)="next()">Next</button>
+<button mat-button (click)="previous()" [disabled]="!_canPrevious">Previous</button>
+<button mat-button (click)="playPause()" [disabled]="!_canPlay">Play</button>
+<button mat-button (click)="playPause()" [disabled]="!_canPause">Pause</button>
+<button mat-button (click)="next()" [disabled]="!_canNext">Next</button>
+<button mat-button (click)="stop()" [disabled]="!_canStop">Stop</button>
 <button mat-button (click)="createPlayer()">Create Player</button>
