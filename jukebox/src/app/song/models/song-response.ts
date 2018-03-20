@@ -1,7 +1,7 @@
 export interface SongResponse {
 
   title: string;
-  artist: string[];
+  artists: string[];
   album: string;
   id: number;
 }

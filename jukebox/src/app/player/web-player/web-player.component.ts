@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {WebPlayerService} from "../web-player.service";
-import {WebPlayerState} from "../web-player-state.enum";
+import {WebPlayerState} from "../models/web-player-state.enum";
+import {PlayerService} from "../player.service";
+import {PlayerResponse} from "../models/player-response";
+import {PlayerCommandResponse} from "../models/player-command-response";
+import {PlayerCommandTypes} from "../models/player-command-types.enum";
 
 @Component({
   selector: 'app-web-player',
@@ -9,30 +13,31 @@ import {WebPlayerState} from "../web-player-state.enum";
 })
 export class WebPlayerComponent implements OnInit {
 
-  private _webPlayerService;
-  private _state: WebPlayerState;
+
   private _canPrevious = false;
   private _canNext = false;
   private _canPlay = false;
   private _canPause = false;
   private _canStop = false;
+  private _playerService: PlayerService;
+  private _activePlayer : PlayerResponse;
 
-  constructor(webPlayerService: WebPlayerService) {
-    this._webPlayerService = webPlayerService;
-    this.updatePlayerState(this._webPlayerService.state);
-    this._webPlayerService.stateChanged
-      .subscribe(value => this.updatePlayerState(value));
-
+  constructor(playerService: PlayerService) {
+    this._playerService = playerService;
+    this.updatePlayer(this._playerService.activePlayer);
+    this._playerService.activePlayerChanged
+      .subscribe(value => this.updatePlayer(value));
   }
 
   ngOnInit() {
   }
 
-  private updatePlayerState(value: WebPlayerState)
+  private updatePlayer(value: PlayerResponse)
   {
-    this._state = value;
+    console.log(value);
+    this._activePlayer = value;
 
-    switch (value){
+    switch (this._activePlayer.state){
       case WebPlayerState.Closed:
       case WebPlayerState.Initializing:{
         this._canPrevious = false;
@@ -81,27 +86,39 @@ export class WebPlayerComponent implements OnInit {
 
   playPause()
   {
-    this._webPlayerService.playPause();
+    let cmd = new PlayerCommandResponse();
+    cmd.Type = PlayerCommandTypes.PlayPause;
+
+    this._playerService.executePlayerCommand(cmd)
+      .subscribe();
   }
 
   next()
   {
-    this._webPlayerService.next();
+    let cmd = new PlayerCommandResponse();
+    cmd.Type = PlayerCommandTypes.JumpToIndex;
+    cmd.Arguments.push(["index",`${this._activePlayer.playlistIndex + 1}`]);
+
+    this._playerService.executePlayerCommand(cmd)
+      .subscribe();
   }
 
   previous()
   {
-    this._webPlayerService.previous();
+    let cmd = new PlayerCommandResponse();
+    cmd.Type = PlayerCommandTypes.JumpToIndex;
+    cmd.Arguments.push(["index",`${this._activePlayer.playlistIndex - 1}`]);
+
+    this._playerService.executePlayerCommand(cmd)
+      .subscribe();
   }
 
   stop()
   {
-    this._webPlayerService.stop();
-  }
+    let cmd = new PlayerCommandResponse();
+    cmd.Type = PlayerCommandTypes.Stop;
 
-  createPlayer()
-  {
-    this._webPlayerService.createPlayer("Test Player tha second");
+    this._playerService.executePlayerCommand(cmd)
+      .subscribe();
   }
-
 }

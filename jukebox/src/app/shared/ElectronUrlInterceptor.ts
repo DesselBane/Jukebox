@@ -27,10 +27,6 @@ export class ElectronUrlInterceptor implements HttpInterceptor {
       let newUrl = baseUrl + req.urlWithParams;
 
       newReq = req.clone({url: newUrl});
-      console.log("electron runtime detected. new request goes here: " + newReq.urlWithParams);
-    }else
-    {
-      console.log("web runtime detected")
     }
 
 

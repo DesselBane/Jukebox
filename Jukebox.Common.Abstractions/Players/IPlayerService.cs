@@ -13,5 +13,6 @@ namespace Jukebox.Common.Abstractions.Players
         Task CreateSocketPlayerAsync(WebSocket socket);
         Task AddSongToPlayerAsync(int playerId, int songId);
         Task ExecuteCommandAsync(int playerId, PlayerCommand cmd);
+        Task CreateNotificationSocketAsync(WebSocket socket, int playerId);
     }
 }

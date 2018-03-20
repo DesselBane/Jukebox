@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Jukebox.Common.Abstractions.DataModel
 {
@@ -14,7 +16,8 @@ namespace Jukebox.Common.Abstractions.DataModel
         public string Name { get; set; }
         
         [DataMember]
-        public bool IsPlaying { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PlayerState State { get; set; }
 
         [DataMember]
         public List<Song> Playlist { get; set; } = new List<Song>();

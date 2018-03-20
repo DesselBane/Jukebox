@@ -13,13 +13,8 @@ import {AuthGuard} from "../security/auth.guard";
         path: 'player',
         children: [
           {path: 'select', component: PlayerSelectionComponent},
-          {path: 'web', component: WebPlayerComponent, canActivate: [AuthGuard]}
+          {path: 'web', component: WebPlayerComponent, canActivate: [AuthGuard, ActivePlayerNeededGuard]}
         ]
-      },
-      {
-        path: 'home',
-        component: SongSelectionComponent,
-        canActivate: [ActivePlayerNeededGuard]
       }
     ])
   ],

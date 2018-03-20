@@ -33,6 +33,10 @@ namespace Jukebox.Common.Players
                         {
                             nameof(ExecuteCommandAsync),
                             x => ExecuteCommandAsync((int) x.Arguments[0],(PlayerCommand) x.Arguments[1])
+                        },
+                        {
+                            nameof(CreateNotificationSocketAsync),
+                            x => CreateNotificationSocketAsync((WebSocket) x.Arguments[0],(int) x.Arguments[1])
                         }
                     });
         }
@@ -67,6 +71,13 @@ namespace Jukebox.Common.Players
             _playerValidator.ValidatePlayerExists(playerId);
             _playerValidator.ValidateCanUpdatePlayer();
             
+            
+            return null;
+        }
+
+        public Task CreateNotificationSocketAsync(WebSocket socket, int playerId)
+        {
+            _playerValidator.ValidatePlayerExists(playerId);
             
             return null;
         }

@@ -18,7 +18,7 @@ export class CurrentPlayerStatusComponent implements OnInit {
 
   ngOnInit() {
     this._activePlayer = this._playerService.activePlayer;
-    this._playerService.activePlayerObservable
+    this._playerService.activePlayerChanged
       .subscribe(value => this._activePlayer = value);
   }
 

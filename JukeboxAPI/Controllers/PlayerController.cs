@@ -73,5 +73,18 @@ namespace Jukebox.Controllers
         {
             return _playerService.ExecuteCommandAsync(playerId,cmd);
         }
+
+        [HttpGet("{playerId}/notifications")]
+        [AllowAnonymous]
+        public async Task CreateNotificationSocketAsync(int playerId)
+        {
+            if (HttpContext.WebSockets.IsWebSocketRequest)
+            {
+                var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+                await _playerService.CreateNotificationSocketAsync(socket, playerId);
+            }
+            else
+                throw new UnsupportedMediaTypeException("Request has to be a Websocket request",Guid.Parse(PlayerErrorCodes.HAS_TO_BE_WEBSOCKET_REQUEST));
+        }
     }
 }

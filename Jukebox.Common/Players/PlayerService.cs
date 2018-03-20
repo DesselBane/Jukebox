@@ -24,6 +24,8 @@ namespace Jukebox.Common.Players
         private readonly DataContext _dataContext;
         private readonly IPlayerRepository _playerRepository;
         private readonly WebsocketOptions _websocketOptions;
+        private List<(int playerId, WebSocket socket)> _notificationChannels = new List<(int playerId, WebSocket socket)>();
+        private static readonly object NOTIFICATION_SYNC_HANDLE = new object();
 
 
         public PlayerService(IOptions<WebsocketOptions> websocketOptions, AuthenticationValidator authValidator, DataContext dataContext, IPlayerRepository playerRepository)
@@ -64,10 +66,13 @@ namespace Jukebox.Common.Players
 
         public async Task AddSongToPlayerAsync(int playerId, int songId)
         {
-            var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId).player;
+            var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId);
             var song = await _dataContext.Songs.FirstOrDefaultAsync(x => x.Id == songId);
             
-            player.Playlist.Add(song);
+            player.player.Playlist.Add(song);
+            
+            await player.socket.SendShortAsync(new PlayerCommand(PlayerCommandTypes.PlaylistUpdate));
+            
             NotifyClients(playerId);
         }
 
@@ -78,14 +83,36 @@ namespace Jukebox.Common.Players
             await player.socket.SendShortAsync(cmd);
         }
 
-        private async Task NotifyClients(int playerId)
+        public Task CreateNotificationSocketAsync(WebSocket socket, int playerId)
+        {
+            var channel = (playerId, socket);
+            
+            lock (NOTIFICATION_SYNC_HANDLE)
+            {
+                _notificationChannels.Add(channel);
+            }
+
+            return KeepNotificationChannelAlive(channel);
+        }
+
+        private void NotifyClients(int playerId)
         {
             //TODO
             var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId);
 
-            if (player.socket != null)
-                await player.socket.SendShortAsync(new PlayerCommand(PlayerCommandTypes.PlaylistUpdate));
-
+            if (player.socket == null)
+                return;
+            
+                lock (NOTIFICATION_SYNC_HANDLE)
+                {
+                    foreach (var notificationChannel in _notificationChannels.Where(x => x.playerId == playerId).ToList())
+                    {
+                        if (notificationChannel.socket.State != WebSocketState.Open)
+                            _notificationChannels.Remove(notificationChannel);
+                        else
+                            notificationChannel.socket.SendShortAsync("update").Wait();
+                    }
+                }
         }
         
         private async Task<Player> InitializePlayer(WebSocket socket)
@@ -128,7 +155,7 @@ namespace Jukebox.Common.Players
                                 {
                                     Name = msg.PlayerName,
                                     Id = 0,
-                                    IsPlaying = false,
+                                    State = PlayerState.Stopped,
                                     PlaylistIndex = 0
                                 };
                 
@@ -157,13 +184,43 @@ namespace Jukebox.Common.Players
                     return;
                 }
 
-                HandlePlayerMessage(Encoding.ASCII.GetString(buffer));
+                HandlePlayerMessage(Encoding.ASCII.GetString(buffer),player.Id);
             }
         }
 
-        private static void HandlePlayerMessage(string message)
+        private void HandlePlayerMessage(string message, int playerId)
         {
-            Console.WriteLine(message);
+            var newPlayer = JsonConvert.DeserializeObject<Player>(message);
+            var playerChannel = _playerRepository.First(x => x.player.Id == playerId);
+            playerChannel.player.Name = newPlayer.Name;
+            playerChannel.player.PlaylistIndex = newPlayer.PlaylistIndex;
+            playerChannel.player.State = newPlayer.State;
+            
+            NotifyClients(playerId);
+        }
+
+        private async Task KeepNotificationChannelAlive((int playerId, WebSocket socket) notificationChannel)
+        {
+            var socket = notificationChannel.socket;
+            var buffer = new byte[_websocketOptions.BufferSize];
+
+            while (true)
+            {
+                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                if (result.CloseStatus.HasValue)
+                {
+                    await socket.CloseAsync(result.CloseStatus.Value, socket.CloseStatusDescription, CancellationToken.None);
+
+                    lock (NOTIFICATION_SYNC_HANDLE)
+                    {
+                        _notificationChannels.Remove(notificationChannel);
+                    }
+                    
+                    return;
+                }
+
+            }
         }
     }
 }

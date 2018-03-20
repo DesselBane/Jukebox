@@ -132,13 +132,11 @@ export class AuthenticationService {
   {
     if (AuthenticationService.loginToken != null && this.loginToken.isValid())
     {
-      console.log("logged in");
       AuthenticationService._logoutNav.isVisible = true;
       AuthenticationService._loginNav.isVisible = false;
       AuthenticationService._registerNav.isVisible = false;
     }
     else {
-      console.log("NOT logged in");
       AuthenticationService._logoutNav.isVisible = false;
       AuthenticationService._loginNav.isVisible = true;
       AuthenticationService._registerNav.isVisible = true;

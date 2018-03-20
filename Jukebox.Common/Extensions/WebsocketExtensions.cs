@@ -11,7 +11,9 @@ namespace Jukebox.Common.Extensions
     {
         public static Task SendShortAsync(this WebSocket socket,object data, CancellationToken cancelToken = default (CancellationToken))
         {
-            return socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(data))), WebSocketMessageType.Text, true, cancelToken);
+            var stringData = data is string s ? s: JsonConvert.SerializeObject(data);
+            
+            return socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(stringData)), WebSocketMessageType.Text, true, cancelToken);
         }
     }
 }

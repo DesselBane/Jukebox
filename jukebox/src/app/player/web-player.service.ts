@@ -7,38 +7,24 @@ import {Subject} from "rxjs/Subject";
 import {Observer} from "rxjs/Observer";
 import {SongService} from "../song/song.service";
 import {AuthenticationService} from "../security/authentication.service";
-import {WebPlayerState} from "./web-player-state.enum";
+import {WebPlayerState} from "./models/web-player-state.enum";
 import {PlayerCommandResponse} from "./models/player-command-response";
 import {PlayerCommandTypes} from "./models/player-command-types.enum";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class WebPlayerService {
-  get stateChanged(): EventEmitter<WebPlayerState> {
-    return this._stateChanged;
-  }
-
-  get state(): WebPlayerState {
-    return this._state;
-
-  }
-
   private setState(value: WebPlayerState): void
   {
     this._state = value;
     if(this._player != null)
       this._player.state = value;
-    this._stateChanged.emit(this._state);
     this.updateUpstream();
-  }
-
-  get player(): PlayerResponse {
-    return this._player;
   }
 
   private _audio;
   private _playerService: PlayerService;
   private _state = WebPlayerState.Closed;
-  private _stateChanged = new EventEmitter<WebPlayerState>();
 
   private _wsObservable: Subject<MessageEvent>;
   private _websocket: WebSocket;
@@ -49,27 +35,26 @@ export class WebPlayerService {
   private serverUrl = "ws://localhost:5000/api/player/ws";
   private _http: HttpClient;
   private _songService: SongService;
+  private _router: Router;
 
-  constructor(playerService: PlayerService, http: HttpClient, songService: SongService)
+  constructor(playerService: PlayerService, http: HttpClient, songService: SongService, router: Router)
   {
     this._playerService = playerService;
     this._http = http;
     this._songService = songService;
+    this._router = router;
     this._audio = new Audio();
     this._audio.autoplay = false;
     this._audio.onended = () => this.next();
     this._audio.onerror = () => this.next();
   }
 
-  private static handleSocketError(error) {
-    console.log(error);
-  }
 
-  public playPause()
+  private playPause()
   {
-    switch(this.state){
+    switch(this._state){
       case WebPlayerState.Stopped: {
-        let previousState = this.state;
+        let previousState = this._state;
         this.setState(WebPlayerState.Loading);
         return this.loadNextTrack()
           .subscribe(() => {
@@ -138,9 +123,9 @@ export class WebPlayerService {
       return Observable.of(song[1]);
   }
 
-  public stop()
+  private stop()
   {
-    if(this.state === WebPlayerState.Playing || this.state === WebPlayerState.Loading)
+    if(this._state === WebPlayerState.Playing || this._state === WebPlayerState.Loading)
     {
       this._audio.pause();
       this._audio.currentTime = 0;
@@ -148,7 +133,7 @@ export class WebPlayerService {
     }
   }
 
-  public next()
+  private next()
   {
     this._player.playlistIndex += 1;
     this.updateUpstream();
@@ -159,13 +144,6 @@ export class WebPlayerService {
       console.log("error Thrown");
       this.stop();
     })
-  }
-
-  public previous()
-  {
-    this._player.playlistIndex -= 1;
-    this.updateUpstream();
-    this.loadNextTrack().subscribe(() => this._audio.play(), () => stop());
   }
 
   public createPlayer(name: string) {
@@ -228,6 +206,8 @@ export class WebPlayerService {
           .subscribe(value => {
             this._player = value;
             this.setState(WebPlayerState.Stopped);
+            this._playerService.activePlayer = this._player;
+            this._router.navigateByUrl("player/web");
           });
         break;
       }
@@ -259,6 +239,11 @@ export class WebPlayerService {
       }
     }
   }
+
+  private static handleSocketError(error) {
+    console.log(error);
+  }
+
 
   private handleSocketCompleted()
   {

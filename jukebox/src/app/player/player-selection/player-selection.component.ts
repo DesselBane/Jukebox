@@ -3,6 +3,7 @@ import {PlayerService} from "../player.service";
 import {Observable} from "rxjs/Observable";
 import {Router} from "@angular/router";
 import {PlayerResponse} from "../models/player-response";
+import {WebPlayerService} from "../web-player.service";
 
 @Component({
   selector: 'app-player-selection',
@@ -15,10 +16,12 @@ export class PlayerSelectionComponent implements OnInit {
   _availalbePlayers: PlayerResponse[];
   private _playerService: PlayerService;
   private _router: Router;
+  private _webPlayerService: WebPlayerService;
 
-  constructor(playerService: PlayerService, router: Router) {
+  constructor(playerService: PlayerService, router: Router, webPlayerService: WebPlayerService) {
     this._playerService = playerService;
     this._router = router;
+    this._webPlayerService = webPlayerService;
   }
 
   ngOnInit() {
@@ -37,5 +40,10 @@ export class PlayerSelectionComponent implements OnInit {
     this._activePlayer = player;
     this._playerService.activePlayer = player;
     this._router.navigateByUrl("/home");
+  }
+
+  createPlayer(name: string)
+  {
+    this._webPlayerService.createPlayer(name);
   }
 }
