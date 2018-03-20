@@ -1,15 +1,15 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {PlayerService} from "../player.service";
+import {PlayerService} from "./player.service";
 import {HttpClient} from "@angular/common/http";
-import {PlayerResponse} from "../models/player-response";
+import {PlayerResponse} from "./models/player-response";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {Observer} from "rxjs/Observer";
-import {SongService} from "../../song/song.service";
-import {AuthenticationService} from "../../security/authentication.service";
+import {SongService} from "../song/song.service";
+import {AuthenticationService} from "../security/authentication.service";
 import {WebPlayerState} from "./web-player-state.enum";
-import {PlayerCommandResponse} from "../models/player-command-response";
-import {PlayerCommandTypes} from "../models/player-command-types.enum";
+import {PlayerCommandResponse} from "./models/player-command-response";
+import {PlayerCommandTypes} from "./models/player-command-types.enum";
 
 @Injectable()
 export class WebPlayerService {
@@ -19,6 +19,7 @@ export class WebPlayerService {
 
   get state(): WebPlayerState {
     return this._state;
+
   }
 
   private setState(value: WebPlayerState): void
@@ -60,42 +61,8 @@ export class WebPlayerService {
     this._audio.onerror = () => this.next();
   }
 
-  public createPlayer(name: string)
-  {
-    this.setState(WebPlayerState.Initializing);
-
-    if(this._websocket != null)
-      throw "Player already created";
-
-    this._websocket = new WebSocket(this.serverUrl);
-
-    this._websocket.onopen = () => {
-      this._websocket.send(JSON.stringify({
-        PlayerName: name,
-        AccessToken: AuthenticationService.loginToken.accessToken
-      }));
-    };
-
-    let observable = Observable.create((obs: Observer<MessageEvent>) => {
-      this._websocket.onmessage = obs.next.bind(obs);
-      this._websocket.onerror = obs.error.bind(obs);
-      this._websocket.onclose = obs.complete.bind(obs);
-      return this._websocket.close.bind(this._websocket);
-    });
-
-    let observer = {
-      next: (data: Object) => {
-        if (this._websocket.readyState === WebSocket.OPEN) {
-          this._websocket.send(JSON.stringify(data));
-        }
-      }
-    };
-
-    this._wsObservable = Subject.create(observer, observable);
-
-    this._wsObservable.subscribe(value => this.handleSocketResponse(value)
-      , err => this.handleSocketError(err)
-      , () => this.handleSocketCompleted());
+  private static handleSocketError(error) {
+    console.log(error);
   }
 
   public playPause()
@@ -201,10 +168,56 @@ export class WebPlayerService {
     this.loadNextTrack().subscribe(() => this._audio.play(), () => stop());
   }
 
+  public createPlayer(name: string) {
+    this.setState(WebPlayerState.Initializing);
+
+    if (this._websocket != null)
+      throw "Player already created";
+
+    this._websocket = new WebSocket(this.serverUrl);
+
+    this._websocket.onopen = () => {
+      this._websocket.send(JSON.stringify({
+        PlayerName: name,
+        AccessToken: AuthenticationService.loginToken.accessToken
+      }));
+    };
+
+    let observable = Observable.create((obs: Observer<MessageEvent>) => {
+      this._websocket.onmessage = obs.next.bind(obs);
+      this._websocket.onerror = obs.error.bind(obs);
+      this._websocket.onclose = obs.complete.bind(obs);
+      return this._websocket.close.bind(this._websocket);
+    });
+
+    let observer = {
+      next: (data: Object) => {
+        if (this._websocket.readyState === WebSocket.OPEN) {
+          this._websocket.send(JSON.stringify(data));
+        }
+      }
+    };
+
+    this._wsObservable = Subject.create(observer, observable);
+
+    this._wsObservable.subscribe(value => this.handleSocketResponse(value)
+      , err => WebPlayerService.handleSocketError(err)
+      , () => this.handleSocketCompleted());
+  }
+
+  private updateUpstream() {
+    if (this._websocket != null) {
+      console.log("Updated Upstream");
+      this._websocket.send(JSON.stringify(this._player));
+    }
+
+  }
+
   private handleSocketResponse(event: MessageEvent)
   {
     let msg : PlayerCommandResponse = JSON.parse(event.data);
 
+    // noinspection FallThroughInSwitchStatementJS
     switch (msg.Type)
     {
       default:{
@@ -245,21 +258,6 @@ export class WebPlayerService {
         break;
       }
     }
-  }
-
-  private updateUpstream()
-  {
-    if(this._websocket != null)
-    {
-      console.log("Updated Upstream");
-      this._websocket.send(JSON.stringify(this._player));
-    }
-
-  }
-
-  private handleSocketError(error)
-  {
-    console.log(error);
   }
 
   private handleSocketCompleted()

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {WebPlayerService} from "./web-player.service";
-import {WebPlayerState} from "./web-player-state.enum";
+import {Component, OnInit} from '@angular/core';
+import {WebPlayerService} from "../web-player.service";
+import {WebPlayerState} from "../web-player-state.enum";
 
 @Component({
   selector: 'app-web-player',
