@@ -51,8 +51,8 @@ export class SongSelectionComponent implements OnInit {
   btn_click()
   {
     let cmd = new PlayerCommandResponse();
-    cmd.type = PlayerCommandTypes.JumpToIndex;
-    cmd.arguments.push(["index","1"]);
+    cmd.Type = PlayerCommandTypes.JumpToIndex;
+    cmd.Arguments.push(["index","1"]);
     this._playerService.executePlayerCommand(cmd)
       .subscribe();
   }

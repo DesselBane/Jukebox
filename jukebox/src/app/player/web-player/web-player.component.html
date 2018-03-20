@@ -1,5 +1,5 @@
 <h1>Player: {{_webPlayerService.player?.name}}</h1>
-<p>Is Playing: {{_state == 2}}</p>
+<p>Is Playing: {{_state == "Playing"}}</p>
 
 <button mat-button (click)="previous()" [disabled]="!_canPrevious">Previous</button>
 <button mat-button (click)="playPause()" [disabled]="!_canPlay">Play</button>

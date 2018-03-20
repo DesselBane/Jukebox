@@ -1,9 +1,10 @@
 import {SongResponse} from "../../song/models/song-response";
+import {WebPlayerState} from "../web-player/web-player-state.enum";
 
 export interface PlayerResponse{
   id: string,
   name: string
-  isPlaying: boolean,
+  state: WebPlayerState,
   playlist: SongResponse[],
   playlistIndex: number
 }

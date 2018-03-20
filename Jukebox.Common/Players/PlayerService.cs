@@ -84,10 +84,7 @@ namespace Jukebox.Common.Players
             var player = _playerRepository.FirstOrDefault(x => x.player.Id == playerId);
 
             if (player.socket != null)
-                await player.socket.SendShortAsync(new
-                                                   {
-                                                       type = "update"
-                                                   });
+                await player.socket.SendShortAsync(new PlayerCommand(PlayerCommandTypes.PlaylistUpdate));
 
         }
         
@@ -137,11 +134,10 @@ namespace Jukebox.Common.Players
                 
                 _playerRepository.Add((player, socket));
 
-                await socket.SendShortAsync(new
-                                            {
-                                                type = "init",
-                                                playerId = player.Id
-                                            });
+                await socket.SendShortAsync(new PlayerCommand(PlayerCommandTypes.Init,new List<string[]>
+                                                                                      {
+                                                                                          new []{"playerId",player.Id.ToString()}
+                                                                                      }));
 
                 return player;
             }

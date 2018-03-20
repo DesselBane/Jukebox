@@ -14,5 +14,17 @@ namespace Jukebox.Common.Abstractions.DataModel
 
         [DataMember]
         public List<string[]> Arguments { get; set; } = new List<string[]>();
+
+        public PlayerCommand()
+        {
+            
+        }
+
+        public PlayerCommand(PlayerCommandTypes cmdType, List<string[]> arguments = null)
+        {
+            Type = cmdType;
+            Arguments = arguments ?? new List<string[]>();
+        }
+        
     }
 }

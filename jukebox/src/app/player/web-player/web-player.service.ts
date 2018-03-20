@@ -8,6 +8,8 @@ import {Observer} from "rxjs/Observer";
 import {SongService} from "../../song/song.service";
 import {AuthenticationService} from "../../security/authentication.service";
 import {WebPlayerState} from "./web-player-state.enum";
+import {PlayerCommandResponse} from "../models/player-command-response";
+import {PlayerCommandTypes} from "../models/player-command-types.enum";
 
 @Injectable()
 export class WebPlayerService {
@@ -22,8 +24,10 @@ export class WebPlayerService {
   private setState(value: WebPlayerState): void
   {
     this._state = value;
+    if(this._player != null)
+      this._player.state = value;
     this._stateChanged.emit(this._state);
-    console.log(value);
+    this.updateUpstream();
   }
 
   get player(): PlayerResponse {
@@ -45,23 +49,15 @@ export class WebPlayerService {
   private _http: HttpClient;
   private _songService: SongService;
 
-  constructor(playerService: PlayerService, http: HttpClient, songService: SongService) {
+  constructor(playerService: PlayerService, http: HttpClient, songService: SongService)
+  {
     this._playerService = playerService;
     this._http = http;
     this._songService = songService;
     this._audio = new Audio();
     this._audio.autoplay = false;
-    this._audio.onended = () => {
-      console.log("ended");
-      this.next();
-    };
-
-    this._audio.onwaiting = () => console.log("waiting");
+    this._audio.onended = () => this.next();
     this._audio.onerror = () => this.next();
-    this._audio.onabort = () => console.log("abort");
-    this._audio.onstalled = () => console.log("stalled");
-
-    setInterval(() => console.log(`Duration: ${this._audio.duration}`), 1000);
   }
 
   public createPlayer(name: string)
@@ -134,8 +130,6 @@ export class WebPlayerService {
 
   private loadNextTrack() : Observable<void>
   {
-
-
     if(this._player.playlistIndex >= this._player.playlist.length)
       return Observable.throw("Playlist end reached");
 
@@ -190,8 +184,7 @@ export class WebPlayerService {
   public next()
   {
     this._player.playlistIndex += 1;
-
-    //TODO update upstream
+    this.updateUpstream();
 
     this.loadNextTrack().subscribe(() =>{
       this._audio.play();
@@ -204,49 +197,64 @@ export class WebPlayerService {
   public previous()
   {
     this._player.playlistIndex -= 1;
+    this.updateUpstream();
     this.loadNextTrack().subscribe(() => this._audio.play(), () => stop());
   }
 
   private handleSocketResponse(event: MessageEvent)
   {
-    let msg = JSON.parse(event.data);
+    let msg : PlayerCommandResponse = JSON.parse(event.data);
 
-    switch (msg.type)
+    switch (msg.Type)
     {
       default:{
         console.log(msg);
       }
-      case "init":{
-        this.handlePlayerInit(msg);
+      case PlayerCommandTypes.Init:{
+        this._http.get<PlayerResponse>(`api/player/${msg.Arguments.find(x => x[0] == "playerId")[1]}`)
+          .subscribe(value => {
+            this._player = value;
+            this.setState(WebPlayerState.Stopped);
+          });
         break;
       }
-      case "update":{
-        this.handlePlayerUpdate(msg);
+      case PlayerCommandTypes.PlaylistUpdate:{
+        this._http.get<PlayerResponse>(`api/player/${this._player.id}`)
+          .subscribe(value => {
+            this._player = value;
+          });
         break;
       }
 
+      case PlayerCommandTypes.JumpToIndex:{
+        this._player.playlistIndex = Number(msg.Arguments.find(x => x[0] == "index")[1]);
+        this.updateUpstream();
+        this.loadNextTrack()
+          .subscribe(() => this._audio.play()
+          ,() => this.stop());
+        break;
+      }
 
+      case PlayerCommandTypes.PlayPause:{
+        this.playPause();
+        break;
+      }
+
+      case PlayerCommandTypes.Stop:{
+        this.stop();
+        break;
+      }
     }
   }
 
-  private handlePlayerInit(msg)
+  private updateUpstream()
   {
-    this._http.get<PlayerResponse>(`api/player/${msg.playerId}`)
-      .subscribe(value => {
-        this._player = value;
-        this.setState(WebPlayerState.Stopped);
-      });
-  }
+    if(this._websocket != null)
+    {
+      console.log("Updated Upstream");
+      this._websocket.send(JSON.stringify(this._player));
+    }
 
-  private handlePlayerUpdate(msg: any)
-  {
-    console.log("player updated");
-
-    this._http.get<PlayerResponse>(`api/player/${this._player.id}`)
-      .subscribe(value => {
-        this._player = value;
-        this.setState(WebPlayerState.Stopped);
-      });
   }
 
   private handleSocketError(error)

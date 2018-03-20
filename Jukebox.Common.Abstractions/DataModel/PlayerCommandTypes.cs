@@ -6,6 +6,7 @@
         PlayPause,
         Stop,
         PlaylistUpdate,
-        JumpToIndex
+        JumpToIndex,
+        Init
     }
 }

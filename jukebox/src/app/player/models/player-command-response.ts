@@ -1,11 +1,11 @@
 import {PlayerCommandTypes} from "./player-command-types.enum";
 
 export class PlayerCommandResponse {
-  type: PlayerCommandTypes;
-  arguments: [string,string][];
+  Type: PlayerCommandTypes;
+  Arguments: [string,string][];
 
   constructor()
   {
-    this.arguments = [];
+    this.Arguments = [];
   }
 }
