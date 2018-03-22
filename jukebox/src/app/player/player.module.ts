@@ -10,17 +10,21 @@ import {CurrentPlayerStatusComponent} from './current-player-status/current-play
 import {ActivePlayerNeededGuard} from "./guards/active-player-needed.guard";
 import {WebPlayerComponent} from './web-player/web-player.component';
 import {WebPlayerService} from "./web-player.service";
+import {CreatePlayerComponent} from './create-player/create-player.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MaterialMetaModule,
     PlayerRoutingModule
   ],
   declarations: [
     PlayerSelectionComponent,
     CurrentPlayerStatusComponent,
-    WebPlayerComponent
+    WebPlayerComponent,
+    CreatePlayerComponent
   ],
   providers: [
     PlayerService,
