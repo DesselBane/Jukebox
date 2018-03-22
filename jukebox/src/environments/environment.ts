@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  websocketBaseUrl: "ws://localhost:5000"
+  websocketBaseUrl: "ws://HDS037:5000"
 };
