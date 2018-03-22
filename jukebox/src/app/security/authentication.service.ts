@@ -18,7 +18,7 @@ export class AuthenticationService {
     this._navigation = navigation;
     // set token if saved in local storage
     let storeToken = JSON.parse(localStorage.getItem('loginToken'));
-    if(storeToken !== null && storeToken instanceof LoginTokenModel)
+    if (storeToken != null && storeToken instanceof LoginTokenModel)
       AuthenticationService.loginTokenResponse = LoginTokenModel.parse(storeToken);
 
   }

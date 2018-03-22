@@ -172,10 +172,9 @@ namespace Jukebox.Common.Players
 
         private async Task HandlePlayerOwnerWebsocket(Player player, WebSocket socket)
         {
-            var buffer = new byte[_websocketOptions.BufferSize];
-
             while (true)
             {
+                var buffer = new byte[_websocketOptions.BufferSize];
                 var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
                 if (result.CloseStatus.HasValue)
@@ -190,6 +189,7 @@ namespace Jukebox.Common.Players
 
         private void HandlePlayerMessage(string message, int playerId)
         {
+            
             var newPlayer = JsonConvert.DeserializeObject<Player>(message);
             var playerChannel = _playerRepository.First(x => x.player.Id == playerId);
             playerChannel.player.Name = newPlayer.Name;

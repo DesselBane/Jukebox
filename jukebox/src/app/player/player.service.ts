@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "./models/player-response";
 import {PlayerCommandResponse} from "./models/player-command-response";
 import {Observer} from "rxjs/Observer";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class PlayerService {
@@ -75,7 +76,7 @@ export class PlayerService {
 
   private openNotificationSocket()
   {
-    this._notificationSocket = new WebSocket(`ws://localhost:5000/api/player/${this._activePlayer.id}/notifications`);
+    this._notificationSocket = new WebSocket(`${environment.websocketBaseUrl}/api/player/${this._activePlayer.id}/notifications`);
 
     let observable = Observable.create((obs: Observer<MessageEvent>) => {
       this._notificationSocket.onmessage = obs.next.bind(obs);

@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {PlayerService} from "./player.service";
 import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "./models/player-response";
@@ -11,6 +11,7 @@ import {WebPlayerState} from "./models/web-player-state.enum";
 import {PlayerCommandResponse} from "./models/player-command-response";
 import {PlayerCommandTypes} from "./models/player-command-types.enum";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class WebPlayerService {
@@ -31,8 +32,7 @@ export class WebPlayerService {
   private _player: PlayerResponse;
   private _songCache: [number,string][] = [];
 
-  //TODO export to environment
-  private serverUrl = "ws://localhost:5000/api/player/ws";
+  private serverUrl = environment.websocketBaseUrl + "/api/player/ws";
   private _http: HttpClient;
   private _songService: SongService;
   private _router: Router;
@@ -186,7 +186,9 @@ export class WebPlayerService {
   private updateUpstream() {
     if (this._websocket != null) {
       console.log("Updated Upstream");
-      this._websocket.send(JSON.stringify(this._player));
+      let playerString = JSON.stringify(this._player);
+      console.log(playerString);
+      this._websocket.send(playerString);
     }
 
   }
