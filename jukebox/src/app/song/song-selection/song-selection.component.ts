@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SongResponse} from "../models/song-response";
+import {Component, OnInit} from '@angular/core';
+import {SongResponse} from "../models/song-response";
 import {PlayerService} from "../../player/player.service";
 import {SongService} from "../song.service";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
-import {PlayerCommandResponse} from "../../player/models/player-command-response";
-import {PlayerCommandTypes} from "../../player/models/player-command-types.enum";
 
 @Component({
   selector: 'app-song-selection',
@@ -14,6 +12,7 @@ import {PlayerCommandTypes} from "../../player/models/player-command-types.enum"
 })
 export class SongSelectionComponent implements OnInit {
 
+  // noinspection JSMismatchedCollectionQueryUpdate
   private _availableSongs: SongResponse[];
   private _playerService: PlayerService;
   private _songService: SongService;
@@ -27,7 +26,7 @@ export class SongSelectionComponent implements OnInit {
     this.searchSubject.asObservable()
       .debounceTime(500)
       .mergeMap(value => this._songService.searchForSongs(value))
-      .catch(err => {
+      .catch(() => {
         return Observable.of([])
       })
       .subscribe(songs => {
@@ -46,14 +45,5 @@ export class SongSelectionComponent implements OnInit {
   searchBarTyped(searchString: string)
   {
     this.searchSubject.next(searchString);
-  }
-
-  btn_click()
-  {
-    let cmd = new PlayerCommandResponse();
-    cmd.Type = PlayerCommandTypes.JumpToIndex;
-    cmd.Arguments.push(["index","1"]);
-    this._playerService.executePlayerCommand(cmd)
-      .subscribe();
   }
 }
