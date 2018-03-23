@@ -25,7 +25,7 @@ namespace Jukebox.Common.Players
         private readonly IPlayerRepository _playerRepository;
         private readonly WebsocketOptions _websocketOptions;
         private List<(int playerId, WebSocket socket)> _notificationChannels = new List<(int playerId, WebSocket socket)>();
-        private static readonly object NOTIFICATION_SYNC_HANDLE = new object();
+        private static readonly object _NOTIFICATION_SYNC_HANDLE = new object();
 
 
         public PlayerService(IOptions<WebsocketOptions> websocketOptions, AuthenticationValidator authValidator, DataContext dataContext, IPlayerRepository playerRepository)
@@ -87,7 +87,7 @@ namespace Jukebox.Common.Players
         {
             var channel = (playerId, socket);
             
-            lock (NOTIFICATION_SYNC_HANDLE)
+            lock (_NOTIFICATION_SYNC_HANDLE)
             {
                 _notificationChannels.Add(channel);
             }
@@ -103,7 +103,7 @@ namespace Jukebox.Common.Players
             if (player.socket == null)
                 return;
             
-                lock (NOTIFICATION_SYNC_HANDLE)
+                lock (_NOTIFICATION_SYNC_HANDLE)
                 {
                     foreach (var notificationChannel in _notificationChannels.Where(x => x.playerId == playerId).ToList())
                     {
@@ -212,7 +212,7 @@ namespace Jukebox.Common.Players
                 {
                     await socket.CloseAsync(result.CloseStatus.Value, socket.CloseStatusDescription, CancellationToken.None);
 
-                    lock (NOTIFICATION_SYNC_HANDLE)
+                    lock (_NOTIFICATION_SYNC_HANDLE)
                     {
                         _notificationChannels.Remove(notificationChannel);
                     }
