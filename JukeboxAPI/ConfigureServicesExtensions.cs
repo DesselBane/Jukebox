@@ -30,6 +30,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SPAMiddleware;
 using System.Linq;
+using Jukebox.Common.Abstractions.Notification;
+using Jukebox.Common.Notifications;
 using Jukebox.Data.InMemory;
 
 namespace Jukebox
@@ -68,7 +70,8 @@ namespace Jukebox
                           .ConfigureHosting(config)
                           .ConfigureIndexing()
                           .ConfigureSongSearch()
-                          .ConfigurePlayers();
+                          .ConfigurePlayers()
+                          .ConfigureNotifications();
         }
 
         #endregion
@@ -273,6 +276,15 @@ namespace Jukebox
             return builder;
         }
 
+        private static ContainerBuilder ConfigureNotifications(this ContainerBuilder builder)
+        {
+            builder.RegisterType<NotificationService>()
+                   .As<INotificationService>()
+                   .SingleInstance();
+            
+            return builder;
+        }
+        
         #endregion
     }
 }
