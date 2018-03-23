@@ -6,7 +6,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav mode="side" #sidenav id="sidenavContainer">
+  <mat-sidenav #sidenav id="sidenavContainer">
 
     <mat-nav-list id="sidenavList">
       <app-nav-item *ngFor="let item of _navItems" [CurrentItem]="item" (ItemClicked)="sidenav.toggle()"></app-nav-item>

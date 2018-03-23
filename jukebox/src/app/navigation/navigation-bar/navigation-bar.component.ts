@@ -1,25 +1,28 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationService} from "../navigation.service";
 import {NavItem} from "../models/nav-item";
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from "@angular/material";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/fromEvent";
+
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.css']
 })
-export class NavigationBarComponent implements OnInit, OnDestroy {
+export class NavigationBarComponent implements OnInit {
   private _navigation: NavigationService;
   public _navItems: NavItem[];
   private mobileQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
 
   @ViewChild(MatSidenav)
   private sidenav: MatSidenav;
   private _lastQuery: boolean = undefined;
+  private _resizeEvent: Observable<void>;
 
-  constructor(navigation: NavigationService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(navigation: NavigationService, media: MediaMatcher) {
     this._navigation = navigation;
     this._navItems = this._navigation.currentNavItems;
 
@@ -27,17 +30,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this._navItems = value;
     });
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
 
-    //setInterval(() => this.makeSidenavResponsveAgain(), 1000);
-  }
+    this._resizeEvent = Observable.fromEvent(window, 'resize')
+      .map(() => {
+      })
+      .debounceTime(200);
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
   }
 
   ngOnInit() {
+    this.makeSidenavResponsveAgain();
   }
 
   makeSidenavResponsveAgain(): void {
@@ -51,17 +54,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this.sidenav.close();
     }
     else {
-      this.sidenav.mode = "push";
+      this.sidenav.mode = "side";
       this.sidenav.open();
     }
-  }
-
-  changeSidenav() {
-    if (this.sidenav.mode == "over") {
-      this.sidenav.mode = "push";
-    }
-    else
-      this.sidenav.mode = "over";
   }
 
 }
