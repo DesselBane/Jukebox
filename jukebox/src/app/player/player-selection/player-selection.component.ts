@@ -1,27 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlayerService} from "../player.service";
 import {Router} from "@angular/router";
 import {PlayerResponse} from "../models/player-response";
+import {NotificationService} from "../../notification/notification.service";
+import {NotificationChannels} from "../../notification/models/notification-channels.enum";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-player-selection',
   templateUrl: './player-selection.component.html',
   styleUrls: ['./player-selection.component.css']
 })
-export class PlayerSelectionComponent implements OnInit {
+export class PlayerSelectionComponent implements OnInit, OnDestroy {
+
 
   _activePlayer: PlayerResponse;
   _availalbePlayers: PlayerResponse[];
   private _playerService: PlayerService;
   private _router: Router;
+  private _notificationService: NotificationService;
+  private _subscription: Subscription;
 
-  constructor(playerService: PlayerService, router: Router) {
+  constructor(playerService: PlayerService, router: Router, notificationService: NotificationService) {
     this._playerService = playerService;
     this._router = router;
+    this._notificationService = notificationService;
   }
 
   ngOnInit() {
     this.loadPlayers();
+    this._subscription = this._notificationService.subscribeToChannel(NotificationChannels.AvailablePlayers)
+      .subscribe(() => this.loadPlayers());
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+    this._subscription = null;
   }
 
   private loadPlayers()

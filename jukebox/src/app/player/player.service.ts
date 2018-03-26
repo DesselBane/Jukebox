@@ -1,11 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
 import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "./models/player-response";
 import {PlayerCommandResponse} from "./models/player-command-response";
-import {Observer} from "rxjs/Observer";
-import {environment} from "../../environments/environment";
+import {NotificationService} from "../notification/notification.service";
+import {NotificationChannels} from "../notification/models/notification-channels.enum";
+import {NotificationResponse} from "../notification/models/notification-response";
 
 @Injectable()
 export class PlayerService {
@@ -21,26 +21,33 @@ export class PlayerService {
     this._activePlayer = value;
     this._activePlayerChanged.emit(this._activePlayer);
     localStorage.setItem("currentPlayerId",String(this._activePlayer.id));
-
-    if(this._notificationSocket == null)
-      this.openNotificationSocket();
   }
 
 
   private _activePlayer: PlayerResponse;
   private _activePlayerChanged = new EventEmitter<PlayerResponse>();
   private _http: HttpClient;
-  private _notificationSocket: WebSocket;
+  private _notificationService: NotificationService;
 
-  constructor(http: HttpClient)
+  constructor(http: HttpClient, notificationService: NotificationService)
   {
     this._http = http;
+    this._notificationService = notificationService;
     let lastPlayerId : number = Number(localStorage.getItem("currentPlayerId"));
 
     this.getPlayerById(lastPlayerId)
       .subscribe(value => this.activePlayer = value,
         () => localStorage.removeItem("currentPlayerId"));
 
+    notificationService.subscribeToChannel(NotificationChannels.PlayerInfo)
+      .filter((notification: NotificationResponse) => {
+        let playerId = notification.Arguments.find(x => x[0] === "playerId");
+        return playerId != null && this._activePlayer != null && Number(playerId[1]) === this._activePlayer.id;
+      })
+      .subscribe(() => this.updatePlayerInfo()
+        , () => {
+        }
+        , () => this.handleSocketCompleted());
   }
 
   getAvailablePlayers() : Observable<PlayerResponse[]>
@@ -74,45 +81,9 @@ export class PlayerService {
         () => this.activePlayer = null);
   }
 
-  private openNotificationSocket()
-  {
-    this._notificationSocket = new WebSocket(`${environment.websocketBaseUrl}/api/player/${this._activePlayer.id}/notifications`);
-
-    let observable = Observable.create((obs: Observer<MessageEvent>) => {
-      this._notificationSocket.onmessage = obs.next.bind(obs);
-      this._notificationSocket.onerror = obs.error.bind(obs);
-      this._notificationSocket.onclose = obs.complete.bind(obs);
-      return this._notificationSocket.close.bind(this._notificationSocket);
-    });
-
-    let observer = {
-      next: (data: Object) => {
-        if (this._notificationSocket.readyState === WebSocket.OPEN) {
-          this._notificationSocket.send(JSON.stringify(data));
-        }
-      }
-    };
-
-    let subject = Subject.create(observer, observable);
-
-    subject.subscribe(value => this.handleSocketResponse(value)
-      , err => PlayerService.handleSocketError(err)
-      , () => this.handleSocketCompleted());
-  }
-
-  private handleSocketResponse(event: MessageEvent)
-  {
-    this.updatePlayerInfo();
-  }
-
-  private static handleSocketError(error) {
-    console.log(error);
-  }
-
   private handleSocketCompleted()
   {
     console.log("Completed");
-    this._notificationSocket = null;
     this.activePlayer = null;
   }
 

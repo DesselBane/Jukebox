@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Jukebox.Common.Abstractions.Notification;
 using Jukebox.Common.Abstractions.Options;
 using Jukebox.Common.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Jukebox.Common.Notifications
 {
@@ -15,9 +16,9 @@ namespace Jukebox.Common.Notifications
         private readonly WebsocketOptions _websocketOptions;
         private List<WebSocket> _notificationChannels = new List<WebSocket>();
 
-        public NotificationService(WebsocketOptions websocketOptions)
+        public NotificationService(IOptions<WebsocketOptions> websocketOptions)
         {
-            _websocketOptions = websocketOptions;
+            _websocketOptions = websocketOptions.Value;
         }
         
         public Task NotifyClientsAsync(Notification notification)

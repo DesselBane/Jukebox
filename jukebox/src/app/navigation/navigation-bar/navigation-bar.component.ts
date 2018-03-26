@@ -59,4 +59,9 @@ export class NavigationBarComponent implements OnInit {
     }
   }
 
+  navItemClicked() {
+    if (this.mobileQuery.matches)
+      this.sidenav.toggle();
+  }
+
 }

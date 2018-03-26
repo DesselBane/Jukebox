@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {FormsModule} from "@angular/forms";
 import {MaterialMetaModule} from "./material-meta/material-meta.module";
 import {AuthGuard} from "./security/auth.guard";
@@ -16,6 +16,7 @@ import {PlayerModule} from "./player/player.module";
 import {SongModule} from "./song/song.module";
 import {NgxElectronModule} from "ngx-electron";
 import {ElectronUrlInterceptor} from "./shared/ElectronUrlInterceptor";
+import {NotificationModule} from "./notification/notification.module";
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {ElectronUrlInterceptor} from "./shared/ElectronUrlInterceptor";
     SecurityModule,
     PlayerModule,
     SongModule,
+    NotificationModule,
 
     //Has to be last !!!
     AppRoutingModule

@@ -61,7 +61,8 @@ namespace Jukebox.Common.Players
             if (player == null)
                 return;
 
-
+            await _notificationService.NotifyClientsAsync(new Notification(NotificationChannel.AvailablePlayers));
+            
             await HandlePlayerOwnerWebsocket(player, socket);
 
             _playerRepository.RemoveByPlayerId(player.Id);

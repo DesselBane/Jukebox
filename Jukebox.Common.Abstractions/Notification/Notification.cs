@@ -9,10 +9,10 @@ namespace Jukebox.Common.Abstractions.Notification
     public sealed class Notification
     {
         [DataMember]
+        [JsonConverter(typeof(StringEnumConverter))]
         public NotificationChannel Channel { get; set; }
         
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
         public List<string[]> Arguments { get; set; } = new List<string[]>();
 
         public Notification()
