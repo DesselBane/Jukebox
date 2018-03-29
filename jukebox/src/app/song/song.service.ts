@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {SongResponse} from "./models/song-response";
@@ -22,6 +22,8 @@ export class SongService {
       .map(value => URL.createObjectURL(value));
   }
 
-
+  public getArtists(): Observable<string[]> {
+    return this._http.get<string[]>('api/song/artists');
+  }
 
 }

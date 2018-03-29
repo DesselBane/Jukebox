@@ -39,5 +39,13 @@ namespace Jukebox.Common.Songs
             var song = await _dataContext.Songs.FirstOrDefaultAsync(x => x.Id == songId);
             return new FileStreamResult(File.OpenRead(song.FilePath), "audio/mp3");
         }
+
+        public async Task<IEnumerable<string>> GetArtistsAsync()
+        {
+            return await _dataContext.Songs
+                                     .SelectMany(x => x.Artists)
+                                     .Distinct()
+                                     .ToListAsync();
+        }
     }
 }

@@ -47,5 +47,13 @@ namespace Jukebox.Controllers
         {
             return _songService.GetSongById(songId);
         }
+
+        [HttpGet("artists")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<string>), Description = "All available Artists")]
+        public Task<IEnumerable<string>> GetArtists()
+        {
+            return _songService.GetArtistsAsync();
+        }
     }
 }
