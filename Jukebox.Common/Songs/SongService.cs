@@ -26,9 +26,7 @@ namespace Jukebox.Common.Songs
             searchTerm = searchTerm.ToLower();
 
             return await _dataContext.Songs
-                                     .Where(x => x.Album.ToLower().Contains(searchTerm) ||
-                                                 x.ArtistsDb.ToLower().Contains(searchTerm) ||
-                                                 x.FilePath.ToLower().Contains(searchTerm) ||
+                                     .Where(x => x.FilePath.ToLower().Contains(searchTerm) ||
                                                  x.Title.ToLower().Contains(searchTerm))
                                      .OrderBy(x => x.Title)
                                      .ToListAsync();
@@ -40,12 +38,14 @@ namespace Jukebox.Common.Songs
             return new FileStreamResult(File.OpenRead(song.FilePath), "audio/mp3");
         }
 
-        public async Task<IEnumerable<string>> GetArtistsAsync()
+        public async Task<IEnumerable<Artist>> GetArtistsAsync()
         {
-            return await _dataContext.Songs
-                                     .SelectMany(x => x.Artists)
-                                     .Distinct()
-                                     .ToListAsync();
+            return await _dataContext.Artists.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Album>> GetAlbumsAsync()
+        {
+            return await _dataContext.Albums.ToListAsync();
         }
     }
 }

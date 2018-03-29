@@ -3,9 +3,8 @@
     <div *ngIf="getArtistsWithLetter(letter).length > 0">
       <h3 matSubheader>{{letter}}</h3>
       <mat-list-item *ngFor="let artist of getArtistsWithLetter(letter)">
-        {{artist}}
+        {{artist.name}}
       </mat-list-item>
-      <mat-divider></mat-divider>
     </div>
   </div>
 </mat-nav-list>

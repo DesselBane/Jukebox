@@ -17,18 +17,14 @@ namespace Jukebox.Common.Abstractions.DataModel
         public string Title { get; set; }
 
         [DataMember]
-        public string Album { get; set; }
+        public int AlbumId { get; set; }
 
+        [DataMember]
+        public Album Album { get; set; }
+        
+        
         public DateTime LastTimeIndexed { get; set; }
 
-        public string ArtistsDb
-        {
-            get => string.Join("§$%&", Artists);
-            protected set => Artists = new List<string>(value.Split(new[] {"§$%&"}, StringSplitOptions.RemoveEmptyEntries));
-        }
-
-        [NotMapped]
-        [DataMember]
-        public List<string> Artists { get; protected set; } = new List<string>();
+        
     }
 }

@@ -44,7 +44,12 @@ namespace Jukebox.Common.Songs
             return null;
         }
 
-        public Task<IEnumerable<string>> GetArtistsAsync()
+        public Task<IEnumerable<Artist>> GetArtistsAsync()
+        {
+            return null;
+        }
+
+        public Task<IEnumerable<Album>> GetAlbumsAsync()
         {
             return null;
         }

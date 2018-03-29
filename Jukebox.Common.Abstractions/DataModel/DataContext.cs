@@ -13,11 +13,23 @@ namespace Jukebox.Common.Abstractions.DataModel
         {
             builder.HasIndex(x => x.FilePath)
                    .IsUnique();
+
+            builder.HasOne(x => x.Album)
+                   .WithMany(x => x.Songs)
+                   .HasForeignKey(x => x.AlbumId);
+        }
+
+        private static void ConfigureAlbum(EntityTypeBuilder<Album> builder)
+        {
+            builder.HasOne(x => x.Artist)
+                   .WithMany(x => x.Albums)
+                   .HasForeignKey(x => x.ArtistId);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureSong(modelBuilder.Entity<Song>());
+            ConfigureAlbum(modelBuilder.Entity<Album>());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -29,6 +41,8 @@ namespace Jukebox.Common.Abstractions.DataModel
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserClaim> Claims { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
+        public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<Artist> Artists { get; set; }
 
         #endregion
     }

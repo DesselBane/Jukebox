@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SongService} from "../song.service";
+import {ArtistResponse} from "../models/artist-response";
 
 @Component({
   selector: 'app-artist-overview',
@@ -10,7 +11,7 @@ export class ArtistOverviewComponent implements OnInit {
 
   // noinspection JSMismatchedCollectionQueryUpdate
   private _alphabet: string[] = [];
-  private _artists: string[] = [];
+  private _artists: ArtistResponse[] = [];
   private _songService: SongService;
 
   constructor(songService: SongService) {
@@ -32,7 +33,7 @@ export class ArtistOverviewComponent implements OnInit {
 
 
   getArtistsWithLetter(letter: string) {
-    return this._artists.filter(x => x.charAt(0).toUpperCase() === letter);
+    return this._artists.filter(x => x.name.charAt(0).toUpperCase() === letter);
   }
 
 }

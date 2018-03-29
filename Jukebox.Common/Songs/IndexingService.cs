@@ -85,14 +85,42 @@ namespace Jukebox.Common.Songs
                     _dataContext.Songs.Add(song);
                 }
 
+                var artistsName = tagLibFile.Tag.Performers.Length > 0 ? tagLibFile.Tag.Performers[0] : "Unknown Artist";
+                var songArtist = await _dataContext.Artists.FirstOrDefaultAsync(x => x.Name == artistsName);
+
+                if (songArtist == null)
+                {
+                    songArtist = new Artist
+                    {
+                        Name = artistsName
+                    };
+
+                    _dataContext.Artists.Add(songArtist);
+                }
+
+                var songAlbum = await _dataContext.Albums.FirstOrDefaultAsync(x => x.Name == tagLibFile.Tag.Album);
+
+                if (songAlbum == null)
+                {
+                    songAlbum = new Album
+                                {
+                                    Name = tagLibFile.Tag.Album,
+                                    ArtistId = songArtist.Id
+                                };
+                    
+                    _dataContext.Albums.Add(songAlbum);
+
+                }
+                                
+
                 song.FilePath = info.FullName;
                 song.Title = tagLibFile.Tag.Title;
-                song.Album = tagLibFile.Tag.Album;
+                song.AlbumId = songAlbum.Id;
 
-                foreach (var artist in tagLibFile.Tag.Artists)
-                    if (!song.Artists.Contains(artist))
-                        song.Artists.Add(artist);
+                song.Album = await _dataContext.Albums.FirstOrDefaultAsync(x => x.Name == tagLibFile.Tag.Album);
 
+               
+              
                 song.LastTimeIndexed = indexingStart;
                 await _dataContext.SaveChangesAsync();
             }

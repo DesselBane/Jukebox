@@ -9,6 +9,7 @@ namespace Jukebox.Common.Abstractions.Songs
     {
         Task<IEnumerable<Song>> SearchForSongAsync(string searchTerm);
         Task<IActionResult> GetSongById(int songId);
-        Task<IEnumerable<string>> GetArtistsAsync();
+        Task<IEnumerable<Artist>> GetArtistsAsync();
+        Task<IEnumerable<Album>> GetAlbumsAsync();
     }
 }
