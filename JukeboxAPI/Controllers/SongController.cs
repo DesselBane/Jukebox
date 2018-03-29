@@ -63,5 +63,13 @@ namespace Jukebox.Controllers
         {
             return _songService.GetAlbumsAsync();
         }
+
+        [HttpGet("songs")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<Song>), Description = "Returns all Songs")]
+        public Task<IEnumerable<Song>> GetSongs()
+        {
+            return _songService.GetSongsAsync();
+        }
     }
 }

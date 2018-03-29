@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <div *ngFor="let letter of _alphabet">
+    <div *ngIf="getSongByLetter(letter).length > 0">
+      <h3 matSubheader>{{letter}}</h3>
+      <mat-list-item *ngFor="let song of getSongByLetter(letter)">
+        {{song.title}}
+      </mat-list-item>
+    </div>
+  </div>
+</mat-nav-list>

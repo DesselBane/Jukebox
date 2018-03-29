@@ -7,7 +7,8 @@ import {SongRoutingModule} from "./song-routing.module";
 import {SongService} from "./song.service";
 import {ArtistOverviewComponent} from './artist-overview/artist-overview.component';
 import {SongSearchComponent} from './song-search/song-search.component';
-import { AlbumOverviewComponent } from './album-overview/album-overview.component';
+import {AlbumOverviewComponent} from './album-overview/album-overview.component';
+import {SongOverviewComponent} from './song-overview/song-overview.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { AlbumOverviewComponent } from './album-overview/album-overview.componen
     SongSelectionComponent,
     ArtistOverviewComponent,
     SongSearchComponent,
-    AlbumOverviewComponent
+    AlbumOverviewComponent,
+    SongOverviewComponent
   ],
   providers: [
     SongService

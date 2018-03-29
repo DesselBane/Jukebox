@@ -11,5 +11,6 @@ namespace Jukebox.Common.Abstractions.Songs
         Task<IActionResult> GetSongById(int songId);
         Task<IEnumerable<Artist>> GetArtistsAsync();
         Task<IEnumerable<Album>> GetAlbumsAsync();
+        Task<IEnumerable<Song>> GetSongsAsync();
     }
 }

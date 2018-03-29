@@ -1,7 +1,9 @@
+import {AlbumResponse} from "./album-response";
+
 export interface SongResponse {
 
-  title: string;
-  artists: string[];
-  album: string;
   id: number;
+  title: string;
+  albumId: number;
+  album: AlbumResponse;
 }

@@ -47,5 +47,10 @@ namespace Jukebox.Common.Songs
         {
             return await _dataContext.Albums.ToListAsync();
         }
+
+        public async Task<IEnumerable<Song>> GetSongsAsync()
+        {
+            return await _dataContext.Songs.ToListAsync();
+        }
     }
 }

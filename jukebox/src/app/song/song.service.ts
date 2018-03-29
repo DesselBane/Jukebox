@@ -32,4 +32,8 @@ export class SongService {
   {
     return this._http.get<AlbumResponse[]>('api/song/albums');
   }
+
+  public getSongs(): Observable<SongResponse[]> {
+    return this._http.get<SongResponse[]>('api/song/songs');
+  }
 }

@@ -6,6 +6,7 @@ namespace Jukebox.Common.Abstractions.DataModel
     [DataContract]
     public class Album
     {
+        [DataMember]
         public int ArtistId { get; set; }
         
         [DataMember]
