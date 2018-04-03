@@ -21,7 +21,6 @@
     "@angular/common": "5.2.0",
     "@angular/compiler": "5.2.0",
     "@angular/core": "5.2.0",
-    "@angular/flex-layout": "2.0.0-beta.12",
     "@angular/forms": "5.2.0",
     "@angular/http": "5.2.0",
     "@angular/material": "5.2.2",
@@ -30,7 +29,8 @@
     "@angular/router": "5.2.0",
     "angular2-jwt": "0.2.3",
     "core-js": "2.4.1",
-    "ngx-electron": "^1.0.4",
+    "id3-parser": "^2.0.0",
+    "ngx-electron": "1.0.4",
     "rxjs": "5.5.6",
     "zone.js": "0.8.19"
   },
