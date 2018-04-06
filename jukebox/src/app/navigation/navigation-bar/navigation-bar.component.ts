@@ -13,10 +13,8 @@ import "rxjs/add/observable/fromEvent";
   styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent implements OnInit {
-  private _navigation: NavigationService;
   public _navItems: NavItem[];
-  private mobileQuery: MediaQueryList;
-
+  private _navigation: NavigationService;
   @ViewChild(MatSidenav)
   private sidenav: MatSidenav;
   private _lastQuery: boolean = undefined;
@@ -29,7 +27,7 @@ export class NavigationBarComponent implements OnInit {
     this._navigation.navItems.subscribe(value => {
       this._navItems = value;
     });
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQuery = media.matchMedia('(max-width: 600px)');
 
     this._resizeEvent = Observable.fromEvent(window, 'resize')
       .map(() => {
@@ -39,15 +37,21 @@ export class NavigationBarComponent implements OnInit {
     this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
   }
 
+  private _mobileQuery: MediaQueryList;
+
+  get mobileQuery(): MediaQueryList {
+    return this._mobileQuery;
+  }
+
   ngOnInit() {
     this.makeSidenavResponsveAgain();
   }
 
   makeSidenavResponsveAgain(): void {
-    if (this._lastQuery != undefined && this._lastQuery === this.mobileQuery.matches)
+    if (this._lastQuery != undefined && this._lastQuery === this._mobileQuery.matches)
       return;
 
-    this._lastQuery = this.mobileQuery.matches;
+    this._lastQuery = this._mobileQuery.matches;
 
     if (this._lastQuery) {
       this.sidenav.mode = "over";
@@ -60,7 +64,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   navItemClicked() {
-    if (this.mobileQuery.matches)
+    if (this._mobileQuery.matches)
       this.sidenav.toggle();
   }
 

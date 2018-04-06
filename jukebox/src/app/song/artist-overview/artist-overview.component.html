@@ -1,5 +1,5 @@
 <mat-nav-list>
-  <div *ngFor="let letter of _alphabet">
+  <div *ngFor="let letter of alphabet">
     <div *ngIf="getArtistsWithLetter(letter).length > 0">
       <h3 matSubheader>{{letter}}</h3>
       <mat-list-item *ngFor="let artist of getArtistsWithLetter(letter)">

@@ -8,6 +8,9 @@ import {SongResponse} from "../models/song-response";
   styleUrls: ['./song-overview.component.css']
 })
 export class SongOverviewComponent implements OnInit {
+  get alphabet(): string[] {
+    return this._alphabet;
+  }
 
   private songs: SongResponse[] = [];
   private _alphabet: string[] = [];

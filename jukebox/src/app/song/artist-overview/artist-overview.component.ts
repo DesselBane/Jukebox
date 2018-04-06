@@ -8,6 +8,9 @@ import {ArtistResponse} from "../models/artist-response";
   styleUrls: ['./artist-overview.component.css']
 })
 export class ArtistOverviewComponent implements OnInit {
+  get alphabet(): string[] {
+    return this._alphabet;
+  }
 
   // noinspection JSMismatchedCollectionQueryUpdate
   private _alphabet: string[] = [];

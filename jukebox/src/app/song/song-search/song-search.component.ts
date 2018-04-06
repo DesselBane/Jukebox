@@ -11,6 +11,9 @@ import {SongService} from "../song.service";
   styleUrls: ['./song-search.component.scss']
 })
 export class SongSearchComponent implements OnInit {
+  get availableSongs(): SongResponse[] {
+    return this._availableSongs;
+  }
 
   // noinspection JSMismatchedCollectionQueryUpdate
   private _availableSongs: SongResponse[];

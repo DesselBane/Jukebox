@@ -1,10 +1,10 @@
-<h1>Player: {{_activePlayer.name}}</h1>
-<p>Is Playing: {{_activePlayer.state == "Playing"}}</p>
+<h1>Player: {{activePlayer.name}}</h1>
+<p>Is Playing: {{activePlayer.state == "Playing"}}</p>
 <p>Playlist:</p>
-<p *ngFor="let song of _activePlayer.playlist">{{song.title}} - {{song.artists[0]}}</p>
+<p *ngFor="let song of activePlayer.playlist">{{song.title}} - TODO Fix Me</p>
 
-<button mat-button (click)="previous()" [disabled]="!_canPrevious">Previous</button>
-<button mat-button (click)="playPause()" [disabled]="!_canPlay">Play</button>
-<button mat-button (click)="playPause()" [disabled]="!_canPause">Pause</button>
-<button mat-button (click)="next()" [disabled]="!_canNext">Next</button>
-<button mat-button (click)="stop()" [disabled]="!_canStop">Stop</button>
+<button mat-button (click)="previous()" [disabled]="!canPrevious">Previous</button>
+<button mat-button (click)="playPause()" [disabled]="!canPlay">Play</button>
+<button mat-button (click)="playPause()" [disabled]="!canPause">Pause</button>
+<button mat-button (click)="next()" [disabled]="!canNext">Next</button>
+<button mat-button (click)="stop()" [disabled]="!canStop">Stop</button>

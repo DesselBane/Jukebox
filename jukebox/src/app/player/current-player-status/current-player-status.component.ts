@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlayerService} from "../player.service";
 import {PlayerResponse} from "../models/player-response";
 import {SongResponse} from "../../song/models/song-response";
@@ -9,6 +9,13 @@ import {SongResponse} from "../../song/models/song-response";
   styleUrls: ['./current-player-status.component.scss']
 })
 export class CurrentPlayerStatusComponent implements OnInit {
+  public get currentSong(): SongResponse {
+    return this._currentSong;
+  }
+
+  public get activePlayerPublic(): PlayerResponse {
+    return this._activePlayer;
+  }
 
   private set activePlayer(value: PlayerResponse) {
     this._activePlayer = value;

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {WebPlayerService} from "../web-player.service";
 import {WebPlayerState} from "../models/web-player-state.enum";
 import {PlayerService} from "../player.service";
 import {PlayerResponse} from "../models/player-response";
@@ -12,6 +11,29 @@ import {PlayerCommandTypes} from "../models/player-command-types.enum";
   styleUrls: ['./web-player.component.css']
 })
 export class WebPlayerComponent implements OnInit {
+  get activePlayer(): PlayerResponse {
+    return this._activePlayer;
+  }
+
+  get canStop(): boolean {
+    return this._canStop;
+  }
+
+  get canPause(): boolean {
+    return this._canPause;
+  }
+
+  get canPlay(): boolean {
+    return this._canPlay;
+  }
+
+  get canNext(): boolean {
+    return this._canNext;
+  }
+
+  get canPrevious(): boolean {
+    return this._canPrevious;
+  }
 
 
   private _canPrevious = false;

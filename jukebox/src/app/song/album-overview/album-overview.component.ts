@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SongService} from "../song.service";
 import {AlbumResponse} from "../models/album-response";
 
@@ -8,6 +8,9 @@ import {AlbumResponse} from "../models/album-response";
   styleUrls: ['./album-overview.component.css']
 })
 export class AlbumOverviewComponent implements OnInit {
+  get alphabet(): string[] {
+    return this._alphabet;
+  }
 
   private _albums: AlbumResponse[] = [];
   private _alphabet: string[] = [];
