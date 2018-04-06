@@ -1,5 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {AuthenticationErrorCodes} from '../shared/ErrorCodes/authentication-errorCodes';
+import {AuthenticationErrorCodes} from '../shared/errorCodes/authentication-errorCodes';
 import {HttpErrorModel} from '../shared/models/http-error-model';
 
 export module AuthenticationErrorResolver {

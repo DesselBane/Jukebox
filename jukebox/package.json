@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "jukebox-build": "ng build --op ../JukeboxAPI/wwwroot",
     "electron": "ng build --bh ./ && electron .",
-    "electron-no-build": "electron ."
+    "electron-no-build": "electron .",
+    "electron-rebuild": "electron-rebuild -f -w sqlite3"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +33,7 @@
     "id3-parser": "^2.0.0",
     "ngx-electron": "1.0.4",
     "rxjs": "5.5.6",
+    "sqlite3": "^4.0.0",
     "zone.js": "0.8.19"
   },
   "devDependencies": {
@@ -53,6 +55,7 @@
     "protractor": "5.1.2",
     "ts-node": "4.1.0",
     "tslint": "5.9.1",
-    "typescript": "2.5.3"
+    "typescript": "2.5.3",
+    "electron-rebuild": "^1.7.3"
   }
 }
