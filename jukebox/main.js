@@ -1,11 +1,40 @@
 const { app, BrowserWindow } = require('electron');
-const ipc = require('electron').ipcMain;
 const Menu = require('electron').Menu;
-const MenuItem = require('electron').MenuItem;
 
 let win;
 let menu = Menu.buildFromTemplate([]);
 
+const os = require('os');
+let apiProcess = null;
+
+function startApi() {
+  const proc = require('child_process').spawn;
+  //  run server
+  let apiPath = `${__dirname}\\api\\bin\\dist\\win`;
+  let apiFullPath = `${apiPath}\\Jukebox.exe`;
+  if (os.platform() === 'darwin') {
+    apiPath = `${__dirname}//api//bin//dist//osx`;
+    apiFullPath = `${apiPath}//Jukebox`;
+  }
+  apiProcess = proc(apiFullPath, [], {cwd: apiPath});
+
+  apiProcess.stdout.on('data', (data) => {
+    writeLog(`stdout: ${data}`);
+    if (win == null) {
+      createWindow();
+    }
+  });
+}
+
+//Kill process when electron exits
+process.on('exit', function () {
+  writeLog('exit');
+  apiProcess.kill();
+});
+
+function writeLog(msg) {
+  console.log(msg);
+}
 
 function createWindow () {
   // Create the browser window.
@@ -31,7 +60,7 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
-  createWindow();
+  startApi();
   Menu.setApplicationMenu(menu);
 });
 
@@ -44,9 +73,3 @@ app.on('window-all-closed', function () {
   }
 });
 
-app.on('activate', function () {
-  // macOS specific close process
-  if (win === null) {
-    createWindow()
-  }
-});
