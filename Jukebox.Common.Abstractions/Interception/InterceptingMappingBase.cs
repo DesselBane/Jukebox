@@ -15,7 +15,7 @@ namespace Jukebox.Common.Abstractions.Interception
 
         #region Implementation of IInterceptor
 
-        public void Intercept(IInvocation invocation)
+        public virtual void Intercept(IInvocation invocation)
         {
             if (_mappings.ContainsKey(invocation.Method.Name))
                 _mappings[invocation.Method.Name](invocation);

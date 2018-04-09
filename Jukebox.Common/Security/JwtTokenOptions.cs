@@ -20,8 +20,8 @@ namespace Jukebox.Common.Security
             if (SigningCredentials == null)
                 throw new ArgumentNullException(nameof(SigningCredentials));
 
-            if (NonceGenerator == null)
-                throw new ArgumentNullException(nameof(NonceGenerator));
+            if (NonceGeneratorAsync == null)
+                throw new ArgumentNullException(nameof(NonceGeneratorAsync));
         }
 
         #region Properties
@@ -53,7 +53,9 @@ namespace Jukebox.Common.Security
         ///     Generates a random value (nonce) for each generated token.
         /// </summary>
         /// <remarks>The default nonce is a random GUID.</remarks>
-        public Func<Task<string>> NonceGenerator { get; set; } = () => Task.FromResult(Guid.NewGuid().ToString());
+        public Func<Task<string>> NonceGeneratorAsync => () => Task.FromResult(NonceGenerator());
+
+        public Func<string> NonceGenerator => () => Guid.NewGuid().ToString();
 
         #endregion
     }

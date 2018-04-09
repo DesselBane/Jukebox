@@ -29,7 +29,7 @@ namespace Jukebox.Testing.Acceptance.Authentication
             var claims = new List<Claim>
                          {
                              new Claim(JwtRegisteredClaimNames.Sub, username),
-                             new Claim(JwtRegisteredClaimNames.Jti, await options.NonceGenerator().ConfigureAwait(false)),
+                             new Claim(JwtRegisteredClaimNames.Jti, await options.NonceGeneratorAsync().ConfigureAwait(false)),
                              new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64)
                          };
 

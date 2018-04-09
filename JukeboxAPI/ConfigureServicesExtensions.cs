@@ -144,8 +144,10 @@ namespace Jukebox
             builder.RegisterType<JwtAuthenticationService>()
                    .As<IAuthenticationService>()
                    .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(ElectronAuthenticationInterceptor))
                    .InterceptedBy(typeof(AuthenticationServiceInterceptor));
 
+            builder.RegisterType<ElectronAuthenticationInterceptor>();
             builder.RegisterType<AuthenticationServiceInterceptor>();
             builder.RegisterType<AuthenticationValidator>();
 

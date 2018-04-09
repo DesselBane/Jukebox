@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Data.SqLite;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,7 @@ namespace Jukebox.Testing.Acceptance
 {
     public class IntStartup : Startup
     {
-        public IntStartup(IConfiguration configuration)
+        public IntStartup(IConfiguration configuration, IHostingEnvironment environment)
             : base(configuration)
         {
         }

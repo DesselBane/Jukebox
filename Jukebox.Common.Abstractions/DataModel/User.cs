@@ -10,6 +10,24 @@ namespace Jukebox.Common.Abstractions.DataModel
     [DataContract]
     public class User
     {
+        private static User _electronUser;
+
+        private static User CreateElectronUser()
+        {
+            _electronUser = new User
+                            {
+                                Id = -1,
+                                EMail = "ElectronSuperUser",
+                                Claims = new List<UserClaim>
+                                         {
+                                             new RoleClaim(RoleClaimTypes.SystemAdmin),
+                                             new UsernameClaim("ElectronSuperUser")
+                                         }
+                            };
+
+            return _electronUser;
+        }
+
         #region Const
 
         public const string USER_AUTH_TYPE = "CustomWebAuth";
@@ -51,6 +69,7 @@ namespace Jukebox.Common.Abstractions.DataModel
         public virtual DateTime? RefreshTokenExpiration { get; set; }
 
         public virtual List<UserClaim> Claims { get; set; } = new List<UserClaim>();
+        public static User ElectronUser => _electronUser ?? CreateElectronUser();
 
         #endregion
     }

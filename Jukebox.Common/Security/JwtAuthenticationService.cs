@@ -178,42 +178,47 @@ namespace Jukebox.Common.Security
             return Guid.NewGuid().ToString().HashPassword().Item1;
         }
 
-        private async Task<AuthToken> GenerateTokenAsync(ClaimsIdentity identity)
+        public static AuthToken CreateBasicAuthToken(ClaimsIdentity identity, JwtTokenOptions options)
         {
             var now = DateTime.UtcNow;
 
-            var claims = new List<Claim>
-                         {
-                             new Claim(JwtRegisteredClaimNames.Sub, identity.Name),
-                             new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator().ConfigureAwait(false)),
-                             new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64)
-                         };
+            var claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, identity.Name));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, options.NonceGenerator()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixEpochDate().ToString(), ClaimValueTypes.Integer64));
 
             claims.AddRange(identity.Claims);
 
             var token = new JwtSecurityToken(
-                                             _options.Issuer,
-                                             _options.Audience,
+                                             options.Issuer,
+                                             options.Audience,
                                              claims.ToArray(),
                                              now,
-                                             now.Add(_options.Expiration),
-                                             _options.SigningCredentials);
+                                             now.Add(options.Expiration),
+                                             options.SigningCredentials);
 
             var refreshToken = Guid.NewGuid().ToString();
-
-            var user = await _securityContext.Users.FirstOrDefaultAsync(x => x.EMail == identity.Name);
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiration = now.Add(_options.RefreshTokenExpiration);
-            await _securityContext.SaveChangesAsync();
-
-
+            var refreshTokenExpiration = now.Add(options.RefreshTokenExpiration);
+            
             return new AuthToken
                    {
-                       RefreshToken = user.RefreshToken,
+                       RefreshToken = refreshToken,
                        AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                       AccessToken_ValidUntil = now.Add(_options.Expiration),
-                       RefreshToken_ValidUntil = user.RefreshTokenExpiration.Value
+                       AccessToken_ValidUntil = now.Add(options.Expiration),
+                       RefreshToken_ValidUntil = refreshTokenExpiration
                    };
+        }
+        
+        private async Task<AuthToken> GenerateTokenAsync(ClaimsIdentity identity)
+        {
+            var token = CreateBasicAuthToken(identity,_options);
+
+            var user = await _securityContext.Users.FirstOrDefaultAsync(x => x.EMail == identity.Name);
+            user.RefreshToken = token.RefreshToken;
+            user.RefreshTokenExpiration = token.RefreshToken_ValidUntil;
+            await _securityContext.SaveChangesAsync();
+
+            return token;
         }
 
         private async Task<ClaimsIdentity> AuthenticateUserAsync(string username, string password)

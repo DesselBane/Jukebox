@@ -116,6 +116,11 @@ namespace Jukebox.Common.Security
             return null;
         }
 
+        public AuthToken CreateBasicAuthToken(ClaimsIdentity identity)
+        {
+            return null;
+        }
+
         #endregion
     }
 }
