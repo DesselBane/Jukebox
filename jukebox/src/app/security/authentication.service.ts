@@ -9,17 +9,27 @@ import {ILoginTokenResponse} from "../shared/models/ilogin-token-response";
 import {LoginTokenModel} from "../shared/models/login-token-model";
 import {NavigationService} from "../navigation/navigation.service";
 import {NavItem} from "../navigation/models/nav-item";
+import {ElectronService} from "ngx-electron";
 
 @Injectable()
 export class AuthenticationService {
   private _navigation: NavigationService;
+  private _electronService: ElectronService;
 
-  constructor(private http: HttpClient, navigation: NavigationService) {
+  constructor(private http: HttpClient, navigation: NavigationService, electronService: ElectronService) {
     this._navigation = navigation;
-    // set token if saved in local storage
-    let storeToken = JSON.parse(localStorage.getItem('loginToken'));
-    if (storeToken != null && storeToken instanceof LoginTokenModel)
-      AuthenticationService.loginTokenResponse = LoginTokenModel.parse(storeToken);
+    this._electronService = electronService;
+
+    if (this._electronService.isElectronApp) {
+      AuthenticationService._authParentItem.isVisible = false;
+      this.login("", "");
+    }
+    else {
+      // set token if saved in local storage
+      let storeToken = JSON.parse(localStorage.getItem('loginToken'));
+      if (storeToken != null && storeToken instanceof LoginTokenModel)
+        AuthenticationService.loginTokenResponse = LoginTokenModel.parse(storeToken);
+    }
 
   }
 
@@ -85,7 +95,8 @@ export class AuthenticationService {
       return;
     AuthenticationService.isInitialized = true;
 
-    this._navigation.registerNavItem(AuthenticationService._authParentItem);
+    if (!this._electronService.isElectronApp)
+      this._navigation.registerNavItem(AuthenticationService._authParentItem);
 
     AuthenticationService.updateNavItems();
 

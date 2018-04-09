@@ -17,8 +17,4 @@ export class SongSelectionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  clickMe() {
-    this._songService.getFileSystem();
-  }
 }

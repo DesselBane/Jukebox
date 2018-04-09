@@ -16,7 +16,7 @@ function startApi() {
     apiPath = `${__dirname}//api//bin//dist//osx`;
     apiFullPath = `${apiPath}//Jukebox`;
   }
-  apiProcess = proc(apiFullPath, [], {cwd: apiPath});
+  apiProcess = proc(apiFullPath, [], {cwd: apiPath, env: {ASPNETCORE_ENVIRONMENT: 'electron'}});
 
   apiProcess.stdout.on('data', (data) => {
     writeLog(`stdout: ${data}`);
@@ -29,7 +29,8 @@ function startApi() {
 //Kill process when electron exits
 process.on('exit', function () {
   writeLog('exit');
-  apiProcess.kill();
+  if (apiProcess != null)
+    apiProcess.kill();
 });
 
 function writeLog(msg) {
@@ -60,7 +61,8 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
-  startApi();
+  createWindow();
+  //startApi();
   Menu.setApplicationMenu(menu);
 });
 
