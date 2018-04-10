@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>
+    Music Paths
+    <button mat-button (click)="addPath()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let path of musicPaths">
+        <p>{{path}}</p>
+        <button mat-button (click)="removePath(path)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

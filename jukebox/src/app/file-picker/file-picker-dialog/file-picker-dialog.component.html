@@ -1,0 +1,6 @@
+<form #myForm="ngForm">
+  <mat-form-field>
+    <input type="text" name="testInput" placeholder="Path here :D" [(ngModel)]="testInput" matInput>
+  </mat-form-field>
+  <button type="submit" (click)="done()" mat-button>Submit</button>
+</form>

@@ -2,7 +2,15 @@ const { app, BrowserWindow } = require('electron');
 const Menu = require('electron').Menu;
 
 let win;
-let menu = Menu.buildFromTemplate([]);
+let menu = Menu.buildFromTemplate([
+  {
+    label: 'Reload',
+    click: () => {
+      console.log("Reloading");
+      win.loadURL(`file://${__dirname}/dist/index.html`);
+    }
+  }
+]);
 
 const os = require('os');
 let apiProcess = null;

@@ -22,7 +22,8 @@ export class AuthenticationService {
 
     if (this._electronService.isElectronApp) {
       AuthenticationService._authParentItem.isVisible = false;
-      this.login("", "");
+      AuthenticationService.logout();
+      this.login("", "").subscribe();
     }
     else {
       // set token if saved in local storage
@@ -109,6 +110,7 @@ export class AuthenticationService {
         password: password
       }))
       .do(response => {
+        console.log("New login");
         AuthenticationService.loginTokenResponse = response;
         AuthenticationService.updateNavItems();
       });

@@ -17,6 +17,8 @@ import {SongModule} from "./song/song.module";
 import {NgxElectronModule} from "ngx-electron";
 import {ElectronUrlInterceptor} from "./shared/ElectronUrlInterceptor";
 import {NotificationModule} from "./notification/notification.module";
+import {SettingsModule} from "./settings/settings.module";
+import {FilePickerModule} from "./file-picker/file-picker.module";
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import {NotificationModule} from "./notification/notification.module";
     PlayerModule,
     SongModule,
     NotificationModule,
+    SettingsModule,
+    FilePickerModule,
 
     //Has to be last !!!
     AppRoutingModule
