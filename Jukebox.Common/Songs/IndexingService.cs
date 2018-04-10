@@ -21,10 +21,10 @@ namespace Jukebox.Common.Songs
         private readonly DataContext _dataContext;
         private readonly IndexOptions _indexOptions;
 
-        public IndexingService(DataContext dataContext, IOptions<IndexOptions> indexOptions)
+        public IndexingService(DataContext dataContext, IOptionsMonitor<IndexOptions> indexOptions)
         {
             _dataContext = dataContext;
-            _indexOptions = indexOptions.Value;
+            _indexOptions = indexOptions.CurrentValue;
         }
 
         public async Task IndexSongsAsync()

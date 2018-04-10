@@ -29,7 +29,7 @@ namespace Jukebox.Common.Players
         private readonly        WebsocketOptions                       _websocketOptions;
 
 
-        public PlayerService(IOptions<WebsocketOptions> websocketOptions,
+        public PlayerService(IOptionsMonitor<WebsocketOptions> websocketOptions,
                              AuthenticationValidator    authValidator,
                              DataContext                dataContext,
                              IPlayerRepository          playerRepository,
@@ -39,7 +39,7 @@ namespace Jukebox.Common.Players
             _dataContext         = dataContext;
             _playerRepository    = playerRepository;
             _notificationService = notificationService;
-            _websocketOptions    = websocketOptions.Value;
+            _websocketOptions    = websocketOptions.CurrentValue;
         }
 
         public Task<IEnumerable<Player>> GetAllPlayersAsync()

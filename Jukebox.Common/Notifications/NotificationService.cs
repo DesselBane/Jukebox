@@ -16,9 +16,9 @@ namespace Jukebox.Common.Notifications
         private readonly WebsocketOptions _websocketOptions;
         private List<WebSocket> _notificationChannels = new List<WebSocket>();
 
-        public NotificationService(IOptions<WebsocketOptions> websocketOptions)
+        public NotificationService(IOptionsMonitor<WebsocketOptions> websocketOptions)
         {
-            _websocketOptions = websocketOptions.Value;
+            _websocketOptions = websocketOptions.CurrentValue;
         }
         
         public Task NotifyClientsAsync(Notification notification)
