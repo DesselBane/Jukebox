@@ -234,6 +234,7 @@ namespace Jukebox
             builder.RegisterType<PingController>();
             builder.RegisterType<NotificationController>();
             builder.RegisterType<SettingsController>();
+            builder.RegisterType<FilesController>();
             
             return builder;
         }
