@@ -31,7 +31,9 @@ using Newtonsoft.Json;
 using SPAMiddleware;
 using System.Linq;
 using Jukebox.Common.Abstractions.Notification;
+using Jukebox.Common.Abstractions.Settings;
 using Jukebox.Common.Notifications;
+using Jukebox.Common.Settings;
 using Jukebox.Data.InMemory;
 
 namespace Jukebox
@@ -71,7 +73,8 @@ namespace Jukebox
                           .ConfigureIndexing()
                           .ConfigureSongSearch()
                           .ConfigurePlayers()
-                          .ConfigureNotifications();
+                          .ConfigureNotifications()
+                          .ConfigureSettings();
         }
 
         #endregion
@@ -230,6 +233,7 @@ namespace Jukebox
 
             builder.RegisterType<PingController>();
             builder.RegisterType<NotificationController>();
+            builder.RegisterType<SettingsController>();
             
             return builder;
         }
@@ -284,6 +288,14 @@ namespace Jukebox
             builder.RegisterType<NotificationService>()
                    .As<INotificationService>()
                    .SingleInstance();
+            
+            return builder;
+        }
+
+        private static ContainerBuilder ConfigureSettings(this ContainerBuilder builder)
+        {
+            builder.RegisterType<SettingsService>()
+                   .As<ISettingsService>();
             
             return builder;
         }
