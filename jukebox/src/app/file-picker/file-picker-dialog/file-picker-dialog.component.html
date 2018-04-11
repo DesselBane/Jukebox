@@ -1,6 +1,24 @@
-<form #myForm="ngForm">
-  <mat-form-field>
-    <input type="text" name="testInput" placeholder="Path here :D" [(ngModel)]="testInput" matInput>
-  </mat-form-field>
-  <button type="submit" (click)="done()" mat-button>Submit</button>
-</form>
+<div id="container">
+  <button id="btn_home" (click)="onAccessPath()" mat-button>
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <mat-list>
+    <div *ngFor="let dir of paths">
+      <mat-list-item (click)="onSelectPath(dir)" (dblclick)="onAccessPath(dir)"
+                     [ngClass]="{'isSelected' : selectedPath == dir}">
+        <mat-icon matListIcon *ngIf="dir.type == 'Home'">home</mat-icon>
+        <mat-icon matListIcon *ngIf="dir.type == 'DriveOrRoot'">storage</mat-icon>
+        <mat-icon matListIcon *ngIf="dir.type == 'Normal'">folder</mat-icon>
+        <mat-icon matListIcon *ngIf="dir.type == 'Network'">cloud</mat-icon>
+        <p>{{dir.directoryName}}</p>
+      </mat-list-item>
+    </div>
+
+  </mat-list>
+
+
+  <button id="btn_submit" (click)="done()" mat-button>Submit</button>
+  <button id="btn_cancle" (click)="cancle()" mat-button>Cancle</button>
+
+</div>

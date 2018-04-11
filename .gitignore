@@ -7,3 +7,4 @@
 *.DotSettings.user
 **/httpRequests/*
 .idea/**/*.xml
+.idea/.idea.JukeboxAPI/**/*.xml

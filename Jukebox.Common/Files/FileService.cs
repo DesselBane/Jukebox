@@ -82,13 +82,30 @@ namespace Jukebox.Common.Files
 
         private Task<IEnumerable<DirectoryDTO>> GetDirectoryContentsAsync(string path)
         {
-            return Task.Run(() => new PhysicalFileProvider(path).GetDirectoryContents("")
-                                                                .Where(x => x.IsDirectory)
-                                                                .Select(x => new DirectoryDTO
-                                                                             {
-                                                                                 DirectoryFullPath = x.PhysicalPath,
-                                                                                 DirectoryName     = x.Name
-                                                                             }));
+            return Task.Run(() =>
+                            {
+                                var dirInfo    = new DirectoryInfo(path);
+                                var parentDir  = dirInfo.Parent;
+                                var directries = new List<DirectoryDTO>();
+
+                                if (parentDir != null)
+                                    directries.Add(new DirectoryDTO
+                                                   {
+                                                       DirectoryFullPath = parentDir.FullName,
+                                                       DirectoryName     = "..",
+                                                       Type              = DirectoryTypes.Normal
+                                                   });
+
+                                directries.AddRange(new PhysicalFileProvider(path).GetDirectoryContents("")
+                                                                                  .Where(x => x.IsDirectory)
+                                                                                  .Select(x => new DirectoryDTO
+                                                                                               {
+                                                                                                   DirectoryFullPath = x.PhysicalPath,
+                                                                                                   DirectoryName     = x.Name
+                                                                                               }));
+
+                                return (IEnumerable<DirectoryDTO>) directries;
+                            });
         }
         
     }

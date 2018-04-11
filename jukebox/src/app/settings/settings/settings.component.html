@@ -16,3 +16,12 @@
     </mat-list>
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <p>Indexing</p>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-button [disabled]="isIndexing" (click)="startIndexing()">Start</button>
+  </mat-card-content>
+</mat-card>

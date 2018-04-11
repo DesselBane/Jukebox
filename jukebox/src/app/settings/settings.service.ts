@@ -4,7 +4,12 @@ import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class SettingsService {
+  private _isIndexing = false;
   private _http: HttpClient;
+
+  get isIndexing(): boolean {
+    return this._isIndexing;
+  }
 
   constructor(http: HttpClient) {
     this._http = http;
@@ -18,6 +23,15 @@ export class SettingsService {
     return this._http.post('api/settings/musicPaths', JSON.stringify(paths))
       .map(() => {
       });
+  }
+
+  public startIndexing(): Observable<void> {
+    this._isIndexing = true;
+
+    return this._http.post('api/song/index', "")
+      .map(() => {
+      })
+      .do(() => this._isIndexing = false);
   }
 
 }

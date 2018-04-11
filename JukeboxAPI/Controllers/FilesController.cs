@@ -18,7 +18,6 @@ namespace Jukebox.Controllers
         }
         
         [HttpGet("info")]
-        [AllowAnonymous]
         public Task<IEnumerable<DirectoryDTO>> GetDirectoryInfo([FromQuery] string path)
         {
             return _fileService.GetDirectoryInfoAsync(path);
