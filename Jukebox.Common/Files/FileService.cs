@@ -32,7 +32,8 @@ namespace Jukebox.Common.Files
                                                                .Select(driveInfo => new DirectoryDTO
                                                                                     {
                                                                                         DirectoryFullPath = driveInfo.Name,
-                                                                                        DirectoryName     = driveInfo.Name + driveInfo.VolumeLabel
+                                                                                        DirectoryName     = driveInfo.Name + driveInfo.VolumeLabel,
+                                                                                        Type              = driveInfo.DriveType == DriveType.Fixed ? DirectoryTypes.DriveOrRoot : DirectoryTypes.Network
                                                                                     }));
 
                                     var envs = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
@@ -40,7 +41,38 @@ namespace Jukebox.Common.Files
                                     directories.Add(new DirectoryDTO
                                                     {
                                                         DirectoryFullPath = envs,
-                                                        DirectoryName = envs.Split('\\').Last()
+                                                        DirectoryName = envs.Split('\\').Last(),
+                                                        Type = DirectoryTypes.Home
+                                                    });
+                                }
+
+                                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                                {
+                                    var drives = DriveInfo.GetDrives();
+
+                                    directories.AddRange(drives.Where(x => x.IsReady
+                                                                           && x.DriveType == DriveType.Network)
+                                                               .Select(driveInfo => new DirectoryDTO
+                                                                                    {
+                                                                                        DirectoryFullPath = driveInfo.Name,
+                                                                                        DirectoryName     = driveInfo.VolumeLabel.Split('/').Last(),
+                                                                                        Type = DirectoryTypes.Network
+                                                                                    }));
+                                    
+                                    var envs = Environment.GetEnvironmentVariable("HOME");
+                                    
+                                    directories.Add(new DirectoryDTO
+                                    {
+                                        DirectoryFullPath = envs,
+                                        DirectoryName = envs.Split('/').Last(),
+                                        Type = DirectoryTypes.Home
+                                    });
+                                    
+                                    directories.Add(new DirectoryDTO
+                                                    {
+                                                        DirectoryFullPath = "/",
+                                                        DirectoryName = "Root",
+                                                        Type = DirectoryTypes.DriveOrRoot
                                                     });
                                 }
 
