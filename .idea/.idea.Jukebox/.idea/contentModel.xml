@@ -17,6 +17,8 @@
         </e>
         <e p="Files" t="Include">
           <e p="FileService.cs" t="Include" />
+          <e p="FileServiceInterceptor.cs" t="Include" />
+          <e p="FileValidator.cs" t="Include" />
         </e>
         <e p="Interception" t="Include">
           <e p="ControllerInterceptor.cs" t="Include" />
@@ -91,6 +93,7 @@
         </e>
         <e p="ErrorCodes" t="Include">
           <e p="AuthenticationErrorCodes.cs" t="Include" />
+          <e p="FileErrorCodes.cs" t="Include" />
           <e p="GlobalErrorCodes.cs" t="Include" />
           <e p="NotificationErrorCodes.cs" t="Include" />
           <e p="PlayerErrorCodes.cs" t="Include" />

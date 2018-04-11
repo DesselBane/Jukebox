@@ -304,8 +304,13 @@ namespace Jukebox
         private static ContainerBuilder ConfigureFiles(this ContainerBuilder builder)
         {
             builder.RegisterType<FileService>()
-                   .As<IFileService>();
+                   .As<IFileService>()
+                .EnableInterfaceInterceptors()
+                .InterceptedBy(typeof(FileServiceInterceptor));
 
+            builder.RegisterType<FileServiceInterceptor>();
+            builder.RegisterType<FileValidator>();
+            
             return builder;
         }
         

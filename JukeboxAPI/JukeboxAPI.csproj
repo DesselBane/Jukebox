@@ -18,6 +18,7 @@
     <PackageReference Include="NSwag.Annotations" Version="11.15.4" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.15.4" />
     <PackageReference Include="SpaMiddleware" Version="1.0.3" />
+      <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.4.0"/>
       <PackageReference Include="System.IO.FileSystem.DriveInfo" Version="4.3.1"/>
   </ItemGroup>
   <ItemGroup>
