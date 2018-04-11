@@ -18,7 +18,7 @@
     <PackageReference Include="NSwag.Annotations" Version="11.15.4" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.15.4" />
     <PackageReference Include="SpaMiddleware" Version="1.0.3" />
-    <PackageReference Include="System.IO.FileSystem.DriveInfo" Version="4.3.1"/>
+      <PackageReference Include="System.IO.FileSystem.DriveInfo" Version="4.3.1"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
@@ -38,8 +38,8 @@
       <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
       <Name>Jukebox.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Jukebox.Data.InMemory\Jukebox.Data.InMemory.csproj"/>
-    <ProjectReference Include="..\Jukebox.Data.SqLite\Jukebox.Data.SqLite.csproj"/>
+      <ProjectReference Include="..\Jukebox.Data.InMemory\Jukebox.Data.InMemory.csproj"/>
+      <ProjectReference Include="..\Jukebox.Data.SqLite\Jukebox.Data.SqLite.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
