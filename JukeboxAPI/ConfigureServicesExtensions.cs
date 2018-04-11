@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.WebSockets;
 using System.Security.Claims;
 using System.Text;
 using Autofac;
@@ -29,12 +27,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SPAMiddleware;
-using System.Linq;
 using Jukebox.Common.Abstractions.Notification;
 using Jukebox.Common.Abstractions.Settings;
+using Jukebox.Common.Files;
 using Jukebox.Common.Notifications;
 using Jukebox.Common.Settings;
 using Jukebox.Data.InMemory;
+using Jukebox.Common.Abstractions.Files;
 
 namespace Jukebox
 {
@@ -74,7 +73,8 @@ namespace Jukebox
                           .ConfigureSongSearch()
                           .ConfigurePlayers()
                           .ConfigureNotifications()
-                          .ConfigureSettings();
+                          .ConfigureSettings()
+                          .ConfigureFiles();
         }
 
         #endregion
@@ -298,6 +298,14 @@ namespace Jukebox
             builder.RegisterType<SettingsService>()
                    .As<ISettingsService>();
             
+            return builder;
+        }
+
+        private static ContainerBuilder ConfigureFiles(this ContainerBuilder builder)
+        {
+            builder.RegisterType<FileService>()
+                   .As<IFileService>();
+
             return builder;
         }
         

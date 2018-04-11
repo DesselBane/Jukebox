@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Jukebox.Common.Abstractions.Files;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +10,18 @@ namespace Jukebox.Controllers
     [Route("api/[controller]")]
     public class FilesController
     {
+        private readonly IFileService _fileService;
+
+        public FilesController(IFileService fileService)
+        {
+            _fileService = fileService;
+        }
+        
         [HttpGet("info")]
         [AllowAnonymous]
-        public async Task GetDirectoryInfo([FromQuery] string path)
+        public Task<IEnumerable<DirectoryDTO>> GetDirectoryInfo([FromQuery] string path)
         {
-            var info = DriveInfo.GetDrives();
+            return _fileService.GetDirectoryInfoAsync(path);
         }
     }
 }

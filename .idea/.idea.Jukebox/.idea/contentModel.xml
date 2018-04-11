@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.Rider2017.3/system/resharper-host/local/Transient/ReSharperHost/v11/SolutionCaches/_Jukebox.-353034341.00" t="ExcludeRecursive" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.reporters.netcoreapp10.dll" t="Include" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.utility.netcoreapp10.dll" t="Include" />
-    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="$PROJECT_DIR$" t="IncludeFlat">
+    <e p="C:\Alderaan\Projects\Jukebox" t="IncludeFlat">
       <e p="Databases" t="Include" />
       <e p="Framework" t="Include" />
       <e p="Jukebox.Common" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Extensions" t="Include">
           <e p="ClaimsIdentityExtensions.cs" t="Include" />
           <e p="DateTimeExtensions.cs" t="Include" />
@@ -17,6 +14,9 @@
           <e p="StringContentExtensions.cs" t="Include" />
           <e p="StringExtensions.cs" t="Include" />
           <e p="WebsocketExtensions.cs" t="Include" />
+        </e>
+        <e p="Files" t="Include">
+          <e p="FileService.cs" t="Include" />
         </e>
         <e p="Interception" t="Include">
           <e p="ControllerInterceptor.cs" t="Include" />
@@ -28,6 +28,13 @@
         </e>
         <e p="Notifications" t="Include">
           <e p="NotificationService.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Common.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
         </e>
         <e p="Players" t="Include">
           <e p="PlayerService.cs" t="Include" />
@@ -53,16 +60,9 @@
           <e p="SongServiceInterceptor.cs" t="Include" />
           <e p="SongValidator.cs" t="Include" />
         </e>
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netstandard2.0" t="Include">
-              <e p="Jukebox.Common.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
       </e>
       <e p="Jukebox.Common.Abstractions" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Claims" t="Include">
           <e p="RoleClaim.cs" t="Include" />
           <e p="RoleClaimTypes.cs" t="Include" />
@@ -96,6 +96,10 @@
           <e p="PlayerErrorCodes.cs" t="Include" />
           <e p="SongErrorCodes.cs" t="Include" />
         </e>
+        <e p="Files" t="Include">
+          <e p="DirectoryDTO.cs" t="Include" />
+          <e p="IFileService.cs" t="Include" />
+        </e>
         <e p="Interception" t="Include">
           <e p="InterceptingMappingBase.cs" t="Include" />
         </e>
@@ -104,6 +108,13 @@
           <e p="INotificationService.cs" t="Include" />
           <e p="Notification.cs" t="Include" />
           <e p="NotificationChannel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Common.Abstractions.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
         </e>
         <e p="Options" t="Include">
           <e p="IHostingOptions.cs" t="Include" />
@@ -124,20 +135,11 @@
           <e p="IIndexingService.cs" t="Include" />
           <e p="ISongService.cs" t="Include" />
         </e>
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netstandard2.0" t="Include">
-              <e p="Jukebox.Common.Abstractions.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
       </e>
       <e p="Jukebox.Data.InMemory" t="IncludeRecursive">
         <e p="AsyncEnumerator.cs" t="Include" />
-        <e p="Jukebox.Data.InMemory.csproj" t="IncludeRecursive" />
-        <e p="PlayerRepository.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Jukebox.Data.InMemory.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
@@ -145,16 +147,16 @@
             </e>
           </e>
         </e>
+        <e p="PlayerRepository.cs" t="Include" />
       </e>
       <e p="Jukebox.Data.SqLite" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Jukebox.Data.SqLite.csproj" t="IncludeRecursive" />
         <e p="Migrations" t="Include">
-          <e p="20180329132322_Initial.Designer.cs" t="Include" />
           <e p="20180329132322_Initial.cs" t="Include" />
+          <e p="20180329132322_Initial.Designer.cs" t="Include" />
           <e p="SqLiteDataContextModelSnapshot.cs" t="Include" />
         </e>
-        <e p="SqLiteDataContext.cs" t="Include" />
-        <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
@@ -162,23 +164,21 @@
             </e>
           </e>
         </e>
+        <e p="SqLiteDataContext.cs" t="Include" />
       </e>
+      <e p="Jukebox.sln" t="IncludeFlat" />
       <e p="Jukebox.Testing.Acceptance" t="IncludeRecursive">
         <e p="Authentication" t="Include">
           <e p="AuthControllerLoginTests.cs" t="Include" />
           <e p="AuthControllerTest.cs" t="Include" />
         </e>
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Extensions" t="Include">
           <e p="AuthExtensions.cs" t="Include" />
           <e p="SongExtensions.cs" t="Include" />
         </e>
         <e p="IntStartup.cs" t="Include" />
         <e p="Jukebox.Testing.Acceptance.csproj" t="IncludeRecursive" />
-        <e p="Song" t="Include">
-          <e p="IndexingTests.cs" t="Include" />
-        </e>
-        <e p="TestBase.cs" t="Include" />
-        <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.0" t="Include">
@@ -187,9 +187,18 @@
             </e>
           </e>
         </e>
+        <e p="Song" t="Include">
+          <e p="IndexingTests.cs" t="Include" />
+        </e>
+        <e p="TestBase.cs" t="Include" />
       </e>
-      <e p="Jukebox.sln" t="IncludeFlat" />
       <e p="JukeboxAPI" t="IncludeRecursive">
+        <e p="appsettings.Alderaan.json" t="Include" />
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.HDS037.json" t="Include" />
+        <e p="appsettings.HDS037.Test.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
         <e p="ConfigureServicesExtensions.cs" t="Include" />
         <e p="Controllers" t="Include">
           <e p="AuthController.cs" t="Include" />
@@ -204,7 +213,15 @@
           <e p="LoginDTO.cs" t="Include" />
           <e p="PasswordUpdateDTO.cs" t="Include" />
         </e>
+        <e p="jukebox.db" t="Include" />
         <e p="JukeboxAPI.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="JukeboxAPI.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Options" t="Include">
           <e p="EmailServiceConfiguration.cs" t="Include" />
           <e p="HostingOptions.cs" t="Include" />
@@ -214,23 +231,13 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
-        <e p="appsettings.Alderaan.json" t="Include" />
-        <e p="appsettings.Development.json" t="Include" />
-        <e p="appsettings.HDS037.Test.json" t="Include" />
-        <e p="appsettings.HDS037.json" t="Include" />
-        <e p="appsettings.json" t="Include" />
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="jukebox.db" t="Include" />
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp2.0" t="Include">
-              <e p="JukeboxAPI.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
       </e>
-      <e p="Testing" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="Testing" t="Include" />
     </e>
+    <e p="C:\Users\TheAdmin\.nuget\packages\xunit.runner.visualstudio\2.3.1\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\TheAdmin\.nuget\packages\xunit.runner.visualstudio\2.3.1\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\TheAdmin\.nuget\packages\xunit.runner.visualstudio\2.3.1\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\TheAdmin\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_Jukebox.1668903831.00" t="ExcludeRecursive" />
   </component>
 </project>

@@ -4,23 +4,14 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9da79b27-7cf2-400e-9098-842c1167d6ce" name="Default" comment="Added updateDatabase Shell script">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/contentModel.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/indexLayout.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/riderModule.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/Jukebox.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/TheAdmin.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/jukebox/package.json" afterPath="$PROJECT_DIR$/jukebox/package.json" />
+    <list default="true" id="9da79b27-7cf2-400e-9098-842c1167d6ce" name="Default" comment="worked on #5 implemented DirectoryOverview for windows">
+      <change afterPath="$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/DirectoryDTO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/IFileService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Jukebox.Common/Files/FileService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <ignored path="JukeboxAPI/JukeboxAPI.sln" />
@@ -36,17 +27,131 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="FilesController.cs" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="FilesController.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+            <state relative-caret-position="414">
+              <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
               <folding>
-                <marker date="1523375229340" expanded="false" signature="6:120" ph="..." />
-                <marker date="1523375229340" expanded="true" signature="151:417" ph="{...}" />
-                <marker date="1523375229340" expanded="true" signature="218:415" ph="{...}" />
-                <marker date="1523375229340" expanded="true" signature="343:409" ph="{...}" />
+                <marker date="1523442350150" expanded="true" signature="6:195" ph="..." />
+                <marker date="1523442350150" expanded="true" signature="226:707" ph="{...}" />
+                <marker date="1523442350150" expanded="true" signature="293:705" ph="{...}" />
+                <marker date="1523442350150" expanded="true" signature="409:469" ph="{...}" />
+                <marker date="1523442350150" expanded="true" signature="618:699" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IFileService.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/IFileService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+              <folding>
+                <marker date="1523442120765" expanded="true" signature="6:63" ph="..." />
+                <marker date="1523442120765" expanded="true" signature="108:234" ph="{...}" />
+                <marker date="1523442120765" expanded="true" signature="144:232" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileService.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Jukebox.Common/Files/FileService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
+              <folding>
+                <marker date="1523443871129" expanded="true" signature="6:234" ph="..." />
+                <marker date="1523443871129" expanded="true" signature="266:3279" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="312:3267" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="400:536" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="613:2483" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="657:2471" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="853:2360" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="1458:1816" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="2091:2324" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="2571:3252" ph="{...}" />
+                <marker date="1523443871129" expanded="true" signature="2934:3239" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexingService.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingService.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="146">
+              <caret line="56" column="93" selection-start-line="56" selection-start-column="93" selection-end-line="56" selection-end-column="93" />
+              <folding>
+                <marker date="1523353375187" expanded="false" signature="6:428" ph="..." />
+                <marker date="1523353375187" expanded="true" signature="460:4486" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="514:4484" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="847:962" ph="{...}" />
+                <marker date="1523353375187" expanded="false" signature="1007:1947" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="2042:4478" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="2136:4468" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="2525:2644" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="2680:2746" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="2889:3014" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="3287:3514" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="3370:3436" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="3671:4022" ph="{...}" />
+                <marker date="1523353375187" expanded="true" signature="3764:3925" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Program.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JukeboxAPI/Program.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+              <folding>
+                <marker date="1521199980153" expanded="false" signature="6:63" ph="..." />
+                <marker date="1521199980153" expanded="true" signature="82:505" ph="{...}" />
+                <marker date="1521199980153" expanded="true" signature="109:503" ph="{...}" />
+                <marker date="1521199980153" expanded="false" signature="162:220" ph="{...}" />
+                <marker date="1521199980153" expanded="true" signature="280:497" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConfigureServicesExtensions.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1670">
+              <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
+              <folding>
+                <marker date="1523442721188" expanded="true" signature="6:1246" ph="..." />
+                <marker date="1523442721188" expanded="true" signature="1265:12056" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="1319:12054" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="1422:2874" ph="General" />
+                <marker date="1523442721188" expanded="false" signature="1551:1874" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="1991:2236" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="2356:2854" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="2884:5558" ph="Service Collection" />
+                <marker date="1523442721188" expanded="false" signature="3000:3560" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="3658:5215" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="3871:4926" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="5332:5538" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="5568:12048" ph="Container Builder" />
+                <marker date="1523442721188" expanded="false" signature="5679:7282" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="6394:6861" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="7372:7514" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="7635:8292" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="8472:8714" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="8806:9642" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="9732:10117" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="10209:10574" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="10663:11252" ph="{...}" />
+                <marker date="1523442721188" expanded="false" signature="11347:11549" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="11639:11796" ph="{...}" />
+                <marker date="1523442721188" expanded="true" signature="11883:12020" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -67,75 +172,74 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerValidator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/JwtTokenOptions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/AuthenticationValidator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/ElectronAuthenticationInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/JwtAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/AuthenticationServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Settings/SettingsService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/DateTimeExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/ObjectExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/WebsocketExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/DataContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Data.SqLite/SqLiteDataContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common/Interception/ControllerInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Notifications/NotificationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Data.SqLite/Migrations/20180329132322_Initial.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Testing.Acceptance/Extensions/AuthExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Songs/ISongService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Songs/IIndexingService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Claims/RoleClaimTypes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Song.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JukeboxAPI/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Players/IPlayerService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Security/IAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Settings/ISettingsService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Player.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JukeboxAPI/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/DataContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/SettingsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Settings/ISettingsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/DateTimeExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Settings/SettingsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/ObjectExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Claims/RoleClaimTypes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/IPlayerRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Extensions/WebsocketExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/ElectronAuthenticationInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Songs/ISongService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Songs/IIndexingService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Player.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/PlayerErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/SongErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/IFileService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Files/FileService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Testing.Acceptance/Extensions/AuthExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/DirectoryDTO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/JwtTokenOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Data.InMemory/AsyncEnumerator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/AuthenticationValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Data.SqLite/Migrations/20180329132322_Initial.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Data.InMemory/PlayerRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/JwtAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Testing.Acceptance/IntStartup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Security/AuthenticationServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Album.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Song.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/SongSource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Artist.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Players/IPlayerService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerCommandTypes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/SongSource.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Interception/InterceptingMappingBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/PingController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerInitMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerCommandTypes.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/IPlayerRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Artist.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/PlayerErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Data.SqLite/SqLiteDataContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Data.InMemory/AsyncEnumerator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Data.InMemory/PlayerRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/NotificationErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/SongErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Interception/InterceptingMappingBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Testing.Acceptance/IntStartup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Notification/NotificationChannel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Notification/Notification.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Notification/INotificationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="dummy://restClient/response1.txt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Notification/Notification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Notification/NotificationChannel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Security/IAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Notifications/NotificationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/NotificationController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/NotificationErrorCodes.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/SongController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/SettingsController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/PingController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/NotificationController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongServiceInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Jukebox.Common/Songs/SongValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="dummy://restClient/response11.txt" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Jukebox.Data.InMemory/PlayerRepository.cs" />
-        <option value="$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/SongErrorCodes.cs" />
-        <option value="$PROJECT_DIR$/Jukebox.Common/Songs/SongValidator.cs" />
-        <option value="$PROJECT_DIR$/Jukebox.Common/Players/PlayerValidator.cs" />
         <option value="$PROJECT_DIR$/JukeboxAPI/Program.cs" />
         <option value="$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerCommandTypes.cs" />
         <option value="$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs" />
@@ -181,8 +285,12 @@
         <option value="$PROJECT_DIR$/Jukebox.Common/Songs/IndexingService.cs" />
         <option value="$PROJECT_DIR$/Jukebox.Common/Notifications/NotificationService.cs" />
         <option value="$PROJECT_DIR$/Jukebox.Common/Players/PlayerService.cs" />
-        <option value="$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs" />
+        <option value="$PROJECT_DIR$/Jukebox.Common/Files/FilesService.cs" />
+        <option value="$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/DirectoryDTO.cs" />
         <option value="$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs" />
+        <option value="$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/IFileService.cs" />
+        <option value="$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs" />
+        <option value="$PROJECT_DIR$/Jukebox.Common/Files/FileService.cs" />
       </list>
     </option>
   </component>
@@ -200,19 +308,10 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -226,7 +325,38 @@
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
               <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Framework" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Framework" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Jukebox.Common" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Framework" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Jukebox.Common" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Files" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Framework" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Jukebox.Common" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Songs" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="JukeboxAPI" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="Jukebox (6 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="JukeboxAPI" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Controllers" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
           </expand>
           <select />
@@ -239,7 +369,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SearchEverywhereHistoryKey" value="filesc&#9;FILE&#9;file:///home/darkphantom/projects/Jukebox/JukeboxAPI/Controllers/FilesController.cs&#10;controllers&#9;null&#9;null&#10;serex&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;servicee&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;user&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/User.cs&#10;jwt&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Security/JwtAuthenticationService.cs&#10;configureauth&#9;null&#9;null&#10;confi&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;mapping&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/Interception/InterceptingMappingBase.cs&#10;configureem&#9;null&#9;null&#10;song&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/Song.cs&#10;soncon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/SongController.cs&#10;play&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;configurecontr&#9;null&#9;null&#10;notser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Notifications/NotificationService.cs&#10;notiser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/Notification/INotificationService.cs&#10;player&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;plaser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;placon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playco&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs&#10;playes&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;playser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;authcon&#9;null&#9;null&#10;authser&#9;null&#9;null&#10;placomm&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs&#10;placomt&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommandTypes.cs&#10;placontr&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;sere&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;songcon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/SongController.cs&#10;placo&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playre&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Data.InMemory/PlayerRepository.cs&#10;players&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;pla&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;da&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/DataContext.cs&#10;data&#9;null&#9;null&#10;plaserin&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerServiceInterceptor.cs&#10;playerva&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerValidator.cs&#10;plcon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playerser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;playcon&#9;null&#9;null&#10;gransys&#9;null&#9;null&#10;playex&#9;null&#9;null&#10;dis&#9;ACTION&#9;ToggleDistractionFreeMode&#10;search&#9;null&#9;null&#10;inde&#9;null&#9;null" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;filesc&#9;FILE&#9;file:///home/darkphantom/projects/Jukebox/JukeboxAPI/Controllers/FilesController.cs&#10;controllers&#9;null&#9;null&#10;serex&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;servicee&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;user&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/User.cs&#10;jwt&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Security/JwtAuthenticationService.cs&#10;configureauth&#9;null&#9;null&#10;confi&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;mapping&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/Interception/InterceptingMappingBase.cs&#10;configureem&#9;null&#9;null&#10;song&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/Song.cs&#10;soncon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/SongController.cs&#10;play&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;configurecontr&#9;null&#9;null&#10;notser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Notifications/NotificationService.cs&#10;notiser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/Notification/INotificationService.cs&#10;player&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;plaser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;placon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playco&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs&#10;playes&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;playser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;authcon&#9;null&#9;null&#10;authser&#9;null&#9;null&#10;placomm&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommand.cs&#10;placomt&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/PlayerCommandTypes.cs&#10;placontr&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;sere&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/ConfigureServicesExtensions.cs&#10;songcon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/SongController.cs&#10;placo&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playre&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Data.InMemory/PlayerRepository.cs&#10;players&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;pla&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;da&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common.Abstractions/DataModel/DataContext.cs&#10;data&#9;null&#9;null&#10;plaserin&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerServiceInterceptor.cs&#10;playerva&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerValidator.cs&#10;plcon&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/JukeboxAPI/Controllers/PlayerController.cs&#10;playerser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/Jukebox.Common/Players/PlayerService.cs&#10;playcon&#9;null&#9;null&#10;gransys&#9;null&#9;null&#10;playex&#9;null&#9;null&#10;dis&#9;ACTION&#9;ToggleDistractionFreeMode&#10;search&#9;null&#9;null&#10;inde&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../EventSystem/EventSystemWebApi/Startup.cs" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -1026,9 +1157,8 @@
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/JukeboxAPI" />
       <option name="PASS_PARENT_ENVS" value="1" />
-      <envs />
-      <option name="USE_MONO" value="0" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/JukeboxAPI/JukeboxAPI.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -1045,8 +1175,8 @@
       <envs>
         <env name="ASPNETCORE_ENVIRONMENT" value="electron" />
       </envs>
-      <option name="USE_MONO" value="0" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/JukeboxAPI/JukeboxAPI.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -1055,13 +1185,10 @@
       <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.0" />
       <browser url="http://localhost:5000" />
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
-      <item index="1" class="java.lang.String" itemvalue=".NET Project.Electron Backend" />
+    <list>
+      <item itemvalue=".NET Project.Default" />
+      <item itemvalue=".NET Project.Electron Backend" />
     </list>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -1095,6 +1222,7 @@
       <workItem from="1523270159238" duration="5975000" />
       <workItem from="1523345261125" duration="1184000" />
       <workItem from="1523346884478" duration="7058000" />
+      <workItem from="1523441503220" duration="2396000" />
     </task>
     <task id="LOCAL-00001" summary="Added Alderaan settings">
       <created>1519911266341</created>
@@ -1247,7 +1375,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95184000" />
+    <option name="totallyTimeSpent" value="97580000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1259,47 +1387,34 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4356021" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19347706" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5195652" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16151386" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48586956" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Errors In Solution" order="4" />
+      <window_info anchor="bottom" id="Messages" weight="0.3297062" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Unit Tests" order="8" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="REST Client" order="8" visible="true" weight="0.4352557" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="NuGet" order="8" weight="0.5195652" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16311301" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="8" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6844396" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.32934782" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1331,7 +1446,8 @@
     <MESSAGE value="worked on #5&#10;changed IOptionsInterface to IOptionsMonitor to be able to see updated files" />
     <MESSAGE value="worked on #5&#10;added basic DriveDetection tests" />
     <MESSAGE value="Added updateDatabase Shell script" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added updateDatabase Shell script" />
+    <MESSAGE value="worked on #5 implemented DirectoryOverview for windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on #5 implemented DirectoryOverview for windows" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1364,7 +1480,7 @@
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="DotNetProject">
@@ -1392,15 +1508,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D035A668-64A8-42DE-9EC4-C9E5B4B8C188/11/34e3e04b/JsonSerializerSettings.cs" />
-    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Serialization/AllPropertiesResolver.cs" />
-    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Interception/ControllerInterceptor.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="23" column="12" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Serialization/IgnoreDataContractResolver.cs" />
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerValidator.cs" />
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/ErrorCodes/PlayerErrorCodes.cs" />
@@ -1414,7 +1521,7 @@
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/DataContext.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="460">
-          <caret line="44" column="58" lean-forward="false" selection-start-line="44" selection-start-column="58" selection-end-line="44" selection-end-column="58" />
+          <caret line="44" column="58" selection-start-line="44" selection-start-column="58" selection-end-line="44" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -1424,7 +1531,7 @@
     <entry file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/SongController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
-          <caret line="71" column="45" lean-forward="false" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
+          <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -1435,14 +1542,14 @@
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/Song.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="44" column="1" lean-forward="false" selection-start-line="44" selection-start-column="1" selection-end-line="44" selection-end-column="1" />
+          <caret line="44" column="1" selection-start-line="44" selection-start-column="1" selection-end-line="44" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Jukebox.Testing.Acceptance/IntStartup.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
-          <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1453,21 +1560,21 @@
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Security/JwtTokenOptions.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
-          <caret line="55" column="95" lean-forward="false" selection-start-line="55" selection-start-column="95" selection-end-line="55" selection-end-column="95" />
+          <caret line="55" column="95" selection-start-line="55" selection-start-column="95" selection-end-line="55" selection-end-column="95" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Interception/InterceptingMappingBase.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
-          <caret line="18" column="9" lean-forward="false" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Security/AuthenticationServiceInterceptor.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="830">
-          <caret line="120" column="24" lean-forward="false" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
+          <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1481,7 +1588,7 @@
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Security/IAuthenticationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
         </state>
       </provider>
     </entry>
@@ -1495,7 +1602,7 @@
     <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/DataModel/User.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
-          <caret line="30" column="14" lean-forward="false" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1505,29 +1612,18 @@
     <entry file="file://$PROJECT_DIR$/JukeboxAPI/Startup.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
-          <caret line="50" column="33" lean-forward="false" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JukeboxAPI/Program.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="57" lean-forward="false" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
+          <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JukeboxAPI/appsettings.Alderaan.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/23AB7A00-4A24-430B-AC43-8833B38A94EB/55/b126b10c/TextWriter.cs" />
     <entry file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/SettingsController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="25" column="52" lean-forward="false" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -1538,57 +1634,146 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Settings/SettingsService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="9" lean-forward="false" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="26" column="53" lean-forward="false" selection-start-line="26" selection-start-column="53" selection-end-line="26" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Settings/SettingsService.cs" />
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Notifications/NotificationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="20" column="61" lean-forward="false" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+          <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Jukebox.Common/Players/PlayerService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="41" column="64" lean-forward="false" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
+          <caret line="41" column="64" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Settings/ISettingsService.cs">
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Settings/ISettingsService.cs" />
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/DirectoryDTO.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="236" column="52" lean-forward="false" selection-start-line="236" selection-start-column="52" selection-end-line="236" selection-end-column="52" />
+        <state relative-caret-position="161">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding>
+            <marker date="1523441987716" expanded="true" signature="80:291" ph="{...}" />
+            <marker date="1523441987716" expanded="true" signature="131:289" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JukeboxAPI/Controllers/FilesController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        <state relative-caret-position="414">
+          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
           <folding>
-            <marker date="1523375229340" expanded="false" signature="6:120" ph="..." />
-            <marker date="1523375229340" expanded="true" signature="151:417" ph="{...}" />
-            <marker date="1523375229340" expanded="true" signature="218:415" ph="{...}" />
-            <marker date="1523375229340" expanded="true" signature="343:409" ph="{...}" />
+            <marker date="1523442350150" expanded="true" signature="6:195" ph="..." />
+            <marker date="1523442350150" expanded="true" signature="226:707" ph="{...}" />
+            <marker date="1523442350150" expanded="true" signature="293:705" ph="{...}" />
+            <marker date="1523442350150" expanded="true" signature="409:469" ph="{...}" />
+            <marker date="1523442350150" expanded="true" signature="618:699" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common.Abstractions/Files/IFileService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+          <folding>
+            <marker date="1523442120765" expanded="true" signature="6:63" ph="..." />
+            <marker date="1523442120765" expanded="true" signature="108:234" ph="{...}" />
+            <marker date="1523442120765" expanded="true" signature="144:232" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JukeboxAPI/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <folding>
+            <marker date="1521199980153" expanded="false" signature="6:63" ph="..." />
+            <marker date="1521199980153" expanded="true" signature="82:505" ph="{...}" />
+            <marker date="1521199980153" expanded="true" signature="109:503" ph="{...}" />
+            <marker date="1521199980153" expanded="false" signature="162:220" ph="{...}" />
+            <marker date="1521199980153" expanded="true" signature="280:497" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JukeboxAPI/ConfigureServicesExtensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1670">
+          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
+          <folding>
+            <marker date="1523442721188" expanded="true" signature="6:1246" ph="..." />
+            <marker date="1523442721188" expanded="true" signature="1265:12056" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="1319:12054" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="1422:2874" ph="General" />
+            <marker date="1523442721188" expanded="false" signature="1551:1874" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="1991:2236" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="2356:2854" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="2884:5558" ph="Service Collection" />
+            <marker date="1523442721188" expanded="false" signature="3000:3560" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="3658:5215" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="3871:4926" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="5332:5538" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="5568:12048" ph="Container Builder" />
+            <marker date="1523442721188" expanded="false" signature="5679:7282" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="6394:6861" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="7372:7514" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="7635:8292" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="8472:8714" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="8806:9642" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="9732:10117" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="10209:10574" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="10663:11252" ph="{...}" />
+            <marker date="1523442721188" expanded="false" signature="11347:11549" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="11639:11796" ph="{...}" />
+            <marker date="1523442721188" expanded="true" signature="11883:12020" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Songs/IndexingService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="56" column="93" selection-start-line="56" selection-start-column="93" selection-end-line="56" selection-end-column="93" />
+          <folding>
+            <marker date="1523353375187" expanded="false" signature="6:428" ph="..." />
+            <marker date="1523353375187" expanded="true" signature="460:4486" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="514:4484" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="847:962" ph="{...}" />
+            <marker date="1523353375187" expanded="false" signature="1007:1947" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="2042:4478" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="2136:4468" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="2525:2644" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="2680:2746" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="2889:3014" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="3287:3514" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="3370:3436" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="3671:4022" ph="{...}" />
+            <marker date="1523353375187" expanded="true" signature="3764:3925" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jukebox.Common/Files/FileService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
+          <folding>
+            <marker date="1523443871129" expanded="true" signature="6:234" ph="..." />
+            <marker date="1523443871129" expanded="true" signature="266:3279" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="312:3267" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="400:536" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="613:2483" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="657:2471" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="853:2360" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="1458:1816" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="2091:2324" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="2571:3252" ph="{...}" />
+            <marker date="1523443871129" expanded="true" signature="2934:3239" ph="{...}" />
           </folding>
         </state>
       </provider>
