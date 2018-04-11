@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ddd27f0c-ea54-418e-8cef-a446934d498e" name="Default" comment="worked on #5&#10;implemented SettingsModule with MusicPath controls (adding a path without a FilePicker atm)">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/contentModel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Jukebox/riderModule.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Jukebox.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/TheAdmin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jukebox/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/jukebox/package.json" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <ignored mask="*.user" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>console.log</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-selection/song-selection.component.scss" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-routing.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/material-meta/material-meta.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/artist.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/song.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/album.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/song-response.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/environments/environment.ts" />
+        <option value="$PROJECT_DIR$/jukebox/ormconfig.json" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/album-response.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/artist-response.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/album-entity.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/song-entity.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/test-connection.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/security/authentication-errorResolver.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/song-source.enum.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/models/artist-entity.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/tsconfig.app.json" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/navigation/save-changes-dialog/save-changes-dialog.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/navigation/navigation-bar/navigation-bar.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/player/current-player-status/current-player-status.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/player/current-player-status/current-player-status.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/player/web-player/web-player.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/player/web-player/web-player.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/album-overview/album-overview.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/album-overview/album-overview.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/artist-overview/artist-overview.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/artist-overview/artist-overview.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-overview/song-overview.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-search/song-search.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-search/song-search.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/environments/environment.prod.ts" />
+        <option value="$PROJECT_DIR$/jukebox/package.json" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song.service.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-selection/song-selection.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-selection/song-selection.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/song/song-overview/song-overview.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings-routing.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/main.js" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.css" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings.service.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/security/authentication.service.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker-dialog/file-picker-dialog.component.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/settings/settings.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/app.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker-dialog/file-picker-dialog.component.html" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker.module.ts" />
+        <option value="$PROJECT_DIR$/jukebox/src/app/file-picker/models/file-picker-config.ts" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/jukebox/node_modules" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/jukebox/package.json" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="85" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Jukebox" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Jukebox" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Jukebox" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Jukebox" type="462c0819:PsiDirectoryNode" />
+              <item name="jukebox" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="SearchEverywhereHistoryKey" value="auth&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/security/authentication.service.ts&#10;mai&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/main.js&#10;authen&#9;null&#9;null&#10;main&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/main.js&#10;sonsel&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song-selection/song-selection.component.ts&#10;songs&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song.service.ts&#10;pack&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/package.json&#10;sonser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song.service.ts&#10;songsea&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song-search/song-search.component.ts&#10;songov&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song-overview/song-overview.component.ts&#10;artiov&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/artist-overview/artist-overview.component.ts&#10;artisover&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/artist-overview/artist-overview.component.html&#10;albo&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/album-overview/album-overview.component.ts&#10;albuov&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/album-overview/album-overview.component.html&#10;wepl&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/player/web-player/web-player.component.html&#10;webpla&#9;null&#9;null&#10;current&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/player/current-player-status/current-player-status.component.html&#10;curren&#9;null&#9;null&#10;naviga&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/navigation/navigation-bar/navigation-bar.component.html&#10;savech&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/navigation/save-changes-dialog/save-changes-dialog.component.html&#10;songser&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/song.service.ts&#10;artre&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/song/models/artist-response.ts&#10;plugins&#9;ACTION&#9;WelcomeScreen.Plugins&#10;error&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/shared/HttpClientErrorInterceptor.ts&#10;weplstate&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/player/web-player/web-player-state.enum.ts&#10;inter&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/shared/HttpClientErrorInterceptor.ts&#10;authg&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/security/auth.guard.ts&#10;placom&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/player/models/player-command-response.ts&#10;playres&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/src/app/player/models/player-response.ts&#10;packa&#9;FILE&#9;file://C:/Alderaan/Projects/Jukebox/jukebox/package.json&#10;distr&#9;ACTION&#9;ToggleDistractionFreeMode&#10;distrac&#9;ACTION&#9;ToggleDistractionFreeMode&#10;navigaser&#9;null&#9;null" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="6.11.3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EventSystem/Angular/eventmanager" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.selected.package.prettier" value="" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/jukebox/node_modules/typescript/lib" />
+    <property name="typescript-compiler-editor-notification" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox\api\bin\dist\win" />
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox\api" />
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox" />
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox\src\app\player\models" />
+      <recent name="C:\Alderaan\Projects\Jukebox\jukebox\src\app\player" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="npm.Electron No Build">
+    <configuration name="Electron No Build" type="js.build_tools.npm" factoryName="npm">
+      <package-json value="$PROJECT_DIR$/jukebox/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="electron-no-build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <configuration name="Electron" type="js.build_tools.npm" factoryName="npm">
+      <package-json value="$PROJECT_DIR$/jukebox/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="electron" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <configuration name="Web" type="js.build_tools.npm" factoryName="npm">
+      <package-json value="$PROJECT_DIR$/jukebox/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="jukebox-build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <list>
+      <item itemvalue="npm.Electron No Build" />
+      <item itemvalue="npm.Electron" />
+      <item itemvalue="npm.Web" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ddd27f0c-ea54-418e-8cef-a446934d498e" name="Default" comment="" />
+      <created>1519905530654</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519905530654</updated>
+      <workItem from="1519905531844" duration="5405000" />
+      <workItem from="1519911523122" duration="4661000" />
+      <workItem from="1520585806912" duration="34000" />
+      <workItem from="1520585874115" duration="102000" />
+      <workItem from="1520586053414" duration="961000" />
+      <workItem from="1520598796218" duration="2206000" />
+      <workItem from="1521022426173" duration="5284000" />
+      <workItem from="1521107994592" duration="8447000" />
+      <workItem from="1521188878102" duration="7606000" />
+      <workItem from="1521452427021" duration="14373000" />
+      <workItem from="1521542440234" duration="10294000" />
+      <workItem from="1521629770439" duration="4028000" />
+      <workItem from="1521698218082" duration="29000" />
+      <workItem from="1521797095616" duration="5516000" />
+      <workItem from="1522066011711" duration="2072000" />
+      <workItem from="1522322531038" duration="616000" />
+      <workItem from="1522323200882" duration="45000" />
+      <workItem from="1522323259578" duration="56000" />
+      <workItem from="1522323324837" duration="7874000" />
+      <workItem from="1522752436439" duration="10535000" />
+      <workItem from="1522844399177" duration="3910000" />
+      <workItem from="1522852411974" duration="73000" />
+      <workItem from="1522852494183" duration="76000" />
+      <workItem from="1522852671868" duration="2371000" />
+      <workItem from="1522919070343" duration="8285000" />
+      <workItem from="1523006683654" duration="3035000" />
+      <workItem from="1523023213695" duration="3743000" />
+      <workItem from="1523270133986" duration="3422000" />
+      <workItem from="1523345062847" duration="7897000" />
+      <workItem from="1523439680126" duration="715000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added electron to dev deps&#10;Added ElectronUrlInterceptor to make all the services work if inside electron">
+      <created>1519907632190</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1519907632190</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fixed electron UrlInterceptor&#10;Fixed Login problem">
+      <created>1519911220770</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1519911220770</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed empty searchTerm exception">
+      <created>1519911490858</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1519911490858</updated>
+    </task>
+    <task id="LOCAL-00004" summary="worked on integrating navigation and menues">
+      <created>1519915567705</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1519915567706</updated>
+    </task>
+    <task id="LOCAL-00005" summary="worked on integrating navigation and menues (kinda works but destroys Angular Routing)">
+      <created>1519916153347</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1519916153347</updated>
+    </task>
+    <task id="LOCAL-00006" summary="worked on WebPlayerComponent">
+      <created>1520601264158</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1520601264158</updated>
+    </task>
+    <task id="LOCAL-00007" summary="basic player implementation works (1 song 1 player and dont click on anything u shouldnt)">
+      <created>1521118180441</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1521118180441</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added AuthGuard to Player">
+      <created>1521118573800</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1521118573800</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implemented basic continue function for playlist">
+      <created>1521202499910</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1521202499910</updated>
+    </task>
+    <task id="LOCAL-00010" summary="worked on playlist management and WebPlayer Component">
+      <created>1521457403583</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1521457403583</updated>
+    </task>
+    <task id="LOCAL-00011" summary="another Login/Refresh Fix">
+      <created>1521460686008</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1521460686008</updated>
+    </task>
+    <task id="LOCAL-00012" summary="implemented playlist and next/previous functions&#10;have to update upstream&#10;playback now kinda works">
+      <created>1521467066219</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1521467066219</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fixed the stop bug on end of playlist">
+      <created>1521467625386</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1521467625386</updated>
+    </task>
+    <task id="LOCAL-00014" summary="implemented update Upstream&#10;implemented actions for Upstream commands (not tested)">
+      <created>1521545828133</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1521545828134</updated>
+    </task>
+    <task id="LOCAL-00015" summary="moved web player service">
+      <created>1521547005133</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1521547005133</updated>
+    </task>
+    <task id="LOCAL-00016" summary="change PC commit">
+      <created>1521698238065</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1521698238065</updated>
+    </task>
+    <task id="LOCAL-00017" summary="enabled some polifills&#10;changed environment back to alderaan">
+      <created>1521798671716</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1521798671716</updated>
+    </task>
+    <task id="LOCAL-00018" summary="made Sidenav responsive">
+      <created>1521799780432</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1521799780432</updated>
+    </task>
+    <task id="LOCAL-00019" summary="implemented new Notification Service (it kinda works but still buggs out randomly)">
+      <created>1522068089677</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1522068089677</updated>
+    </task>
+    <task id="LOCAL-00020" summary="implemented Artist Overview (basic, frontend)">
+      <created>1522327462656</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1522327462656</updated>
+    </task>
+    <task id="LOCAL-00021" summary="updated addMigration.bat">
+      <created>1522331884863</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1522331884863</updated>
+    </task>
+    <task id="LOCAL-00022" summary="implemented SongOverview">
+      <created>1522332754656</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1522332754656</updated>
+    </task>
+    <task id="LOCAL-00023" summary="sample implementation of reading from the fs and reading ID3 Tags">
+      <created>1522758444840</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1522758444840</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed authenticationResolver Path issue&#10;changed Path to music for Alderaan System&#10;Added SongSource Enum and changed Song Entity to reflect changes&#10;Added Music Path to Angular env&#10;Changed Song Response Models from Iface to Class">
+      <created>1523007019500</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1523007019500</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fixed Property accessors&#10;fixed Prod env">
+      <created>1523009036609</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1523009036609</updated>
+    </task>
+    <task id="LOCAL-00026" summary="removed accidentally checked in artists-entity.ts&#10;updated solution to embed ASP.NET Core project into electron">
+      <created>1523024800412</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1523024800412</updated>
+    </task>
+    <task id="LOCAL-00027" summary="implemented #1 &#10;If run as Electron an ElectronSuperUser account is automatically obtained">
+      <created>1523276445925</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1523276445925</updated>
+    </task>
+    <task id="LOCAL-00028" summary="worked on #5&#10;implemented SettingsModule with MusicPath controls (adding a path without a FilePicker atm)">
+      <created>1523356031172</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1523356031172</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="123671000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17085153" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32897604" />
+      <window_info active="true" anchor="bottom" auto_hide="true" id="Run" order="2" visible="true" weight="0.32528856" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.42287514" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" order="12" weight="0.32899022" />
+      <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.32934782" />
+      <window_info anchor="bottom" id="REST Client" order="10" weight="0.5021739" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32897604" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32897604" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.32570806" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17123288" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TypeScript" order="12" weight="0.32899022" />
+      <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.32934782" />
+      <window_info anchor="bottom" id="REST Client" order="10" weight="0.5021739" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.42374727" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.32897604" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="worked on integrating navigation and menues" />
+    <MESSAGE value="worked on integrating navigation and menues (kinda works but destroys Angular Routing)" />
+    <MESSAGE value="worked on WebPlayerComponent" />
+    <MESSAGE value="basic player implementation works (1 song 1 player and dont click on anything u shouldnt)" />
+    <MESSAGE value="added AuthGuard to Player" />
+    <MESSAGE value="implemented basic continue function for playlist" />
+    <MESSAGE value="worked on playlist management and WebPlayer Component" />
+    <MESSAGE value="another Login/Refresh Fix" />
+    <MESSAGE value="implemented playlist and next/previous functions&#10;have to update upstream&#10;playback now kinda works" />
+    <MESSAGE value="fixed the stop bug on end of playlist" />
+    <MESSAGE value="implemented update Upstream&#10;implemented actions for Upstream commands (not tested)" />
+    <MESSAGE value="moved web player service" />
+    <MESSAGE value="change PC commit" />
+    <MESSAGE value="enabled some polifills&#10;changed environment back to alderaan" />
+    <MESSAGE value="made Sidenav responsive" />
+    <MESSAGE value="implemented new Notification Service (it kinda works but still buggs out randomly)" />
+    <MESSAGE value="implemented Artist Overview (basic, frontend)" />
+    <MESSAGE value="updated addMigration.bat" />
+    <MESSAGE value="implemented SongOverview" />
+    <MESSAGE value="sample implementation of reading from the fs and reading ID3 Tags" />
+    <MESSAGE value="fixed authenticationResolver Path issue&#10;changed Path to music for Alderaan System&#10;Added SongSource Enum and changed Song Entity to reflect changes&#10;Added Music Path to Angular env&#10;Changed Song Response Models from Iface to Class" />
+    <MESSAGE value="fixed Property accessors&#10;fixed Prod env" />
+    <MESSAGE value="removed accidentally checked in artists-entity.ts&#10;updated solution to embed ASP.NET Core project into electron" />
+    <MESSAGE value="implemented #1 &#10;If run as Electron an ElectronSuperUser account is automatically obtained" />
+    <MESSAGE value="worked on #5&#10;implemented SettingsModule with MusicPath controls (adding a path without a FilePicker atm)" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on #5&#10;implemented SettingsModule with MusicPath controls (adding a path without a FilePicker atm)" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="8" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/album.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/album-response.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/artist-response.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/song-entity.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/album-entity.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/ormconfig.json.old" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/test-connection.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/security/authentication-errorResolver.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/song-source.enum.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/node_modules/sequelize-typescript/lib/models/Model.d.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/models/artist-entity.ts" />
+    <entry file="file://$PROJECT_DIR$/jukebox/src/environments/environment.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="8" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/tsconfig.app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/navigation/save-changes-dialog/save-changes-dialog.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/navigation/save-changes-dialog/save-changes-dialog.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/navigation/navigation-bar/navigation-bar.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="38" column="8" lean-forward="true" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/player/current-player-status/current-player-status.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/player/current-player-status/current-player-status.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/player/web-player/web-player.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/player/web-player/web-player.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="40" column="12" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/album-overview/album-overview.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/album-overview/album-overview.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="11" lean-forward="true" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/artist-overview/artist-overview.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/artist-overview/artist-overview.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/environments/environment.prod.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-search/song-search.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-search/song-search.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="40" lean-forward="true" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-selection/song-selection.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-selection/song-selection.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-overview/song-overview.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-overview/song-overview.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-routing.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="16" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings-routing.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="18" column="4" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/song/song-search/song-search.component.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/security/authentication.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="116" column="3" selection-start-line="116" selection-start-column="3" selection-end-line="116" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings/settings.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker-dialog/file-picker-dialog.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker-dialog/file-picker-dialog.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/file-picker/file-picker.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/file-picker/models/file-picker-config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="30" column="16" lean-forward="true" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/src/app/settings/settings.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jukebox/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="50" lean-forward="true" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

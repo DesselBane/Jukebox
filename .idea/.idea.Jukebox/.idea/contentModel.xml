@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2017.3/system/resharper-host/local/Transient/ReSharperHost/v11/SolutionCaches/_Jukebox.-353034341.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/xunit.runner.visualstudio/2.3.1/build/netcoreapp1.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="Databases" t="Include" />
+      <e p="Framework" t="Include" />
+      <e p="Jukebox.Common" t="IncludeRecursive">
+        <e p="Extensions" t="Include">
+          <e p="ClaimsIdentityExtensions.cs" t="Include" />
+          <e p="DateTimeExtensions.cs" t="Include" />
+          <e p="EmailExtensions.cs" t="Include" />
+          <e p="ObjectExtensions.cs" t="Include" />
+          <e p="StringContentExtensions.cs" t="Include" />
+          <e p="StringExtensions.cs" t="Include" />
+          <e p="WebsocketExtensions.cs" t="Include" />
+        </e>
+        <e p="Interception" t="Include">
+          <e p="ControllerInterceptor.cs" t="Include" />
+        </e>
+        <e p="Jukebox.Common.csproj" t="IncludeRecursive" />
+        <e p="Mail" t="Include">
+          <e p="DummyMailService.cs" t="Include" />
+          <e p="MailKitEmailService.cs" t="Include" />
+        </e>
+        <e p="Notifications" t="Include">
+          <e p="NotificationService.cs" t="Include" />
+        </e>
+        <e p="Players" t="Include">
+          <e p="PlayerService.cs" t="Include" />
+          <e p="PlayerServiceInterceptor.cs" t="Include" />
+          <e p="PlayerValidator.cs" t="Include" />
+        </e>
+        <e p="Security" t="Include">
+          <e p="AuthenticationServiceInterceptor.cs" t="Include" />
+          <e p="AuthenticationValidator.cs" t="Include" />
+          <e p="ElectronAuthenticationInterceptor.cs" t="Include" />
+          <e p="HashWorker.cs" t="Include" />
+          <e p="JwtAuthenticationService.cs" t="Include" />
+          <e p="JwtTokenOptions.cs" t="Include" />
+        </e>
+        <e p="Settings" t="Include">
+          <e p="SettingsService.cs" t="Include" />
+        </e>
+        <e p="Songs" t="Include">
+          <e p="IndexingService.cs" t="Include" />
+          <e p="IndexingServiceInterceptor.cs" t="Include" />
+          <e p="IndexingValidator.cs" t="Include" />
+          <e p="SongService.cs" t="Include" />
+          <e p="SongServiceInterceptor.cs" t="Include" />
+          <e p="SongValidator.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Common.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Jukebox.Common.Abstractions" t="IncludeRecursive">
+        <e p="Claims" t="Include">
+          <e p="RoleClaim.cs" t="Include" />
+          <e p="RoleClaimTypes.cs" t="Include" />
+          <e p="UsernameClaim.cs" t="Include" />
+        </e>
+        <e p="DataModel" t="Include">
+          <e p="Album.cs" t="Include" />
+          <e p="Artist.cs" t="Include" />
+          <e p="DataContext.cs" t="Include" />
+          <e p="IPlayerRepository.cs" t="Include" />
+          <e p="Player.cs" t="Include" />
+          <e p="PlayerCommand.cs" t="Include" />
+          <e p="PlayerCommandTypes.cs" t="Include" />
+          <e p="PlayerInitMessage.cs" t="Include" />
+          <e p="PlayerState.cs" t="Include" />
+          <e p="Song.cs" t="Include" />
+          <e p="SongSource.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UserClaim.cs" t="Include" />
+        </e>
+        <e p="Email" t="Include">
+          <e p="IEmail.cs" t="Include" />
+          <e p="IEmailService.cs" t="Include" />
+          <e p="IEmailServiceConfiguration.cs" t="Include" />
+          <e p="SimpleEmail.cs" t="Include" />
+        </e>
+        <e p="ErrorCodes" t="Include">
+          <e p="AuthenticationErrorCodes.cs" t="Include" />
+          <e p="GlobalErrorCodes.cs" t="Include" />
+          <e p="NotificationErrorCodes.cs" t="Include" />
+          <e p="PlayerErrorCodes.cs" t="Include" />
+          <e p="SongErrorCodes.cs" t="Include" />
+        </e>
+        <e p="Interception" t="Include">
+          <e p="InterceptingMappingBase.cs" t="Include" />
+        </e>
+        <e p="Jukebox.Common.Abstractions.csproj" t="IncludeRecursive" />
+        <e p="Notification" t="Include">
+          <e p="INotificationService.cs" t="Include" />
+          <e p="Notification.cs" t="Include" />
+          <e p="NotificationChannel.cs" t="Include" />
+        </e>
+        <e p="Options" t="Include">
+          <e p="IHostingOptions.cs" t="Include" />
+          <e p="IndexOptions.cs" t="Include" />
+          <e p="WebsocketOptions.cs" t="Include" />
+        </e>
+        <e p="Players" t="Include">
+          <e p="IPlayerService.cs" t="Include" />
+        </e>
+        <e p="Security" t="Include">
+          <e p="AuthToken.cs" t="Include" />
+          <e p="IAuthenticationService.cs" t="Include" />
+        </e>
+        <e p="Settings" t="Include">
+          <e p="ISettingsService.cs" t="Include" />
+        </e>
+        <e p="Songs" t="Include">
+          <e p="IIndexingService.cs" t="Include" />
+          <e p="ISongService.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Common.Abstractions.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Jukebox.Data.InMemory" t="IncludeRecursive">
+        <e p="AsyncEnumerator.cs" t="Include" />
+        <e p="Jukebox.Data.InMemory.csproj" t="IncludeRecursive" />
+        <e p="PlayerRepository.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Data.InMemory.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Jukebox.Data.SqLite" t="IncludeRecursive">
+        <e p="Jukebox.Data.SqLite.csproj" t="IncludeRecursive" />
+        <e p="Migrations" t="Include">
+          <e p="20180329132322_Initial.Designer.cs" t="Include" />
+          <e p="20180329132322_Initial.cs" t="Include" />
+          <e p="SqLiteDataContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="SqLiteDataContext.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Jukebox.Data.SqLite.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Jukebox.Testing.Acceptance" t="IncludeRecursive">
+        <e p="Authentication" t="Include">
+          <e p="AuthControllerLoginTests.cs" t="Include" />
+          <e p="AuthControllerTest.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="AuthExtensions.cs" t="Include" />
+          <e p="SongExtensions.cs" t="Include" />
+        </e>
+        <e p="IntStartup.cs" t="Include" />
+        <e p="Jukebox.Testing.Acceptance.csproj" t="IncludeRecursive" />
+        <e p="Song" t="Include">
+          <e p="IndexingTests.cs" t="Include" />
+        </e>
+        <e p="TestBase.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="Jukebox.Testing.Acceptance.AssemblyInfo.cs" t="Include" />
+              <e p="Jukebox.Testing.Acceptance.Program.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Jukebox.sln" t="IncludeFlat" />
+      <e p="JukeboxAPI" t="IncludeRecursive">
+        <e p="ConfigureServicesExtensions.cs" t="Include" />
+        <e p="Controllers" t="Include">
+          <e p="AuthController.cs" t="Include" />
+          <e p="FilesController.cs" t="Include" />
+          <e p="NotificationController.cs" t="Include" />
+          <e p="PingController.cs" t="Include" />
+          <e p="PlayerController.cs" t="Include" />
+          <e p="SettingsController.cs" t="Include" />
+          <e p="SongController.cs" t="Include" />
+        </e>
+        <e p="DataTransferObjects" t="Include">
+          <e p="LoginDTO.cs" t="Include" />
+          <e p="PasswordUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="JukeboxAPI.csproj" t="IncludeRecursive" />
+        <e p="Options" t="Include">
+          <e p="EmailServiceConfiguration.cs" t="Include" />
+          <e p="HostingOptions.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="appsettings.Alderaan.json" t="Include" />
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.HDS037.Test.json" t="Include" />
+        <e p="appsettings.HDS037.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="jukebox.db" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="JukeboxAPI.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Testing" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
