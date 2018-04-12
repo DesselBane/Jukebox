@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using ExceptionMiddleware;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.ErrorCodes;
@@ -47,6 +48,25 @@ namespace Jukebox.Common.Songs
                                                              .ToListAsync());
             await _dataContext.SaveChangesAsync();
 
+            var orphanedAlbums = await _dataContext.Albums
+                                                   .GroupJoin(_dataContext.Songs, album => album.Id, song => song.AlbumId, (album,
+                                                                                                                            song) => new {album, song})
+                                                   .Where(x => x.song == null || !x.song.Any())
+                                                   .Select(x => x.album)
+                                                   .ToListAsync();
+
+            _dataContext.Albums.RemoveRange(orphanedAlbums);
+            await _dataContext.SaveChangesAsync();
+
+            var orphanedArtists = await _dataContext.Artists
+                                                    .GroupJoin(_dataContext.Albums, artist => artist.Id, album => album.ArtistId, (artist,
+                                                                                                                                   album) => new {artist, album})
+                                                    .Where(x => x.album == null || !x.album.Any())
+                                                    .Select(x => x.artist)
+                                                    .ToListAsync();
+            
+            _dataContext.Artists.RemoveRange(orphanedArtists);
+            await _dataContext.SaveChangesAsync();
 
             lock (_IS_INDEXING_SYNC_HANDLE)
             {
