@@ -41,5 +41,21 @@ export class SongService {
     return this._http.get<SongResponse[]>('api/song/songs');
   }
 
+  public getAlbumsOfArtist(artistId: number): Observable<AlbumResponse[]> {
+    return this._http.get<AlbumResponse[]>(`api/song/albums/ofArtist/${artistId}`);
+  }
+
+  public getArtistById(artistId: number): Observable<ArtistResponse> {
+    return this._http.get<ArtistResponse>(`api/song/artists/${artistId}`);
+  }
+
+  public getSongsOfAlbum(albumId: number): Observable<SongResponse[]> {
+    return this._http.get<SongResponse[]>(`api/song/songs/ofAlbum/${albumId}`);
+  }
+
+  public getAlbumById(albumId: number): Observable<AlbumResponse> {
+    return this._http.get<AlbumResponse>(`api/song/albums/${albumId}`);
+  }
+
 
 }
