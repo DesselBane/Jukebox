@@ -26,6 +26,22 @@ namespace Jukebox.Common.Songs
                         {
                             nameof(GetSongById),
                             x => GetSongById((int) x.Arguments[0])
+                        },
+                        {
+                            nameof(GetArtistByIdAsync),
+                            x => GetArtistByIdAsync((int) x.Arguments[0])
+                        },
+                        {
+                            nameof(GetAlbumByIdAsync),
+                            x => GetAlbumByIdAsync((int) x.Arguments[0])
+                        },
+                        {
+                            nameof(GetAlbumsOfArtistAsync),
+                            x => GetAlbumsOfArtistAsync((int) x.Arguments[0])
+                        },
+                        {
+                            nameof(GetSongsOfAlbumAsync),
+                            x => GetSongsOfAlbumAsync((int) x.Arguments[0])
                         }
                     });
         }
@@ -56,6 +72,34 @@ namespace Jukebox.Common.Songs
 
         public Task<IEnumerable<Song>> GetSongsAsync()
         {
+            return null;
+        }
+
+        public Task<Artist> GetArtistByIdAsync(int artistId)
+        {
+            _songValidator.ValidateArtistExists(artistId);
+            
+            return null;
+        }
+
+        public Task<Album> GetAlbumByIdAsync(int albumId)
+        {
+            _songValidator.ValidateAlbumExists(albumId);
+            
+            return null;
+        }
+
+        public Task<IEnumerable<Album>> GetAlbumsOfArtistAsync(int artistId)
+        {
+            _songValidator.ValidateArtistExists(artistId);
+
+            return null;
+        }
+
+        public Task<IEnumerable<Song>> GetSongsOfAlbumAsync(int albumId)
+        {
+            _songValidator.ValidateAlbumExists(albumId);
+            
             return null;
         }
     }

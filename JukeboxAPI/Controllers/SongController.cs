@@ -56,6 +56,24 @@ namespace Jukebox.Controllers
             return _songService.GetArtistsAsync();
         }
 
+        [HttpGet("artists/{artistId}")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(Artist), Description = "Artist with the specified Id")]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = SongErrorCodes.ARTIST_NOT_FOUND + "\nArtist could not be found")]
+        public Task<Artist> GetArtistById(int artistId)
+        {
+            return _songService.GetArtistByIdAsync(artistId);
+        }
+
+        [HttpGet("albums/ofArtist/{artistId}")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<Album>), Description = "All Albums by the specified Artist")]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = SongErrorCodes.ARTIST_NOT_FOUND + "\n Artist could not be found")]
+        public Task<IEnumerable<Album>> GetAlbumsOfArtist(int artistId)
+        {
+            return _songService.GetAlbumsOfArtistAsync(artistId);
+        }
+
         [HttpGet("albums")]
         [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<Album>), Description = "Returns all Albums")]
@@ -64,12 +82,30 @@ namespace Jukebox.Controllers
             return _songService.GetAlbumsAsync();
         }
 
+        [HttpGet("albums/{albumId}")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(Album), Description              = "Album with specified Id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, typeof(ExceptionDTO), Description = SongErrorCodes.ALBUM_NOT_FOUND + "\nAlbum could not be found")]
+        public Task<Album> GetAlbumById(int albumId)
+        {
+            return _songService.GetAlbumByIdAsync(albumId);
+        }
+
         [HttpGet("songs")]
         [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK, typeof(IEnumerable<Song>), Description = "Returns all Songs")]
         public Task<IEnumerable<Song>> GetSongs()
         {
             return _songService.GetSongsAsync();
+        }
+
+        [HttpGet("songs/ofAlbum/{albumId")]
+        [AllowAnonymous]
+        [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<Song>), Description = "All Songs from the specified Album")]
+        [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = "Album could not be found")]
+        public Task<IEnumerable<Song>> GetSongsOfAlbum(int albumId)
+        {
+            return _songService.GetSongsOfAlbumAsync(albumId);
         }
     }
 }

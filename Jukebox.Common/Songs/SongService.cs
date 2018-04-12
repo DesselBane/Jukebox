@@ -52,5 +52,29 @@ namespace Jukebox.Common.Songs
         {
             return await _dataContext.Songs.ToListAsync();
         }
+
+        public Task<Artist> GetArtistByIdAsync(int artistId)
+        {
+            return _dataContext.Artists.FirstAsync(x => x.Id == artistId);
+        }
+
+        public Task<Album> GetAlbumByIdAsync(int albumId)
+        {
+            return _dataContext.Albums.FirstAsync(x => x.Id == albumId);
+        }
+
+        public async Task<IEnumerable<Album>> GetAlbumsOfArtistAsync(int artistId)
+        {
+            return await _dataContext.Albums
+                                     .Where(x => x.ArtistId == artistId)
+                                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Song>> GetSongsOfAlbumAsync(int albumId)
+        {
+            return await _dataContext.Songs
+                                     .Where(x => x.AlbumId == albumId)
+                                     .ToListAsync();
+        }
     }
 }
