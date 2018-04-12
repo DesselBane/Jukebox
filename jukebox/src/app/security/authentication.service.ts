@@ -15,12 +15,14 @@ import {ElectronService} from "ngx-electron";
 export class AuthenticationService {
   private _navigation: NavigationService;
   private _electronService: ElectronService;
+  private static _isElectronApp: boolean = false;
 
   constructor(private http: HttpClient, navigation: NavigationService, electronService: ElectronService) {
     this._navigation = navigation;
     this._electronService = electronService;
 
     if (this._electronService.isElectronApp) {
+      AuthenticationService._isElectronApp = true;
       AuthenticationService._authParentItem.isVisible = false;
       AuthenticationService.logout();
       this.login("", "").subscribe();
@@ -80,6 +82,12 @@ export class AuthenticationService {
   }
 
   static createRefreshHttpRequest(): HttpRequest<any> {
+    if (this._isElectronApp)
+      return new HttpRequest<any>('POST', 'api/auth/login', JSON.stringify({
+        username: "",
+        password: ""
+      }));
+
     return new HttpRequest<any>('POST', '/api/auth/refreshToken', JSON.stringify(AuthenticationService.loginToken));
   }
 
@@ -110,7 +118,6 @@ export class AuthenticationService {
         password: password
       }))
       .do(response => {
-        console.log("New login");
         AuthenticationService.loginTokenResponse = response;
         AuthenticationService.updateNavItems();
       });
