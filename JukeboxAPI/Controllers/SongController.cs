@@ -99,7 +99,7 @@ namespace Jukebox.Controllers
             return _songService.GetSongsAsync();
         }
 
-        [HttpGet("songs/ofAlbum/{albumId")]
+        [HttpGet("songs/ofAlbum/{albumId}")]
         [AllowAnonymous]
         [SwaggerResponse(HttpStatusCode.OK,typeof(IEnumerable<Song>), Description = "All Songs from the specified Album")]
         [SwaggerResponse(HttpStatusCode.NotFound,typeof(ExceptionDTO), Description = "Album could not be found")]
