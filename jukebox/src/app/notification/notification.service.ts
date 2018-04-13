@@ -10,6 +10,7 @@ import {Subject} from "rxjs/Subject";
 export class NotificationService {
   private _notificationSocket: WebSocket;
   private _subject: Subject<MessageEvent>;
+  private _otherSubject = new Subject<NotificationResponse>();
 
   constructor() {
     this.openNotificationSocket();
@@ -20,10 +21,8 @@ export class NotificationService {
   }
 
   subscribeToChannel(channel: NotificationChannels): Observable<NotificationResponse> {
-    return this._subject.asObservable()
-      .map((messageEvent: MessageEvent) => {
-        return JSON.parse(messageEvent.data);
-      })
+    return this._otherSubject.asObservable()
+
       .filter((notification: NotificationResponse) => {
         return notification.Channel == channel;
       });
@@ -46,7 +45,9 @@ export class NotificationService {
 
     this._subject = Subject.create(observer, observable);
 
-    this._subject.subscribe(() => {
+    this._subject.subscribe((messageEvent: MessageEvent) => {
+        console.log(messageEvent);
+        this._otherSubject.next(JSON.parse(messageEvent.data))
       }
       , err => NotificationService.handleSocketError(err)
       , () => this.handleSocketCompleted());
