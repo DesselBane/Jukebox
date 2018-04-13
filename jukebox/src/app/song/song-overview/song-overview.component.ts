@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SongService} from "../song.service";
 import {SongResponse} from "../models/song-response";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
   selector: 'app-song-overview',
@@ -8,6 +9,7 @@ import {SongResponse} from "../models/song-response";
   styleUrls: ['./song-overview.component.css']
 })
 export class SongOverviewComponent implements OnInit {
+  private _notificationService: NotificationService;
   get alphabet(): string[] {
     return this._alphabet;
   }
@@ -36,5 +38,6 @@ export class SongOverviewComponent implements OnInit {
   public getSongByLetter(letter: string) {
     return this.songs.filter(x => x.title.charAt(0).toUpperCase() === letter);
   }
+
 
 }

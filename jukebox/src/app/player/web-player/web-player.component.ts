@@ -4,6 +4,8 @@ import {PlayerService} from "../player.service";
 import {PlayerResponse} from "../models/player-response";
 import {PlayerCommandResponse} from "../models/player-command-response";
 import {PlayerCommandTypes} from "../models/player-command-types.enum";
+import {UserNotification} from "../../notification/models/user-notification";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
   selector: 'app-web-player',
@@ -11,6 +13,7 @@ import {PlayerCommandTypes} from "../models/player-command-types.enum";
   styleUrls: ['./web-player.component.css']
 })
 export class WebPlayerComponent implements OnInit {
+  private _notificationService: NotificationService;
   get activePlayer(): PlayerResponse {
     return this._activePlayer;
   }
@@ -44,8 +47,10 @@ export class WebPlayerComponent implements OnInit {
   private _playerService: PlayerService;
   private _activePlayer : PlayerResponse;
 
-  constructor(playerService: PlayerService) {
+  constructor(playerService: PlayerService, notificationService: NotificationService) {
     this._playerService = playerService;
+    this._notificationService = notificationService;
+
     this.updatePlayer(this._playerService.activePlayer);
     this._playerService.activePlayerChanged
       .subscribe(value => this.updatePlayer(value));
@@ -142,5 +147,9 @@ export class WebPlayerComponent implements OnInit {
 
     this._playerService.executePlayerCommand(cmd)
       .subscribe();
+  }
+
+  clickMe() {
+    this._notificationService.displayUserNotification(new UserNotification());
   }
 }

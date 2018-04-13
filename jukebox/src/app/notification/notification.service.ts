@@ -5,6 +5,9 @@ import {NotificationResponse} from "./models/notification-response";
 import {Observer} from "rxjs/Observer";
 import {environment} from "../../environments/environment";
 import {Subject} from "rxjs/Subject";
+import {UserNotification} from "./models/user-notification";
+
+declare var Notification: any;
 
 @Injectable()
 export class NotificationService {
@@ -56,5 +59,30 @@ export class NotificationService {
   private handleSocketCompleted() {
     console.log("Completed");
     this._notificationSocket = null;
+  }
+
+  public displayUserNotification(notifica: UserNotification) {
+    console.log(Notification.permission);
+
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      let notification = new Notification("Hi there!");
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          let notification = new Notification("Hi there!");
+        }
+      });
+    }
   }
 }
