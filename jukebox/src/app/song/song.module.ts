@@ -11,6 +11,7 @@ import {AlbumOverviewComponent} from './album-overview/album-overview.component'
 import {SongOverviewComponent} from './song-overview/song-overview.component';
 import {ArtistDetailsComponent} from './artist-details/artist-details.component';
 import {AlbumDetailsComponent} from './album-details/album-details.component';
+import {SongListViewModelComponent} from './song-list-view-model/song-list-view-model.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {AlbumDetailsComponent} from './album-details/album-details.component';
     AlbumOverviewComponent,
     SongOverviewComponent,
     ArtistDetailsComponent,
-    AlbumDetailsComponent
+    AlbumDetailsComponent,
+    SongListViewModelComponent
   ],
   providers: [
     SongService

@@ -6,9 +6,13 @@ import {PlayerCommandResponse} from "./models/player-command-response";
 import {NotificationService} from "../notification/notification.service";
 import {NotificationChannels} from "../notification/models/notification-channels.enum";
 import {NotificationResponse} from "../notification/models/notification-response";
+import {ElectronService} from "ngx-electron";
+import {WebPlayerService} from "./web-player.service";
 
 @Injectable()
 export class PlayerService {
+  private _electronService: ElectronService;
+  private _webPlayerService: WebPlayerService;
   get activePlayerChanged(): EventEmitter<PlayerResponse> {
     return this._activePlayerChanged;
   }
@@ -29,15 +33,24 @@ export class PlayerService {
   private _http: HttpClient;
   private _notificationService: NotificationService;
 
-  constructor(http: HttpClient, notificationService: NotificationService)
+  constructor(http: HttpClient, notificationService: NotificationService, electronService: ElectronService, webPlayerService: WebPlayerService)
   {
     this._http = http;
     this._notificationService = notificationService;
+    this._electronService = electronService;
+    this._webPlayerService = webPlayerService;
+
+    this._webPlayerService.activePlayerChanged.subscribe(player => this.activePlayer = player);
+
     let lastPlayerId : number = Number(localStorage.getItem("currentPlayerId"));
 
     this.getPlayerById(lastPlayerId)
       .subscribe(value => this.activePlayer = value,
-        () => localStorage.removeItem("currentPlayerId"));
+        () => {
+          localStorage.removeItem("currentPlayerId");
+          if (this._electronService.isElectronApp)
+            this.createDefaultPlayer();
+        });
 
     notificationService.subscribeToChannel(NotificationChannels.PlayerInfo)
       .filter((notification: NotificationResponse) => {
@@ -87,4 +100,7 @@ export class PlayerService {
     this.activePlayer = null;
   }
 
+  private createDefaultPlayer() {
+    this._webPlayerService.createPlayer('Local Player');
+  }
 }

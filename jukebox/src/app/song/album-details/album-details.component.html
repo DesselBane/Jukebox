@@ -4,9 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let song of songs">
-        {{song.title}}
-      </mat-list-item>
+      <app-song-list-view-model *ngFor="let song of songs" [Song]="song"></app-song-list-view-model>
     </mat-list>
   </mat-card-content>
 </mat-card>

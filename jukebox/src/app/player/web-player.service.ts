@@ -1,5 +1,4 @@
-import {Injectable} from '@angular/core';
-import {PlayerService} from "./player.service";
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {PlayerResponse} from "./models/player-response";
 import {Observable} from "rxjs/Observable";
@@ -15,6 +14,15 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class WebPlayerService {
+  constructor(http: HttpClient, songService: SongService, router: Router) {
+    this._http = http;
+    this._songService = songService;
+    this._router = router;
+    this._audio = new Audio();
+    this._audio.autoplay = false;
+    this._audio.onended = () => this.next();
+    this._audio.onerror = () => this.next();
+  }
   private setState(value: WebPlayerState): void
   {
     this._state = value;
@@ -24,7 +32,6 @@ export class WebPlayerService {
   }
 
   private _audio;
-  private _playerService: PlayerService;
   private _state = WebPlayerState.Closed;
 
   private _wsObservable: Subject<MessageEvent>;
@@ -37,16 +44,10 @@ export class WebPlayerService {
   private _songService: SongService;
   private _router: Router;
 
-  constructor(playerService: PlayerService, http: HttpClient, songService: SongService, router: Router)
-  {
-    this._playerService = playerService;
-    this._http = http;
-    this._songService = songService;
-    this._router = router;
-    this._audio = new Audio();
-    this._audio.autoplay = false;
-    this._audio.onended = () => this.next();
-    this._audio.onerror = () => this.next();
+  private _activePlayerChanged = new EventEmitter<PlayerResponse>();
+
+  get activePlayerChanged(): EventEmitter<PlayerResponse> {
+    return this._activePlayerChanged;
   }
 
 
@@ -208,7 +209,7 @@ export class WebPlayerService {
           .subscribe(value => {
             this._player = value;
             this.setState(WebPlayerState.Stopped);
-            this._playerService.activePlayer = this._player;
+            this.activePlayerChanged.emit(this._player);
             this._router.navigateByUrl("player/web");
           });
         break;
