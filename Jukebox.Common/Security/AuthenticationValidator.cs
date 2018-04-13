@@ -55,11 +55,6 @@ namespace Jukebox.Common.Security
 
             if (!jwtHandler.CanReadToken(token))
                 throw new UnauthorizedException("Invalid Access Token", Guid.Parse(AuthenticationErrorCodes.ACCESS_TOKEN_INVALID));
-
-            var jwtToken = jwtHandler.ReadJwtToken(token);
-
-            if (!_securityContext.Users.Any(x => string.Equals(x.EMail, jwtToken.Subject, StringComparison.CurrentCultureIgnoreCase)))
-                throw new NotFoundException(jwtToken.Subject, nameof(User), Guid.Parse(AuthenticationErrorCodes.USER_NOT_FOUND));
         }
     }
 }
