@@ -49,12 +49,14 @@ namespace Jukebox.Common.Security
                 throw new NotFoundException("", "ResetHash doesnt Exist", Guid.Parse(AuthenticationErrorCodes.RESET_HAST_DOESNT_EXIST));
         }
 
-        public void ValidateJwtToken(string token)
+        public JwtSecurityToken ValidateJwtToken(string token)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
 
             if (!jwtHandler.CanReadToken(token))
                 throw new UnauthorizedException("Invalid Access Token", Guid.Parse(AuthenticationErrorCodes.ACCESS_TOKEN_INVALID));
+            
+            return jwtHandler.ReadJwtToken(token);
         }
     }
 }

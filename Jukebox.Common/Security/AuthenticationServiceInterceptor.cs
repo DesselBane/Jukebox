@@ -71,7 +71,9 @@ namespace Jukebox.Common.Security
 
         public Task<AuthToken> AuthenticateTokenAsync(AuthToken token)
         {
-            _authenticationValidator.ValidateJwtToken(token.AccessToken);
+            var parsedToken = _authenticationValidator.ValidateJwtToken(token.AccessToken);
+            _authenticationValidator.ValidateUserExists(parsedToken.Subject);
+            
             return null;
         }
 
@@ -112,11 +114,6 @@ namespace Jukebox.Common.Security
         }
 
         public Task<User> GetCurrentUserAsync()
-        {
-            return null;
-        }
-
-        public AuthToken CreateBasicAuthToken(ClaimsIdentity identity)
         {
             return null;
         }

@@ -11,12 +11,27 @@ declare var Notification: any;
 
 @Injectable()
 export class NotificationService {
+  constructor() {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      this._canSendNotifications = false;
+    }
+    else if (Notification.permission === "default")
+      Notification.requestPermission()
+        .then(() => this._canSendNotifications = Notification.permission === "granted");
+
+    this.openNotificationSocket();
+  }
+
   private _notificationSocket: WebSocket;
   private _subject: Subject<MessageEvent>;
   private _otherSubject = new Subject<NotificationResponse>();
 
-  constructor() {
-    this.openNotificationSocket();
+  // noinspection TypeScriptFieldCanBeMadeReadonly
+  private _canSendNotifications = true;
+
+  get canSendNotifications(): boolean {
+    return this._canSendNotifications;
   }
 
   private static handleSocketError(error) {
@@ -61,28 +76,17 @@ export class NotificationService {
     this._notificationSocket = null;
   }
 
-  public displayUserNotification(notifica: UserNotification) {
-    console.log(Notification.permission);
+  public displayUserNotification(notification: UserNotification) {
+    if (!this.canSendNotifications)
+      return;
 
-    // Let's check if the browser supports notifications
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }
+    new Notification("Hi there!", {
+      badge: "https://i.imgur.com/4reaNuF.jpg",
+      body: "This is the Notification Body",
+      image: "https://i.imgur.com/AkDc38Z.jpg",
+      icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJPSURBVGhD7do5ixRBGIfx8QYRDERQWPAIzQQRBAURv4LgCoLifSsiiIGBkZmIibBgZiAaKpgIot9AEBMxMRINDNREPJ7/sK80RU3121d1g/3CL5iarmaenZmlZ3Yn44zzf806bF20Sgt9zzye4SZWaMEx1/EbfxZ9xnb0NldgD0YewxPzDcV9soBe5jLCByOemNi+h8g+syJMWUxsT/YQRRRf3/IjuC2pmPBYyRpyCWHEO2zCk8KamRUTHifZQmZFbIRmJbwx4TGSJeQiUhE23pjwfuk85AJSEUtwDmumt9Ixy6EJ75NOQzwRd6D1V/DGhOvSWch5eCOMNyZck05C9FKpGmE8MTGthzSJMHViWg05i6YRpmpMayFn0FaEqRLTSkgXEcYb0zjkNLqKMJ6Yl1iKWnMKXUcYT8wDVI7JGWFajzmJ3BGmtZgT6CvCNI4ZQoSpHXMcQ4kwxRhd5pfG7MIvFA/oO8J4Ym5gOuGXBUOJMGUxLzCdzfgELb7BkCJMGPMIWtfb4Rj+zVrshN5YmroRb3EUBxIO4Sli+1OKMXp8e7FjemvGNHkm9Ox6Rj/VD4idI6UYk5wmEV9RZeo8K+KK0W+w2GaPXCFyDcnZjdhGj5wh+sY+OWMIxpAaxhCPMaSGMcRjUCG6cIxt9NBfY6vMc8TO43EVyZlDbKOXrkg9sx5fEDuHx0GUjj5YxTZ7fIc+ft5OuIePiO33+IkNKJ3DiJ1gKO7DPXcRO0nfXmM1Ks0RvEfshLnp/XQLjf7BZgv2YH8P9mEbliExk8lfN8HbebLAzesAAAAASUVORK5CYII=",
+      data: {lol: "this is some data"}
+    });
 
-    // Let's check whether notification permissions have already been granted
-    else if (Notification.permission === "granted") {
-      // If it's okay let's create a notification
-      let notification = new Notification("Hi there!");
-    }
-
-    // Otherwise, we need to ask the user for permission
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          let notification = new Notification("Hi there!");
-        }
-      });
-    }
   }
 }
