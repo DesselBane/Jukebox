@@ -3,10 +3,6 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
-      <excludeFolder url="file://$MODULE_DIR$/JukeboxAPI/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/JukeboxAPI/obj" />
-      <excludeFolder url="file://$MODULE_DIR$/JukeboxAPI/wwwroot" />
-      <excludeFolder url="file://$MODULE_DIR$/jukebox/api" />
       <excludeFolder url="file://$MODULE_DIR$/jukebox/dist" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />

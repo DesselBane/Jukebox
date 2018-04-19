@@ -13,7 +13,7 @@
     "jukebox-build": "ng build --op ../JukeboxAPI/wwwroot",
     "electron": "ng build --bh ./ && electron .",
     "electron-no-build": "electron .",
-    "electron-rebuild": "electron-rebuild -f -w sqlite3"
+    "electron-rebuild": "electron-rebuild"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "@angular/router": "5.2.0",
     "angular2-jwt": "0.2.3",
     "core-js": "2.4.1",
+    "electron-windows-notifications": "^2.0.1",
     "ngx-electron": "1.0.4",
     "rxjs": "5.5.6",
     "zone.js": "0.8.19"
@@ -44,6 +45,7 @@
     "codelyzer": "4.0.1",
     "electron": "^1.8.2",
     "electron-builder": "^20.8.1",
+    "electron-rebuild": "^1.7.3",
     "jasmine-core": "2.8.0",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "2.0.0",

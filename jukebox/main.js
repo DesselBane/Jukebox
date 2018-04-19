@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const Menu = require('electron').Menu;
+const appId = '7B0F2E4A-39B3-47EA-82D4-45FB73D4C646';
 
 let win;
 let menu = Menu.buildFromTemplate([
@@ -14,6 +15,7 @@ let menu = Menu.buildFromTemplate([
 
 const os = require('os');
 let apiProcess = null;
+app.setAppUserModelId(appId);
 
 function startApi() {
   const proc = require('child_process').spawn;
