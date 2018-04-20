@@ -5,6 +5,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from "@angular/material";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
+import {ElectronService} from "ngx-electron";
 
 
 @Component({
@@ -13,6 +14,8 @@ import "rxjs/add/observable/fromEvent";
   styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent implements OnInit {
+  private _electronService: ElectronService;
+
   public _navItems: NavItem[];
   private _navigation: NavigationService;
   @ViewChild(MatSidenav)
@@ -20,21 +23,29 @@ export class NavigationBarComponent implements OnInit {
   private _lastQuery: boolean = undefined;
   private _resizeEvent: Observable<void>;
 
-  constructor(navigation: NavigationService, media: MediaMatcher) {
+  constructor(navigation: NavigationService, media: MediaMatcher, electronService: ElectronService) {
     this._navigation = navigation;
+    this._electronService = electronService;
     this._navItems = this._navigation.currentNavItems;
 
     this._navigation.navItems.subscribe(value => {
       this._navItems = value;
     });
-    this._mobileQuery = media.matchMedia('(max-width: 600px)');
 
-    this._resizeEvent = Observable.fromEvent(window, 'resize')
-      .map(() => {
-      })
-      .debounceTime(200);
+    if (!this.isElectronApp) {
+      this._mobileQuery = media.matchMedia('(max-width: 600px)');
 
-    this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
+      this._resizeEvent = Observable.fromEvent(window, 'resize')
+        .map(() => {
+        })
+        .debounceTime(200);
+
+      this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
+    }
+  }
+
+  public get isElectronApp(): boolean {
+    return this._electronService.isElectronApp;
   }
 
   private _mobileQuery: MediaQueryList;
@@ -44,10 +55,14 @@ export class NavigationBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.makeSidenavResponsveAgain();
+    if (this.isElectronApp)
+      this.sidenav.close();
+    else
+      this.makeSidenavResponsveAgain();
   }
 
   makeSidenavResponsveAgain(): void {
+
     if (this._lastQuery != undefined && this._lastQuery === this._mobileQuery.matches)
       return;
 
@@ -64,6 +79,10 @@ export class NavigationBarComponent implements OnInit {
   }
 
   navItemClicked() {
+    if (this.isElectronApp)
+      return;
+
+
     if (this._mobileQuery.matches)
       this.sidenav.toggle();
   }

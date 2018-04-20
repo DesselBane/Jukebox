@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-button id="btn_menu" (click)="sidenav.toggle()" *ngIf="mobileQuery.matches">
+  <button mat-button id="btn_menu" (click)="sidenav.toggle()" *ngIf="!isElectronApp && mobileQuery.matches">
     <mat-icon>menu</mat-icon>
   </button>
   <span id="title">Jukebox</span>
