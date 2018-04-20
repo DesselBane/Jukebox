@@ -10,6 +10,9 @@ export class NavigationService {
   private _electronService: ElectronService;
   private _router: Router;
   private _zone: NgZone;
+  private _trayIcon: Electron.Tray;
+  private _trayMenu: Electron.Menu;
+
 
 
   get navItems(): Observable<NavItem[]> {
@@ -27,6 +30,7 @@ export class NavigationService {
 
     this._navItemsRepo = [];
     this._navItemsSubject = new Subject<NavItem[]>();
+    this.createSysTrayIcon();
 
   }
 
@@ -74,6 +78,26 @@ export class NavigationService {
     });
 
     return item;
+  }
+
+  public updateSysTrayToolTip(toolTip: string) {
+    this._trayIcon.setToolTip(toolTip);
+  }
+
+  private createSysTrayIcon() {
+    if (!this._electronService.isElectronApp)
+      return;
+
+
+    this._trayIcon = new this._electronService.remote.Tray(`dist/assets/jukebox_24_dark.png`);
+    let trayMenuTemplate = [{
+      label: 'Jukebox APP',
+      enabled: false
+    }];
+
+    this._trayMenu = this._electronService.remote.Menu.buildFromTemplate(trayMenuTemplate);
+
+    this._trayIcon.setContextMenu(this._trayMenu);
   }
 
 }

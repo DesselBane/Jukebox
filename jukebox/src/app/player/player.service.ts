@@ -8,6 +8,8 @@ import {NotificationChannels} from "../notification/models/notification-channels
 import {NotificationResponse} from "../notification/models/notification-response";
 import {ElectronService} from "ngx-electron";
 import {WebPlayerService} from "./web-player.service";
+import {NavigationService} from "../navigation/navigation.service";
+import {SongResponse} from "../song/models/song-response";
 
 @Injectable()
 export class PlayerService {
@@ -21,24 +23,19 @@ export class PlayerService {
     return this._activePlayer;
   }
 
-  set activePlayer(value: PlayerResponse) {
-    this._activePlayer = value;
-    this._activePlayerChanged.emit(this._activePlayer);
-    localStorage.setItem("currentPlayerId",String(this._activePlayer.id));
-  }
-
-
+  private _navigationService: NavigationService;
   private _activePlayer: PlayerResponse;
   private _activePlayerChanged = new EventEmitter<PlayerResponse>();
   private _http: HttpClient;
   private _notificationService: NotificationService;
 
-  constructor(http: HttpClient, notificationService: NotificationService, electronService: ElectronService, webPlayerService: WebPlayerService)
+  constructor(http: HttpClient, notificationService: NotificationService, electronService: ElectronService, webPlayerService: WebPlayerService, navigationService: NavigationService)
   {
     this._http = http;
     this._notificationService = notificationService;
     this._electronService = electronService;
     this._webPlayerService = webPlayerService;
+    this._navigationService = navigationService;
 
     this._webPlayerService.activePlayerChanged.subscribe(player => this.activePlayer = player);
 
@@ -61,6 +58,19 @@ export class PlayerService {
         , () => {
         }
         , () => this.handleSocketCompleted());
+  }
+
+  get currentSong(): SongResponse {
+    if (this._activePlayer != null)
+      return this._activePlayer.playlist[this._activePlayer.playlistIndex];
+  }
+
+  set activePlayer(value: PlayerResponse) {
+    this._activePlayer = value;
+    this._activePlayerChanged.emit(this._activePlayer);
+    localStorage.setItem("currentPlayerId", String(this._activePlayer.id));
+    if (this.currentSong != null)
+      this._navigationService.updateSysTrayToolTip(this.currentSong.title);
   }
 
   getAvailablePlayers() : Observable<PlayerResponse[]>
