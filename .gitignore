@@ -8,3 +8,5 @@
 **/httpRequests/*
 .idea/**/*.xml
 .idea/.idea.JukeboxAPI/**/*.xml
+out/**/*
+prebuilt/**/*
