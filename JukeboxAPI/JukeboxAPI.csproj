@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <RuntimeIdentifiers>win10-x64;osx.10.11-x64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64;osx.10.11-x64;linux-x64;win10-x86</RuntimeIdentifiers>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Jukebox</AssemblyName>
     <RootNamespace>Jukebox</RootNamespace>
