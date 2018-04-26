@@ -20,10 +20,10 @@ app.setAppUserModelId(appId);
 function startApi() {
   const proc = require('child_process').spawn;
   //  run server
-  let apiPath = `${__dirname}\\api\\bin\\dist\\win`;
+  let apiPath = `${__dirname}\\api\\win`;
   let apiFullPath = `${apiPath}\\Jukebox.exe`;
   if (os.platform() === 'darwin') {
-    apiPath = `${__dirname}//api//bin//dist//osx`;
+    apiPath = `${__dirname}//api//osx`;
     apiFullPath = `${apiPath}//Jukebox`;
   }
   apiProcess = proc(apiFullPath, [], {cwd: apiPath, env: {ASPNETCORE_ENVIRONMENT: 'electron'}});

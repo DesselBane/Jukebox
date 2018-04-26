@@ -5,8 +5,8 @@
   },
   "apps": [
     {
-      "root": "src",
-      "outDir": "dist",
+      "root": "jukebox/src",
+      "outDir": "jukebox/dist",
       "assets": [
         "assets",
         "favicon.ico",
