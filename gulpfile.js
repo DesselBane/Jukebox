@@ -118,7 +118,7 @@ gulp.task('build-api-win64', ['build-api-angular', 'copy-prebuilts-win64'], () =
 });
 
 gulp.task('copy-electron-win64', ['copy-prebuilts-win64'], () => {
-  return gulp.src(__dirname + '/main.js')
+    return gulp.src(__dirname + '/jukebox/main.js')
     .pipe(gulp.dest(__dirname + '/out/win64/resources/app/'))
 });
 
