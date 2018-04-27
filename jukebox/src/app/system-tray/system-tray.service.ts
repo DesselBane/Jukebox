@@ -34,6 +34,10 @@ export class SystemTrayService {
     this._win = this._electronService.remote.getCurrentWindow();
   }
 
+  public updateTooltip(newTooltip: string) {
+    this._tray.setToolTip(newTooltip);
+  }
+
   private initSysTray() {
     console.log(this._dirname);
 

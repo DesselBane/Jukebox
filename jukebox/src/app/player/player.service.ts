@@ -10,6 +10,7 @@ import {ElectronService} from "ngx-electron";
 import {WebPlayerService} from "./web-player.service";
 import {NavigationService} from "../navigation/navigation.service";
 import {SongResponse} from "../song/models/song-response";
+import {SystemTrayService} from "../system-tray/system-tray.service";
 
 @Injectable()
 export class PlayerService {
@@ -28,14 +29,21 @@ export class PlayerService {
   private _activePlayerChanged = new EventEmitter<PlayerResponse>();
   private _http: HttpClient;
   private _notificationService: NotificationService;
+  private _trayService: SystemTrayService;
 
-  constructor(http: HttpClient, notificationService: NotificationService, electronService: ElectronService, webPlayerService: WebPlayerService, navigationService: NavigationService)
+  constructor(http: HttpClient,
+              notificationService: NotificationService,
+              electronService: ElectronService,
+              webPlayerService: WebPlayerService,
+              navigationService: NavigationService,
+              trayService: SystemTrayService)
   {
     this._http = http;
     this._notificationService = notificationService;
     this._electronService = electronService;
     this._webPlayerService = webPlayerService;
     this._navigationService = navigationService;
+    this._trayService = trayService;
 
     this._webPlayerService.activePlayerChanged.subscribe(player => this.activePlayer = player);
 
@@ -70,7 +78,7 @@ export class PlayerService {
     this._activePlayerChanged.emit(this._activePlayer);
     localStorage.setItem("currentPlayerId", String(this._activePlayer.id));
     if (this.currentSong != null)
-      this._navigationService.updateSysTrayToolTip(this.currentSong.title);
+      this._trayService.updateTooltip(this.currentSong.title);
   }
 
   getAvailablePlayers() : Observable<PlayerResponse[]>

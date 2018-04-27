@@ -77,7 +77,4 @@ export class NavigationService {
     return item;
   }
 
-  public updateSysTrayToolTip(toolTip: string) {
-    console.log('TODO remove this :D');
-  }
 }
