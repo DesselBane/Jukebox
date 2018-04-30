@@ -93,8 +93,8 @@ export class NotificationService {
       appId: environment.appId
     });
 
-    let ToastNotification = this._electronService.remote.require('electron-windows-notifications');
-    let winNot = new ToastNotification({
+    let notifications = this._electronService.remote.require('electron-windows-notifications');
+    let winNot = new notifications.ToastNotification({
       appId: environment.appId,
       template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
       strings: ['Hi!']
