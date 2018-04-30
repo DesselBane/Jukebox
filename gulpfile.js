@@ -1,6 +1,10 @@
 let gulp = require('gulp');
 let del = require('del');
 let exec = require('gulp-exec');
+let pathToElectron = require('electron-rebuild');
+let merge = require('merge-stream');
+
+const electronVersion = '1.8.6';
 
 // Genral stuff
 
@@ -99,7 +103,14 @@ gulp.task('copy-angular-win32', ['build-electron-angular', 'copy-prebuilts-win32
 
 // Win 64 Build
 
-gulp.task('build-win64', ['build-api-win64', 'copy-electron-win64', 'copy-package-json-win64', 'copy-angular-win64'], () => {
+gulp.task('build-win64', [
+    'build-api-win64',
+    'copy-electron-win64',
+    'copy-package-json-win64',
+    'copy-angular-win64',
+    'copy-rebuilt-electron-modules-win64',
+    'copy-node_modules-win64'
+], () => {
   console.log('Win 64 build complete');
 });
 
@@ -110,6 +121,33 @@ gulp.task('clean-win64', () => {
 gulp.task('copy-prebuilts-win64', ['clean-win64'], () => {
   return gulp.src(__dirname + '/prebuilt/win64/**/*')
     .pipe(gulp.dest(__dirname + '/out/win64/'));
+});
+
+gulp.task('rebuild-electron-modules-win64', ['copy-prebuilts-win64'], () => {
+    return pathToElectron.rebuild({
+        buildPath: __dirname,
+        arch: 'x64',
+        electronVersion: electronVersion
+    });
+});
+
+gulp.task('copy-rebuilt-electron-modules-win64', ['rebuild-electron-modules-win64'], () => {
+    let appmodel = gulp.src(`${__dirname}/node_modules/@nodert-win10-au/windows.applicationmodel/bin/win32-x64-57/windows.applicationmodel.node`)
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
+
+    let dataXmlDom = gulp.src(__dirname + '/node_modules/@nodert-win10-au/windows.data.xml.dom/bin/win32-x64-57/windows.data.xml.dom.node')
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
+
+    let foundation = gulp.src(__dirname + '/node_modules/@nodert-win10-au/windows.foundation/bin/win32-x64-57/windows.foundation.node')
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
+
+    let uiNotifications = gulp.src(__dirname + '/node_modules/@nodert-win10-au/windows.ui.notifications/bin/win32-x64-57/windows.ui.notifications.node')
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
+
+    let uiStartscreen = gulp.src(__dirname + '/node_modules/@nodert-win10-au/windows.ui.startscreen/bin/win32-x64-57/windows.ui.startscreen.node')
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
+
+    return merge(appmodel, dataXmlDom, foundation, uiNotifications, uiStartscreen);
 });
 
 gulp.task('build-api-win64', ['build-api-angular', 'copy-prebuilts-win64'], () => {
@@ -133,9 +171,20 @@ gulp.task('copy-angular-win64', ['build-electron-angular', 'copy-prebuilts-win64
     .pipe(gulp.dest(__dirname + '/out/win64/resources/app/dist/'));
 });
 
+gulp.task('copy-node_modules-win64', ['copy-prebuilts-win64'], () => {
+    let windowsNotifications = gulp.src(__dirname + '/node_modules/electron-windows-notifications/**/*')
+        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/electron-windows-notifications/'));
+    let debug = gulp.src(__dirname + '/node_modules/debug/**/*')
+        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/debug/'));
+    let ms = gulp.src(__dirname + '/node_modules/ms/**/*')
+        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/ms/'));
+
+
+    return merge(windowsNotifications, debug, ms);
+});
 
 // Default Task
 
-gulp.task('default', ['build-win64', 'build-win32', 'build-linux'], () => {
-
+gulp.task('default', () => {
+    console.log('Tasks are : \n\t build-win64 \n\t build-win32 \n\t build-linux \n\t clean-all');
 });

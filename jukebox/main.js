@@ -77,6 +77,7 @@ function createWindow () {
     }
     else {
       win = null;
+      app.quit();
     }
   });
 }
