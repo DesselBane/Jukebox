@@ -3,6 +3,8 @@ let del = require('del');
 let exec = require('gulp-exec');
 let pathToElectron = require('electron-rebuild');
 let merge = require('merge-stream');
+let rename = require('gulp-rename');
+let vinylPaths = require('vinyl-paths');
 
 const electronVersion = '1.8.6';
 
@@ -31,7 +33,13 @@ gulp.task('build-api-angular', () => {
 });
 
 // Linux Build
-gulp.task('build-linux', ['build-api-linux', 'copy-electron-linux', 'copy-package-json-linux', 'copy-angular-linux'], () => {
+gulp.task('build-linux', [
+    'build-api-linux',
+    'copy-electron-linux',
+    'copy-package-json-linux',
+    'copy-angular-linux',
+    'rename-exe-linux'
+], () => {
   console.log('Linux build complete');
 });
 
@@ -66,6 +74,14 @@ gulp.task('copy-angular-linux', ['build-electron-angular', 'copy-prebuilts-linux
 });
 
 
+gulp.task('rename-exe-linux', ['copy-prebuilts-linux'], () => {
+    return gulp.src(__dirname + '/out/linux/electron')
+        .pipe(vinylPaths(del))
+        .pipe(rename('Jukebox'))
+        .pipe(gulp.dest(__dirname + '/out/linux/'));
+});
+
+
 // Win 32 Build
 gulp.task('build-win32', [
     'build-api-win32',
@@ -73,7 +89,8 @@ gulp.task('build-win32', [
     'copy-package-json-win32',
     'copy-angular-win32',
     'rebuild-electron-modules-win32',
-    'copy-node_modules-win32'
+    'copy-node_modules-win32',
+    'rename-exe-win32'
 ], () => {
   console.log('Win 32 build complete');
 });
@@ -136,6 +153,13 @@ gulp.task('copy-node_modules-win32', ['copy-prebuilts-win32', 'rebuild-electron-
     return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid);
 });
 
+gulp.task('rename-exe-win32', ['copy-prebuilts-win32'], () => {
+    return gulp.src(__dirname + '/out/win32/electron.exe')
+        .pipe(vinylPaths(del))
+        .pipe(rename('Jukebox.exe'))
+        .pipe(gulp.dest(__dirname + '/out/win32/'));
+});
+
 // Win 64 Build
 
 gulp.task('build-win64', [
@@ -143,7 +167,8 @@ gulp.task('build-win64', [
     'copy-electron-win64',
     'copy-package-json-win64',
     'copy-angular-win64',
-    'copy-node_modules-win64'
+    'copy-node_modules-win64',
+    'rename-exe-win64'
 ], () => {
   console.log('Win 64 build complete');
 });
@@ -204,6 +229,13 @@ gulp.task('copy-node_modules-win64', ['copy-prebuilts-win64', 'rebuild-electron-
 
 
     return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid);
+});
+
+gulp.task('rename-exe-win64', ['copy-prebuilts-win64'], () => {
+    return gulp.src(__dirname + '/out/win64/electron.exe')
+        .pipe(vinylPaths(del))
+        .pipe(rename('Jukebox.exe'))
+        .pipe(gulp.dest(__dirname + '/out/win64/'));
 });
 
 // Default Task

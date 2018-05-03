@@ -46,7 +46,7 @@ export class SystemTrayService {
     let trayMenuTemplate = [
       {
         label: 'Jukebox APP',
-        enabled: false
+        click: () => this._win.show()
       },
       {
         label: 'Quit Jukebox',

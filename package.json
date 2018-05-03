@@ -31,6 +31,7 @@
     "@angular/router": "5.2.0",
     "angular2-jwt": "0.2.3",
     "core-js": "2.4.1",
+    "electron-windows-interactive-notifications": "^0.7.7",
     "electron-windows-notifications": "^2.0.1",
     "ngx-electron": "1.0.4",
     "rxjs": "5.5.6",
@@ -43,6 +44,7 @@
     "@types/jasmine": "2.8.3",
     "@types/jasminewd2": "2.0.2",
     "@types/node": "6.0.60",
+    "child_process": "^1.0.2",
     "codelyzer": "4.0.1",
     "del": "^3.0.0",
     "electron": "^1.8.2",
@@ -50,6 +52,7 @@
     "electron-rebuild": "^1.7.3",
     "gulp": "^3.9.1",
     "gulp-exec": "^3.0.1",
+    "gulp-rename": "^1.2.2",
     "jasmine-core": "2.8.0",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "2.0.0",
@@ -61,6 +64,7 @@
     "protractor": "5.1.2",
     "ts-node": "4.1.0",
     "tslint": "5.9.1",
-    "typescript": "2.5.3"
+    "typescript": "2.5.3",
+    "vinyl-paths": "^2.1.0"
   }
 }
