@@ -133,21 +133,29 @@ export class NotificationService {
   private generateWindowsNotification(notificationTemplate: UserNotificationTemplate) {
     let notifications = this._electronService.remote.require('electron-windows-notifications');
 
+    /*<image placement="appLogoOverride" hint-crop="circle" src="ms-appx:///app/resources/app/dist/assets/jukebox_48_dark.png" />*/
+
+    /*<input id="message" type="text" placeHolderContent="Type a reply" />*/
+
     let template = `<toast>
                         <visual><binding template="ToastGeneric">
                             <text id="1">${notificationTemplate.title}</text><text id="2">${notificationTemplate.body}</text>
                             <text placement="attribution">Via Electron :D</text>
-                            <image placement="appLogoOverride" hint-crop="circle" src="ms-appx:///app/resources/app/dist/assets/jukebox_48_dark.png" />
                         </binding></visual>
                         <actions>
-                            <action content='${notificationTemplate.actions[0]}' arguments='action=${notificationTemplate.actions[0]}' activationType='foreground'  />
-                            <action content='${notificationTemplate.actions[1]}' arguments='action=${notificationTemplate.actions[1]}' activationType='foreground' />
+                            <input id="time" type="selection" defaultInput="lunch">
+                                <selection id="breakfast" content="Breakfast" />
+                                <selection id="lunch" content="Lunch" />
+                                <selection id="dinner" content="Dinner" />
+                            </input>
+                            <action content='${notificationTemplate.actions[0]}' arguments='action=${notificationTemplate.actions[0]}' activationType='background'  />
+                            <action content='${notificationTemplate.actions[1]}' arguments='action=${notificationTemplate.actions[1]}' activationType='background' />
                         </actions>
                     </toast>`;
 
     let winNot = new notifications.ToastNotification({
       appId: environment.appId,
-      template: template,
+      template: template
     });
 
     console.log(template);
