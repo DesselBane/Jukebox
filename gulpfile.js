@@ -6,7 +6,7 @@ let merge = require('merge-stream');
 let rename = require('gulp-rename');
 let vinylPaths = require('vinyl-paths');
 
-const electronVersion = '1.8.6';
+const electronVersion = '2.0.0';
 
 // Genral stuff
 
@@ -226,9 +226,13 @@ gulp.task('copy-node_modules-win64', ['copy-prebuilts-win64', 'rebuild-electron-
         .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/sanitize-xml-string/'));
     let uuid = gulp.src(__dirname + '/node_modules/uuid/**/*')
         .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/uuid/'));
+    let interactive = gulp.src(__dirname + '/node_modules/electron-windows-interactive-notifications/**/*')
+        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/electron-windows-interactive-notifications/'));
+    let bindings = gulp.src(__dirname + '/node_modules/bindings/**/*')
+        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/bindings/'));
 
 
-    return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid);
+    return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid, interactive, bindings);
 });
 
 gulp.task('rename-exe-win64', ['copy-prebuilts-win64'], () => {
