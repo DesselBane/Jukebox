@@ -2,7 +2,9 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const Menu = require('electron').Menu;
 const appId = '7B0F2E4A-39B3-47EA-82D4-45FB73D4C646';
 const shortcut = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment\\Jukebox.lnk';
+const shortcutFolder = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment';
 const {registerAppForNotificationSupport, registerActivator} = require('electron-windows-interactive-notifications');
+const fs = require('fs');
 
 let win;
 let menu = Menu.buildFromTemplate([
@@ -28,6 +30,14 @@ ipcMain.on('quitApplication', () => {
   win.close();
 });
 
+
+//Kill process when electron exits
+process.on('exit', function () {
+  writeLog('exit');
+  if (apiProcess != null)
+    apiProcess.kill();
+});
+
 function startApi() {
   const proc = require('child_process').spawn;
   //  run server
@@ -46,13 +56,6 @@ function startApi() {
     }
   });
 }
-
-//Kill process when electron exits
-process.on('exit', function () {
-  writeLog('exit');
-  if (apiProcess != null)
-    apiProcess.kill();
-});
 
 function writeLog(msg) {
   console.log(msg);
@@ -86,6 +89,7 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
+  fs.mkdir(shortcutFolder);
   registerAppForNotificationSupport(shortcut, appId);
   registerActivator();
 
