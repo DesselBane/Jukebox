@@ -1,8 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const Menu = require('electron').Menu;
 const appId = '7B0F2E4A-39B3-47EA-82D4-45FB73D4C646';
-const shortcut = 'C:\\Users\\TheAdmin\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment\\electron.exe.lnk';
-const {registerAppForNotificationSupport, registerActivator, registerComServer} = require('electron-windows-interactive-notifications');
+const shortcut = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment\\Jukebox.lnk';
+const {registerAppForNotificationSupport, registerActivator} = require('electron-windows-interactive-notifications');
 
 let win;
 let menu = Menu.buildFromTemplate([
@@ -86,7 +86,7 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
-  registerComServer();
+  registerAppForNotificationSupport(shortcut, appId);
   registerActivator();
 
   createWindow();
