@@ -242,6 +242,17 @@ gulp.task('rename-exe-win64', ['copy-prebuilts-win64'], () => {
         .pipe(gulp.dest(__dirname + '/out/win64/'));
 });
 
+// Development
+
+gulp.task('clean-dev', () => {
+    return del(__dirname + '/jukebox/api');
+});
+
+gulp.task('build-api-dev', ['clean-dev', 'build-api-angular'], () => {
+    return gulp.src(__dirname)
+        .pipe(exec(`cd JukeboxAPI && dotnet publish -r win10-x64 -c Release -o ${__dirname}/jukebox/api/win/`));
+});
+
 // Default Task
 
 gulp.task('default', () => {

@@ -43,10 +43,16 @@ function startApi() {
   //  run server
   let apiPath = `${__dirname}\\api\\win`;
   let apiFullPath = `${apiPath}\\Jukebox.exe`;
+
   if (os.platform() === 'darwin') {
     apiPath = `${__dirname}//api//osx`;
     apiFullPath = `${apiPath}//Jukebox`;
   }
+  if (os.platform() === 'linux') {
+    apiPath = `${__dirname}/api/linux`;
+    apiFullPath = `${apiPath}/Jukebox`;
+  }
+
   apiProcess = proc(apiFullPath, [], {cwd: apiPath, env: {ASPNETCORE_ENVIRONMENT: 'electron'}});
 
   apiProcess.stdout.on('data', (data) => {
@@ -89,14 +95,19 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
+
+  setupWindowsNotifications();
+  createWindow();
+  startApi();
+  Menu.setApplicationMenu(menu);
+});
+
+function setupWindowsNotifications() {
+  if (os.platform() !== 'win32')
+    return;
+
   if (!fs.existsSync(shortcutFolder))
     fs.mkdirSync(shortcutFolder);
   registerAppForNotificationSupport(shortcut, appId);
   registerActivator();
-
-  createWindow();
-  //startApi();
-  Menu.setApplicationMenu(menu);
-});
-
-
+}
