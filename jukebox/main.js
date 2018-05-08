@@ -89,7 +89,8 @@ function createWindow () {
 
 // Create window on electron intialization
 app.on('ready', () => {
-  fs.mkdir(shortcutFolder);
+  if (!fs.existsSync(shortcutFolder))
+    fs.mkdirSync(shortcutFolder);
   registerAppForNotificationSupport(shortcut, appId);
   registerActivator();
 
