@@ -1,22 +1,41 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const Menu = require('electron').Menu;
+const fs = require('fs');
+const os = require('os');
+
 const appId = '7B0F2E4A-39B3-47EA-82D4-45FB73D4C646';
 const shortcut = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment\\Jukebox.lnk';
 const shortcutFolder = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment';
-const fs = require('fs');
+const executablePath = app.getPath('exe');
+
 
 let isQuitting = false;
 let win;
-const isSecondInstance = app.makeSingleInstance((argv, workingDirectory) => {
-  console.log(argv);
-  console.log(workingDirectory);
+const isSecondInstance = app.makeSingleInstance((argv) => {
+  if (win == null)
+    return;
+
+  win.webContents.send('protocolActivation', argv[1]);
+  console.log(argv[1]);
 });
 
 if (isSecondInstance) {
-  isQuitting = true;
-  app.quit();
-}
+  setTimeout(() => {
+    isQuitting = true;
+    app.quit();
+  }, 1000)
+} else {
+  // Create window on electron intialization
+  app.on('ready', () => {
 
+    Menu.setApplicationMenu(menu);
+    setupWindowsNotifications();
+    startApi();
+    createWindow();
+    console.log(isSecondInstance);
+  });
+
+}
 
 let menu = Menu.buildFromTemplate([
   {
@@ -34,10 +53,9 @@ let menu = Menu.buildFromTemplate([
 ]);
 
 
-const os = require('os');
 let apiProcess = null;
 app.setAppUserModelId(appId);
-app.setAsDefaultProtocolClient('jukebox', shortcut);
+app.setAsDefaultProtocolClient('jukebox', executablePath);
 
 
 ipcMain.on('requestDirname', () => {
@@ -117,15 +135,6 @@ function createWindow () {
   });
 }
 
-// Create window on electron intialization
-app.on('ready', () => {
-
-  Menu.setApplicationMenu(menu);
-  setupWindowsNotifications();
-  startApi();
-  createWindow();
-
-});
 
 function setupWindowsNotifications() {
   if (os.platform() !== 'win32')

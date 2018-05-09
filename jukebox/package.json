@@ -1,0 +1,20 @@
+{
+  "name": "jukebox",
+  "version": "0.0.0",
+  "description": "lol",
+  "main": "main.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "jukebox-build": "ng build --op JukeboxAPI/wwwroot",
+    "electron": "ng build --bh ./ && electron ./",
+    "electron-no-build": "electron ./",
+    "electron-rebuild": "electron-rebuild"
+  },
+  "author": "DarkPhantom",
+  "license": "MIT"
+}
