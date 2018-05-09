@@ -3,7 +3,6 @@ const Menu = require('electron').Menu;
 const appId = '7B0F2E4A-39B3-47EA-82D4-45FB73D4C646';
 const shortcut = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment\\Jukebox.lnk';
 const shortcutFolder = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment';
-const {registerAppForNotificationSupport, registerActivator} = require('electron-windows-interactive-notifications');
 const fs = require('fs');
 
 let win;
@@ -62,10 +61,9 @@ function startApi() {
 
   apiProcess.stdout.on('data', (data) => {
     writeLog(`stdout: ${data}`);
-    if (win == null) {
-      createWindow();
-    }
   });
+
+
 }
 
 function writeLog(msg) {
@@ -77,10 +75,17 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1600,
     height: 800,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    show: false
   });
 
-  win.loadURL(`file://${__dirname}/dist/index.html`);
+
+  setTimeout(() => {
+
+    win.loadURL(`file://${__dirname}/dist/index.html`);
+  }, 2000);
+
+  win.webContents.on('did-finish-load', () => win.show());
 
   //// uncomment below to open the DevTools.
    win.webContents.openDevTools();
@@ -102,14 +107,16 @@ function createWindow () {
 app.on('ready', () => {
 
   setupWindowsNotifications();
-  createWindow();
   startApi();
+  createWindow();
   Menu.setApplicationMenu(menu);
 });
 
 function setupWindowsNotifications() {
   if (os.platform() !== 'win32')
     return;
+
+  const {registerAppForNotificationSupport, registerActivator} = require('electron-windows-interactive-notifications');
 
   if (!fs.existsSync(shortcutFolder))
     fs.mkdirSync(shortcutFolder);
