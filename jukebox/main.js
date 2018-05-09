@@ -5,7 +5,19 @@ const shortcut = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Progra
 const shortcutFolder = process.env.APPDATA + '\\Microsoft\\Windows\\Start Menu\\Programs\\DarkDevelopment';
 const fs = require('fs');
 
+let isQuitting = false;
 let win;
+const isSecondInstance = app.makeSingleInstance((argv, workingDirectory) => {
+  console.log(argv);
+  console.log(workingDirectory);
+});
+
+if (isSecondInstance) {
+  isQuitting = true;
+  app.quit();
+}
+
+
 let menu = Menu.buildFromTemplate([
   {
     label: 'Development',
@@ -20,11 +32,13 @@ let menu = Menu.buildFromTemplate([
     ]
   }
 ]);
-let isQuitting = false;
+
 
 const os = require('os');
 let apiProcess = null;
 app.setAppUserModelId(appId);
+app.setAsDefaultProtocolClient('jukebox', shortcut);
+
 
 ipcMain.on('requestDirname', () => {
   win.webContents.send('provideDirname', __dirname);
@@ -106,10 +120,11 @@ function createWindow () {
 // Create window on electron intialization
 app.on('ready', () => {
 
+  Menu.setApplicationMenu(menu);
   setupWindowsNotifications();
   startApi();
   createWindow();
-  Menu.setApplicationMenu(menu);
+
 });
 
 function setupWindowsNotifications() {

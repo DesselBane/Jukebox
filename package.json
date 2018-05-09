@@ -2,7 +2,7 @@
   "name": "jukebox",
   "version": "0.0.0",
   "description": "lol",
-  "main": "main.js",
+  "main": "jukebox/main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,8 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "jukebox-build": "ng build --op JukeboxAPI/wwwroot",
-    "electron": "ng build --bh ./ && electron jukebox",
-    "electron-no-build": "electron jukebox/",
+    "electron": "ng build --bh ./ && electron ./",
+    "electron-no-build": "electron ./",
     "electron-rebuild": "electron-rebuild"
   },
   "author": "DarkPhantom",
