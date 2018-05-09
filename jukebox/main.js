@@ -9,11 +9,16 @@ const fs = require('fs');
 let win;
 let menu = Menu.buildFromTemplate([
   {
-    label: 'Reload',
-    click: () => {
-      console.log("Reloading");
-      win.loadURL(`file://${__dirname}/dist/index.html`);
-    }
+    label: 'Development',
+    submenu: [
+      {
+        label: 'Reload',
+        click: () => {
+          console.log("Reloading");
+          win.loadURL(`file://${__dirname}/dist/index.html`);
+        }
+      }
+    ]
   }
 ]);
 let isQuitting = false;
