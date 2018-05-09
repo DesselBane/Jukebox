@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using ExceptionMiddleware;
+using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,6 +33,8 @@ namespace Jukebox
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.ApplicationServices.GetService<DataContext>().Database.Migrate();
+            
             app.UseExceptionMiddleware();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -53,5 +57,4 @@ namespace Jukebox
             app.UseMvc();
             app.UseStaticFiles();
         }
-    }
 }

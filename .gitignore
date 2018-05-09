@@ -12,6 +12,8 @@ out/**/*
 prebuilt/**/*
 **/package-lock.json
 
+jukebox/api/**/*
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 package-lock.json
