@@ -31,10 +31,12 @@ namespace Jukebox
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public virtual void Configure(IApplicationBuilder app,
+                                      IHostingEnvironment env,
+                                      ILoggerFactory      loggerFactory)
         {
             app.ApplicationServices.GetService<DataContext>().Database.Migrate();
-            
+
             app.UseExceptionMiddleware();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -57,4 +59,5 @@ namespace Jukebox
             app.UseMvc();
             app.UseStaticFiles();
         }
+    }
 }
