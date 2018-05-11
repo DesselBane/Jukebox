@@ -11,7 +11,6 @@ import {AuthenticationInterceptor} from "./shared/AuthenticationInterceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {SecurityModule} from "./security/security.module";
-import {NavigationModule} from "./navigation/navigation.module";
 import {PlayerModule} from "./player/player.module";
 import {SongModule} from "./song/song.module";
 import {NgxElectronModule} from "ngx-electron";
@@ -20,6 +19,8 @@ import {NotificationModule} from "./notification/notification.module";
 import {SettingsModule} from "./settings/settings.module";
 import {FilePickerModule} from "./file-picker/file-picker.module";
 import {SystemTrayModule} from "./system-tray/system-tray.module";
+import {MenuModule} from "./menu/menu.module";
+import {DialogModule} from "./dialog/dialog.module";
 
 
 @NgModule({
@@ -32,10 +33,10 @@ import {SystemTrayModule} from "./system-tray/system-tray.module";
     FormsModule,
     MaterialMetaModule,
     HttpClientModule,
-    NavigationModule,
     NgxElectronModule,
 
     //App Modules load here
+    DialogModule,
     SecurityModule,
     PlayerModule,
     SongModule,
@@ -43,6 +44,7 @@ import {SystemTrayModule} from "./system-tray/system-tray.module";
     SettingsModule,
     FilePickerModule,
     SystemTrayModule,
+    MenuModule,
 
     //Has to be last !!!
     AppRoutingModule

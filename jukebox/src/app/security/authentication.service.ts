@@ -7,9 +7,9 @@ import '../rxjs-extensions';
 import {Observable} from 'rxjs/Observable';
 import {ILoginTokenResponse} from "../shared/models/ilogin-token-response";
 import {LoginTokenModel} from "../shared/models/login-token-model";
-import {NavigationService} from "../navigation/navigation.service";
-import {NavItem} from "../navigation/models/nav-item";
+import {NavigationService} from "../menu/navigation.service";
 import {ElectronService} from "ngx-electron";
+import {AngularMenuItem} from "../menu/models/angular-menu-item";
 
 @Injectable()
 export class AuthenticationService {
@@ -17,13 +17,16 @@ export class AuthenticationService {
   private _electronService: ElectronService;
   private static _isElectronApp: boolean = false;
 
+  private static _loginItem: AngularMenuItem;
+  private static _registerItem: AngularMenuItem;
+  private static _logoutItem: AngularMenuItem;
+
   constructor(private http: HttpClient, navigation: NavigationService, electronService: ElectronService) {
     this._navigation = navigation;
     this._electronService = electronService;
 
     if (this._electronService.isElectronApp) {
       AuthenticationService._isElectronApp = true;
-      AuthenticationService._authParentItem.isVisible = false;
       AuthenticationService.logout();
       this.login("", "").subscribe();
     }
@@ -36,10 +39,6 @@ export class AuthenticationService {
 
   }
 
-  private static _loginNav = new NavItem("auth/login","Login","auth/login");
-  private static _registerNav = new NavItem("auth/register","Register","auth/register");
-  private static _logoutNav = new NavItem("auth/logout","Logout", "auth/logout");
-  private static _authParentItem = new NavItem("auth","Account","",[AuthenticationService._loginNav,AuthenticationService._registerNav, AuthenticationService._logoutNav], true);
   private static isInitialized = false;
 
   private static _loginToken: LoginTokenModel;
@@ -98,17 +97,20 @@ export class AuthenticationService {
     this.updateNavItems();
   }
 
-  public initialize()
-  {
-    if(AuthenticationService.isInitialized)
+  private static updateNavItems() {
+    if (!AuthenticationService.isInitialized)
       return;
-    AuthenticationService.isInitialized = true;
 
-    if (!this._electronService.isElectronApp)
-      this._navigation.registerNavItem(AuthenticationService._authParentItem);
-
-    AuthenticationService.updateNavItems();
-
+    if (AuthenticationService.loginToken != null && this.loginToken.isValid()) {
+      AuthenticationService._logoutItem.visible = true;
+      AuthenticationService._loginItem.visible = false;
+      AuthenticationService._registerItem.visible = false;
+    }
+    else {
+      AuthenticationService._logoutItem.visible = false;
+      AuthenticationService._loginItem.visible = true;
+      AuthenticationService._registerItem.visible = true;
+    }
   }
 
   login(username: string, password: string): Observable<ILoginTokenResponse> {
@@ -148,19 +150,17 @@ export class AuthenticationService {
     });
   }
 
-  private static updateNavItems()
-  {
-    if (AuthenticationService.loginToken != null && this.loginToken.isValid())
-    {
-      AuthenticationService._logoutNav.isVisible = true;
-      AuthenticationService._loginNav.isVisible = false;
-      AuthenticationService._registerNav.isVisible = false;
-    }
-    else {
-      AuthenticationService._logoutNav.isVisible = false;
-      AuthenticationService._loginNav.isVisible = true;
-      AuthenticationService._registerNav.isVisible = true;
-    }
+  public initialize() {
+    if (AuthenticationService.isInitialized)
+      return;
+    AuthenticationService.isInitialized = true;
+
+    AuthenticationService._loginItem = this._navigation.findNavItem('account/login');
+    AuthenticationService._registerItem = this._navigation.findNavItem('account/register');
+    AuthenticationService._logoutItem = this._navigation.findNavItem('account/logout');
+
+    AuthenticationService.updateNavItems();
+
   }
 
 }

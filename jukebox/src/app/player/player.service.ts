@@ -8,7 +8,7 @@ import {NotificationChannels} from "../notification/models/notification-channels
 import {NotificationResponse} from "../notification/models/notification-response";
 import {ElectronService} from "ngx-electron";
 import {WebPlayerService} from "./web-player.service";
-import {NavigationService} from "../navigation/navigation.service";
+import {NavigationService} from "../menu/navigation.service";
 import {SongResponse} from "../song/models/song-response";
 import {SystemTrayService} from "../system-tray/system-tray.service";
 

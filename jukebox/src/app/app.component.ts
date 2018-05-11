@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {NavItem} from "./navigation/models/nav-item";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

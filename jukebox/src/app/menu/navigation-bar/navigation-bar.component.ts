@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationService} from "../navigation.service";
-import {NavItem} from "../models/nav-item";
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from "@angular/material";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import {ElectronService} from "ngx-electron";
+import {AngularMenuItem} from "../models/angular-menu-item";
 
 
 @Component({
@@ -16,7 +16,7 @@ import {ElectronService} from "ngx-electron";
 export class NavigationBarComponent implements OnInit {
   private _electronService: ElectronService;
 
-  public _navItems: NavItem[];
+  public _navItems: AngularMenuItem[];
   private _navigation: NavigationService;
   @ViewChild(MatSidenav)
   private sidenav: MatSidenav;
@@ -26,9 +26,9 @@ export class NavigationBarComponent implements OnInit {
   constructor(navigation: NavigationService, media: MediaMatcher, electronService: ElectronService) {
     this._navigation = navigation;
     this._electronService = electronService;
-    this._navItems = this._navigation.currentNavItems;
+    this._navItems = this._navigation.navItemsRepo;
 
-    this._navigation.navItems.subscribe(value => {
+    this._navigation.navItemsChanged.subscribe(value => {
       this._navItems = value;
     });
 

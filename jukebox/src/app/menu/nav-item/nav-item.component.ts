@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NavItem} from "../models/nav-item";
+import {AngularMenuItem} from "../models/angular-menu-item";
 
 @Component({
   selector: 'app-nav-item',
@@ -9,7 +9,7 @@ import {NavItem} from "../models/nav-item";
 export class NavItemComponent implements OnInit {
 
   @Input()
-  CurrentItem: NavItem;
+  CurrentItem: AngularMenuItem;
 
   @Output()
   ItemClicked = new EventEmitter();
@@ -17,18 +17,12 @@ export class NavItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.CurrentItem);
   }
 
-  needsExpander() : boolean
-  {
-    let retVal = false;
-
-    this.CurrentItem.subItems.forEach(item => {
-      if(item.isVisible)
-        retVal = true;
-    });
-
-    return retVal;
+  public itemClickHandler() {
+    this.ItemClicked.emit();
+    this.CurrentItem.click();
   }
 
 }

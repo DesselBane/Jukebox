@@ -1,0 +1,13 @@
+<mat-expansion-panel *ngIf="CurrentItem.type === 'submenu'">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{CurrentItem.label}}</mat-panel-title>
+  </mat-expansion-panel-header>
+  <app-nav-item *ngFor="let subItem of CurrentItem.submenu" [CurrentItem]="subItem"
+                (ItemClicked)="ItemClicked.emit()"></app-nav-item>
+</mat-expansion-panel>
+
+<mat-list-item *ngIf="CurrentItem.type === 'normal' && CurrentItem.visible" (click)="itemClickHandler()">
+  <p>{{CurrentItem.label}}</p>
+</mat-list-item>
+
+<!-- TODO add seperator -->
