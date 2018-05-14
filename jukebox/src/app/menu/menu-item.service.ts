@@ -24,7 +24,9 @@ export class MenuItemService {
       type: menuItem.type,
       enabled: menuItem.enabled,
       visible: menuItem.visible,
-      id: menuItem.id
+      id: menuItem.id,
+      position: menuItem.position,
+      accelerator: menuItem.accelerator
     });
 
     let visibleChangedSub = menuItem.visibleChanged.subscribe(() => {
@@ -43,4 +45,5 @@ export class MenuItemService {
     menuItem.subscriptions.push(visibleChangedSub, enabledChanged);
     return item;
   }
+
 }

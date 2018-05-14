@@ -18,7 +18,6 @@ import {ElectronUrlInterceptor} from "./shared/ElectronUrlInterceptor";
 import {NotificationModule} from "./notification/notification.module";
 import {SettingsModule} from "./settings/settings.module";
 import {FilePickerModule} from "./file-picker/file-picker.module";
-import {SystemTrayModule} from "./system-tray/system-tray.module";
 import {MenuModule} from "./menu/menu.module";
 import {DialogModule} from "./dialog/dialog.module";
 
@@ -43,7 +42,6 @@ import {DialogModule} from "./dialog/dialog.module";
     NotificationModule,
     SettingsModule,
     FilePickerModule,
-    SystemTrayModule,
     MenuModule,
 
     //Has to be last !!!

@@ -61,7 +61,6 @@ export class WebPlayerComponent implements OnInit {
 
   private updatePlayer(value: PlayerResponse)
   {
-    console.log(value);
     this._activePlayer = value;
 
     switch (this._activePlayer.state){
@@ -113,39 +112,25 @@ export class WebPlayerComponent implements OnInit {
 
   playPause()
   {
-    let cmd = new PlayerCommandResponse();
-    cmd.Type = PlayerCommandTypes.PlayPause;
-
-    this._playerService.executePlayerCommand(cmd)
+    this._playerService.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.PlayPause))
       .subscribe();
   }
 
   next()
   {
-    let cmd = new PlayerCommandResponse();
-    cmd.Type = PlayerCommandTypes.JumpToIndex;
-    cmd.Arguments.push(["index",`${this._activePlayer.playlistIndex + 1}`]);
-
-    this._playerService.executePlayerCommand(cmd)
+    this._playerService.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.JumpToIndex, [["index", `${this._activePlayer.playlistIndex + 1}`]]))
       .subscribe();
   }
 
   previous()
   {
-    let cmd = new PlayerCommandResponse();
-    cmd.Type = PlayerCommandTypes.JumpToIndex;
-    cmd.Arguments.push(["index",`${this._activePlayer.playlistIndex - 1}`]);
-
-    this._playerService.executePlayerCommand(cmd)
+    this._playerService.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.JumpToIndex, [["index", `${this._activePlayer.playlistIndex - 1}`]]))
       .subscribe();
   }
 
   stop()
   {
-    let cmd = new PlayerCommandResponse();
-    cmd.Type = PlayerCommandTypes.Stop;
-
-    this._playerService.executePlayerCommand(cmd)
+    this._playerService.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.Stop))
       .subscribe();
   }
 

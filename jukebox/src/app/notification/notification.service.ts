@@ -91,7 +91,6 @@ export class NotificationService {
     this._subject = Subject.create(observer, observable);
 
     this._subject.subscribe((messageEvent: MessageEvent) => {
-        console.log(messageEvent);
         this._otherSubject.next(JSON.parse(messageEvent.data))
       }
       , err => NotificationService.handleSocketError(err)

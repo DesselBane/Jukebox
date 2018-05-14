@@ -27,7 +27,6 @@ if (isSecondInstance) {
 } else {
   // Create window on electron intialization
   app.on('ready', () => {
-
     Menu.setApplicationMenu(menu);
     setupWindowsNotifications();
     startApi();

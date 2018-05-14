@@ -7,6 +7,7 @@ import {NavItemComponent} from "./nav-item/nav-item.component";
 import {NavigationBarComponent} from "./navigation-bar/navigation-bar.component";
 import {RouterModule} from "@angular/router";
 import {SecurityModule} from "../security/security.module";
+import {SystemTrayService} from "./system-tray.service";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {SecurityModule} from "../security/security.module";
   ],
   providers: [
     MenuItemService,
-    NavigationService
+    NavigationService,
+    SystemTrayService
   ],
   exports: [
     NavigationBarComponent

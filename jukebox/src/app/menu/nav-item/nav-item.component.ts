@@ -17,7 +17,6 @@ export class NavItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.CurrentItem);
   }
 
   public itemClickHandler() {

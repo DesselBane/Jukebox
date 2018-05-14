@@ -10,7 +10,9 @@ import {ElectronService} from "ngx-electron";
 import {WebPlayerService} from "./web-player.service";
 import {NavigationService} from "../menu/navigation.service";
 import {SongResponse} from "../song/models/song-response";
-import {SystemTrayService} from "../system-tray/system-tray.service";
+import {SystemTrayService} from "../menu/system-tray.service";
+import {AngularMenuItem} from "../menu/models/angular-menu-item";
+import {PlayerCommandTypes} from "./models/player-command-types.enum";
 
 @Injectable()
 export class PlayerService {
@@ -66,6 +68,47 @@ export class PlayerService {
         , () => {
         }
         , () => this.handleSocketCompleted());
+
+
+    let playbackMenuItem = new AngularMenuItem({
+      label: 'Playback',
+      id: 'web-player-service/playback',
+      type: 'submenu',
+      position: 'middle',
+      submenu: [
+        {
+          label: 'Next',
+          id: 'player-service/playback/next',
+          type: 'normal',
+          accelerator: 'MediaNextTrack',
+          click: () => this.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.JumpToIndex, [["index", `${this._activePlayer.playlistIndex + 1}`]])).subscribe()
+        },
+        {
+          label: 'Play/Pause',
+          id: 'player-service/playback/play-pause',
+          type: 'normal',
+          accelerator: 'MediaPlayPause',
+          click: () => this.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.PlayPause)).subscribe()
+        },
+        {
+          label: 'Stop',
+          id: 'player-service/playback/stop',
+          type: 'normal',
+          accelerator: 'MediaStop',
+          click: () => this.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.Stop)).subscribe()
+        },
+        {
+          label: 'Previous',
+          id: 'player-service/playback/previous',
+          type: 'normal',
+          accelerator: 'MediaPreviousTrack',
+          click: () => this.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.JumpToIndex, [["index", `${this._activePlayer.playlistIndex - 1}`]])).subscribe()
+        }
+      ]
+    });
+
+    this._trayService.addTrayMenuItem(playbackMenuItem);
+    this._navigationService.registerNavItem(playbackMenuItem);
   }
 
   get currentSong(): SongResponse {

@@ -14,15 +14,7 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class WebPlayerService {
-  constructor(http: HttpClient, songService: SongService, router: Router) {
-    this._http = http;
-    this._songService = songService;
-    this._router = router;
-    this._audio = new Audio();
-    this._audio.autoplay = false;
-    this._audio.onended = () => this.next();
-    this._audio.onerror = () => this.next();
-  }
+
   private setState(value: WebPlayerState): void
   {
     this._state = value;
@@ -50,6 +42,15 @@ export class WebPlayerService {
     return this._activePlayerChanged;
   }
 
+  constructor(http: HttpClient, songService: SongService, router: Router) {
+    this._http = http;
+    this._songService = songService;
+    this._router = router;
+    this._audio = new Audio();
+    this._audio.autoplay = false;
+    this._audio.onended = () => this.next();
+    this._audio.onerror = () => this.next();
+  }
 
   private playPause()
   {
@@ -186,9 +187,7 @@ export class WebPlayerService {
 
   private updateUpstream() {
     if (this._websocket != null) {
-      console.log("Updated Upstream");
       let playerString = JSON.stringify(this._player);
-      console.log(playerString);
       this._websocket.send(playerString);
     }
 
