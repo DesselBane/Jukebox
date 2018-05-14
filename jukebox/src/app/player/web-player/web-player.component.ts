@@ -4,7 +4,6 @@ import {PlayerService} from "../player.service";
 import {PlayerResponse} from "../models/player-response";
 import {PlayerCommandResponse} from "../models/player-command-response";
 import {PlayerCommandTypes} from "../models/player-command-types.enum";
-import {UserNotification} from "../../notification/models/user-notification";
 import {NotificationService} from "../../notification/notification.service";
 
 @Component({
@@ -132,9 +131,5 @@ export class WebPlayerComponent implements OnInit {
   {
     this._playerService.executePlayerCommand(new PlayerCommandResponse(PlayerCommandTypes.Stop))
       .subscribe();
-  }
-
-  clickMe() {
-    this._notificationService.displayUserNotification(new UserNotification());
   }
 }

@@ -122,6 +122,11 @@ export class PlayerService {
     localStorage.setItem("currentPlayerId", String(this._activePlayer.id));
     if (this.currentSong != null)
       this._trayService.updateTooltip(this.currentSong.title);
+    if (this.currentSong != null)
+      this._notificationService.displayUserNotification({
+        title: this.currentSong.title,
+        actions: ['Next', 'Play/Pause', 'Stop', 'Previous']
+      });
   }
 
   getAvailablePlayers() : Observable<PlayerResponse[]>

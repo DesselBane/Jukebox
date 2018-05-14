@@ -6,7 +6,7 @@ import {Observer} from "rxjs/Observer";
 import {environment} from "../../environments/environment";
 import {Subject} from "rxjs/Subject";
 import {ElectronService} from "ngx-electron";
-import {UserNotificationTemplate} from "./models/user-notification-template";
+import {UserNotificationOptions} from "./models/user-notification-options";
 import {HostEnvironment} from "../shared/models/host-environment.enum";
 
 declare var Notification: any;
@@ -102,54 +102,50 @@ export class NotificationService {
     this._notificationSocket = null;
   }
 
-  public displayUserNotification(notificationTemplate: UserNotificationTemplate) {
+  private static displayHTMLNotification(notificationOptions: UserNotificationOptions) {
+    new Notification(notificationOptions.title, {
+      body: notificationOptions.body,
+      icon: notificationOptions.icon,
+      appId: environment.appId
+    });
+  }
+
+  public displayUserNotification(notificationOptions: UserNotificationOptions) {
     if (!this.canSendNotifications)
       return;
 
-    this.generateWindowsNotification({
-      title: "Notification Title",
-      body: "This is the Notification Body",
-      icon: "http://localhost:5000/assets/jukebox_48_dark.png",
-      actions: ['Previous', 'Next']
-    });
-
-    return;
-
-    /*  let basicNot = new Notification("Hi there!", {
-        badge: "https://i.imgur.com/4reaNuF.jpg",
-        body: "This is the Notification Body",
-        image: "https://i.imgur.com/AkDc38Z.jpg",
-        icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJPSURBVGhD7do5ixRBGIfx8QYRDERQWPAIzQQRBAURv4LgCoLifSsiiIGBkZmIibBgZiAaKpgIot9AEBMxMRINDNREPJ7/sK80RU3121d1g/3CL5iarmaenZmlZ3Yn44zzf806bF20Sgt9zzye4SZWaMEx1/EbfxZ9xnb0NldgD0YewxPzDcV9soBe5jLCByOemNi+h8g+syJMWUxsT/YQRRRf3/IjuC2pmPBYyRpyCWHEO2zCk8KamRUTHifZQmZFbIRmJbwx4TGSJeQiUhE23pjwfuk85AJSEUtwDmumt9Ixy6EJ75NOQzwRd6D1V/DGhOvSWch5eCOMNyZck05C9FKpGmE8MTGthzSJMHViWg05i6YRpmpMayFn0FaEqRLTSkgXEcYb0zjkNLqKMJ6Yl1iKWnMKXUcYT8wDVI7JGWFajzmJ3BGmtZgT6CvCNI4ZQoSpHXMcQ4kwxRhd5pfG7MIvFA/oO8J4Ym5gOuGXBUOJMGUxLzCdzfgELb7BkCJMGPMIWtfb4Rj+zVrshN5YmroRb3EUBxIO4Sli+1OKMXp8e7FjemvGNHkm9Ox6Rj/VD4idI6UYk5wmEV9RZeo8K+KK0W+w2GaPXCFyDcnZjdhGj5wh+sY+OWMIxpAaxhCPMaSGMcRjUCG6cIxt9NBfY6vMc8TO43EVyZlDbKOXrkg9sx5fEDuHx0GUjj5YxTZ7fIc+ft5OuIePiO33+IkNKJ3DiJ1gKO7DPXcRO0nfXmM1Ks0RvEfshLnp/XQLjf7BZgv2YH8P9mEbliExk8lfN8HbebLAzesAAAAASUVORK5CYII=",
-        data: {lol: "this is some data"},
-        appId: environment.appId
-      });
-
-      basicNot.onclick = (event) => console.log(event);*/
-
-
+    switch (this._hostEnvironment) {
+      case HostEnvironment.Windows:
+        this.displayWindowsNotification(notificationOptions);
+        break;
+      case HostEnvironment.Web:
+      case HostEnvironment.Linux:
+      case HostEnvironment.OSX:
+        NotificationService.displayHTMLNotification(notificationOptions);
+        break;
+    }
   }
 
-  private generateWindowsNotification(notificationTemplate: UserNotificationTemplate) {
+  private displayWindowsNotification(notificationOptions: UserNotificationOptions) {
     let notifications = this._electronService.remote.require('electron-windows-notifications');
 
     /*<image placement="appLogoOverride" hint-crop="circle" src="ms-appx:///app/resources/app/dist/assets/jukebox_48_dark.png" />*/
-
     /*<input id="message" type="text" placeHolderContent="Type a reply" />*/
+    /* <text placement="attribution">Via Electron :D</text> */
+
+    let actions = '<actions>';
+
+    notificationOptions.actions.forEach((action) => {
+      actions += `<action content='${action}' arguments='action=${action}' activationType='background'  />`
+    });
+
+    actions += '</actions>';
 
     let template = `<toast>
                         <visual><binding template="ToastGeneric">
-                            <text id="1">${notificationTemplate.title}</text><text id="2">${notificationTemplate.body}</text>
-                            <text placement="attribution">Via Electron :D</text>
+                            <text id="1">${notificationOptions.title}</text><text id="2">${notificationOptions.body}</text>
                         </binding></visual>
-                        <actions>
-                            <input id="time" type="selection" defaultInput="lunch">
-                                <selection id="breakfast" content="Breakfast" />
-                                <selection id="lunch" content="Lunch" />
-                                <selection id="dinner" content="Dinner" />
-                            </input>
-                            <action content='${notificationTemplate.actions[0]}' arguments='action=${notificationTemplate.actions[0]}' activationType='background'  />
-                            <action content='${notificationTemplate.actions[1]}' arguments='action=${notificationTemplate.actions[1]}' activationType='background' />
-                        </actions>
+                        ${actions}
                     </toast>`;
 
     let winNot = new notifications.ToastNotification({
@@ -157,18 +153,6 @@ export class NotificationService {
       template: template
     });
 
-    console.log(template);
-
-    winNot.on('activated', (e, t) => {
-      console.log('Activated!');
-      console.log(e);
-      console.log(t);
-    });
-    winNot.on('dismissed', (e, t) => {
-      console.log('Dismissed!');
-      console.log(e);
-      console.log(t);
-    });
     winNot.show();
   }
 
