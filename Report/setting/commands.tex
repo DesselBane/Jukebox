@@ -8,6 +8,7 @@
 \newcommand{\bzw}{bzw.\ }
 \newcommand{\evtl}{evtl.\ }
 \newcommand{\dw}{des Weiteren}
+\newcommand{\uu}{u.\ U.\ }
 
 % Enumeration
 \newcommand{\enumDot}[1]{
@@ -65,7 +66,7 @@
 
 \newcommand{\showimg}[2][scale=1.0]{ \includegraphics[{#1}]{res/images/#2} }
 \newcommand{\image}[3][scale=1.0]{
-	\begin{figure}[h]
+	\begin{figure}[ht]
 		\centering
 		\showimg[#1]{#2}
 		\caption{#3}
@@ -117,7 +118,7 @@
 \newcommand{\Webservice}[1]{\textsf{#1}}
 
 \newcommand{\addpage}[1]{\include{pages/#1}}
-\newcommand{\addexample}[1]{\include{pages/Examples/#1}}
+\newcommand{\addsubpage}[1]{\input{pages/#1}}
 
 %hyperref
 % Befehle, die Umlaute ausgeben, führen zu Fehlern, wenn sie hyperref als
@@ -136,3 +137,4 @@
 \newcommand*{\mynameref}[1]{\hyperref[{#1}]{\nameref{#1} \vpageref{#1}}}
 
 \newcommand{\lstcode}[1]{\texttt{#1}}
+\newcommand{\revMark}[1]{\textcolor{red}{#1} \ref{revMarkerLABEL}}
