@@ -45,9 +45,13 @@
 % document start
 % ------------------------------------------------------------------------------
 \begin{document}
+\selectlanguage{american}
+
 % Deckblatt und Abstract ohne Seitenzahl
 \addpage{report_coversheet}
 %\addpage{abstract}
+
+\addpage{abstract}
 
 % start page numberging
 \ofoot{\pagemark}
@@ -65,25 +69,27 @@
 % Quellcodeverzeichnis
 \lstlistoflistings
 
+% glossary
+\addcontentsline{toc}{chapter}{List of Abbreviations} % add to table of contents
+\setlist[description]{leftmargin=!, labelwidth=5em} % Change for glossaries
+\printglossary[title=List of Abbreviations]
+\setlist[description]{style=standard} % reset settings back to default
+
+
 % arabic page count
 \clearpage
 \pagenumbering{arabic}
 
 % ##############################################################################
 % Chapters
-\addpage{abstract}
 \addpage{introduction}
 \addpage{body}
+\addpage{results}
 \addpage{ending}
 
 
 % ##############################################################################
 
-% glossary
-\addcontentsline{toc}{chapter}{List of Abbreviations} % add to table of contents
-\setlist[description]{leftmargin=!, labelwidth=5em} % Change for glossaries
-\printglossary[title=List of Abbreviations]
-\setlist[description]{style=standard} % reset settings back to default
 
 
 % Indexverzeichnis
@@ -100,6 +106,8 @@
 %\addpage{declaration}                     % add declaration page
 %\setdefaultleftmargin{1em}{}{}{}{}{}%    % Rand der Aufzählungen in Tabellen anpassen
 %\end{appendix}
+
+\selectlanguage{ngerman}
 
 \addsubpage{eidesstattliche}
 
