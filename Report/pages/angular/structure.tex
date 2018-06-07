@@ -2,7 +2,22 @@
 
 \Section{Structure}
 
-\Subsection{Modules}
+This Section describes how an Angular application is structued.
+
 \Subsection{Components}
+
+An Angular component can be compared to a View and ViewModel combo from the \gls{mvvm} Pattern. It is composed of three files. There is one \gls{html} and one \gls{css} file which together are the View. The ViewModel is a \gls{ts} file which contains the essetial logic for the View to function. The component is always declared in the \gls{ts} File with the \lstcode{@Component} decorator, see \myautoref{lst:example-component.ts}.
+
+\file{example-component.ts}{Example of an Angular Component TypeScript File}{JavaScript}
+
+The \lstcode{@Component} decorator can take many arguments but the commonly used ones are: \enquote{selector}, \enquote{templateUrl}, and \enquote{styleUrls} \cite{ngcomponent}. The selector is a string which starts by convention with \enquote{app} and is then followed by the components name, see \mylineref{lst:example-component.ts}{comp_selector}. The selector is used if a component wants to include another component in its \gls{html}.
+
+The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corresponding \gls{html} and \gls{css} files respectivly (\mylineref{lst:example-component.ts}{comp_templateUrl} and \ref{line:comp_styleUrls}). These arguments take a relative path to a file or multiple files in the case of \enquote{styleUrls} in the project. For both arguments there are inline variants though out of redability concerns they should be avoided when possible.
+
+\Subsubsection{Lifecycle Hooks}
+\Subsubsection{Template Syntax}
+
+
 \Subsection{Services}
 \Subsection{Interception}
+\Subsection{Modules}
