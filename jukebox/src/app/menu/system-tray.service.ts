@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ElectronService} from "ngx-electron";
-import {AngularMenuItem} from "./models/angular-menu-item";
-import {MenuItemService} from "./menu-item.service";
+import {ElectronService} from 'ngx-electron';
+import {AngularMenuItem} from './models/angular-menu-item';
+import {MenuItemService} from './menu-item.service';
 
 @Injectable()
 export class SystemTrayService {
@@ -50,7 +50,16 @@ export class SystemTrayService {
 
     this._win = this._electronService.remote.getCurrentWindow();
 
-    let image = this._electronService.remote.nativeImage.createFromPath(`${this._dirname}/dist/assets/jukebox_24_dark.png`);
+    let image;
+
+    if (this._electronService.remote.process.platform === 'darwin') {
+      console.log('this is osx');
+      image = this._electronService.remote.nativeImage.createFromPath(`${this._dirname}/dist/assets/jukebox_24_light.png`);
+    } else {
+      console.log('Not OSX');
+      image = this._electronService.remote.nativeImage.createFromPath(`${this._dirname}/dist/assets/jukebox_24_dark.png`);
+    }
+
     this._tray = new this._electronService.remote.Tray(image);
 
     let trayMenuTemplate = [
@@ -77,6 +86,7 @@ export class SystemTrayService {
     this._tray.addListener('click', () => {
       this._win.show();
     });
+
   }
 
 }

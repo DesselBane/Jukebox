@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {NotificationChannels} from "./models/notification-channels.enum";
-import {Observable} from "rxjs/Observable";
-import {NotificationResponse} from "./models/notification-response";
-import {Observer} from "rxjs/Observer";
-import {environment} from "../../environments/environment";
-import {Subject} from "rxjs/Subject";
-import {ElectronService} from "ngx-electron";
-import {UserNotificationOptions} from "./models/user-notification-options";
-import {HostEnvironment} from "../shared/models/host-environment.enum";
+import {NotificationChannels} from './models/notification-channels.enum';
+import {Observable} from 'rxjs/Observable';
+import {NotificationResponse} from './models/notification-response';
+import {Observer} from 'rxjs/Observer';
+import {environment} from '../../environments/environment';
+import {Subject} from 'rxjs/Subject';
+import {ElectronService} from 'ngx-electron';
+import {UserNotificationOptions} from './models/user-notification-options';
+import {HostEnvironment} from '../shared/models/host-environment.enum';
 
 declare var Notification: any;
 
@@ -120,8 +120,10 @@ export class NotificationService {
         break;
       case HostEnvironment.Web:
       case HostEnvironment.Linux:
-      case HostEnvironment.OSX:
         NotificationService.displayHTMLNotification(notificationOptions);
+        break;
+      case HostEnvironment.OSX:
+        this.dispolayMacNotification(notificationOptions);
         break;
     }
   }
@@ -156,5 +158,14 @@ export class NotificationService {
     winNot.show();
   }
 
+  private dispolayMacNotification(notificationOptions: UserNotificationOptions) {
+    let notificationConstructor = this._electronService.remote.require('node-mac-notifier');
+
+    let notification = new notificationConstructor(notificationOptions.title, {
+      body: notificationOptions.body
+    });
+
+    notification.addEventListener('click', () => console.log('Notification clicked'));
+  }
 
 }
