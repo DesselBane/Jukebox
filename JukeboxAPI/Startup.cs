@@ -41,8 +41,8 @@ namespace Jukebox
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUi3Settings());
+ 
+            app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly);
 
             app.UseAuthentication();
 
