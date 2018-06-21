@@ -75,6 +75,25 @@ namespace Jukebox.Common.Files
                                                         Type = DirectoryTypes.DriveOrRoot
                                                     });
                                 }
+                                
+                                if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                                {
+                                    var envs = Environment.GetEnvironmentVariable("HOME");
+                                    
+                                    directories.Add(new DirectoryDTO
+                                    {
+                                        DirectoryFullPath = envs,
+                                        DirectoryName = envs.Split('/').Last(),
+                                        Type = DirectoryTypes.Home
+                                    });
+                                    
+                                    directories.Add(new DirectoryDTO
+                                    {
+                                        DirectoryFullPath = "/",
+                                        DirectoryName = "Root",
+                                        Type = DirectoryTypes.DriveOrRoot
+                                    });
+                                }
 
                                 return (IEnumerable<DirectoryDTO>) directories;
                             });

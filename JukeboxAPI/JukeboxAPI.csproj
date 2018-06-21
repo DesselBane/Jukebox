@@ -1,25 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <RuntimeIdentifiers>win10-x64;osx.10.11-x64;linux-x64;win10-x86</RuntimeIdentifiers>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;osx.10.13-x64;linux-x64;win10-x86</RuntimeIdentifiers>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Jukebox</AssemblyName>
     <RootNamespace>Jukebox</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
     <PackageReference Include="ExceptionMiddleware" Version="1.0.2" />
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="NSwag.Annotations" Version="11.15.4" />
-    <PackageReference Include="NSwag.AspNetCore" Version="11.15.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="NSwag.Annotations" Version="11.17.13" />
+    <PackageReference Include="NSwag.AspNetCore" Version="11.17.13" />
     <PackageReference Include="SpaMiddleware" Version="1.0.3" />
-      <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.4.0"/>
-      <PackageReference Include="System.IO.FileSystem.DriveInfo" Version="4.3.1"/>
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.5.0" />
+    <PackageReference Include="System.IO.FileSystem.DriveInfo" Version="4.3.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
@@ -39,8 +39,8 @@
       <Project>{6A7F07A3-8FE6-4CB8-885C-FC6C0D52BEF9}</Project>
       <Name>Jukebox.Common</Name>
     </ProjectReference>
-      <ProjectReference Include="..\Jukebox.Data.InMemory\Jukebox.Data.InMemory.csproj"/>
-      <ProjectReference Include="..\Jukebox.Data.SqLite\Jukebox.Data.SqLite.csproj"/>
+    <ProjectReference Include="..\Jukebox.Data.InMemory\Jukebox.Data.InMemory.csproj" />
+    <ProjectReference Include="..\Jukebox.Data.SqLite\Jukebox.Data.SqLite.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

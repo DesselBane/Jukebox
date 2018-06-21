@@ -80,8 +80,8 @@ function startApi() {
   let apiFullPath = `${apiPath}\\Jukebox.exe`;
 
   if (os.platform() === 'darwin') {
-    apiPath = `${__dirname}//api//osx`;
-    apiFullPath = `${apiPath}//Jukebox`;
+    apiPath = `${__dirname}/api/osx`;
+    apiFullPath = `${apiPath}/Jukebox`;
   }
   if (os.platform() === 'linux') {
     apiPath = `${__dirname}/api/linux`;
