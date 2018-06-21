@@ -4,7 +4,7 @@
 
 This Section describes how an Angular application is structued.
 
-\Subsection{Components}
+\Subsection[components]{Components}
 
 An Angular component can be compared to a View and ViewModel combo from the \gls{mvvm} Pattern. It is composed of three files. There is one \gls{html} and one \gls{css} file which together are the View. The ViewModel is a \gls{ts} file which contains the essetial logic for the View to function. The component is always declared in the \gls{ts} File with the \lstcode{@Component} decorator, see \myautoref{lst:example-component.ts}.
 
@@ -12,10 +12,20 @@ An Angular component can be compared to a View and ViewModel combo from the \gls
 
 The \lstcode{@Component} decorator can take many arguments but the commonly used ones are: \enquote{selector}, \enquote{templateUrl}, and \enquote{styleUrls} \cite{ngcomponent}. The selector is a string which starts by convention with \enquote{app} and is then followed by the components name, see \mylineref{lst:example-component.ts}{comp_selector}. The selector is used if a component wants to include another component in its \gls{html}.
 
-The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corresponding \gls{html} and \gls{css} files respectivly (\mylineref{lst:example-component.ts}{comp_templateUrl} and \ref{line:comp_styleUrls}). These arguments take a relative path to a file or multiple files in the case of \enquote{styleUrls} in the project. For both arguments there are inline variants though out of redability concerns they should be avoided when possible.
+The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corresponding \gls{html} and \gls{css} files respectivly (\mylineref{lst:example-component.ts}{comp_templateUrl} and \ref{line:comp_styleUrls}). These arguments take a relative path to a file or multiple files in the case of \enquote{styleUrls} in the project. For both arguments there are inline variants though for redability concerns they should be avoided when possible.
 
 \Subsubsection{Lifecycle Hooks}
+Each components lifecycle is managed by the Angular framework. The developer can implement diferent Interfaces to be able to respond to these lifecycle events. Although since at runtime the executed code is JavaScript it is not necessary to implement these Interfaces. Angular will check any component if it contains a method like \zB \lstcode{ngOnInit()} and if so will call this method. One of these hooks is the \lstcode{OnInit} Interface with its \lstcode{ngOnInit()} Method, as shown in \mylineref{lst:example-component.ts}{comp_OnInit} and \ref{line:comp_ngOnInit}. Every components lifecycle starts with a call to its constructor and is then followed by the events: \lstcode{NgOnChanges()}, \lstcode{ngOnInit()}, \lstcode{ngDoCheck()}, \lstcode{ngAfterContentInit()}, \lstcode{ngAfterContentChecked()}, \lstcode{ngAfterViewInit()}, \lstcode{ngAfterViewChecked()}, \lstcode{ngOnDestroy()}. \cite{angularLifecycleHooks}
+
 \Subsubsection{Template Syntax}
+A Template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} don't make much sense. The official tags are extended through tags that refer to components like described in \myref{subsec:components}.
+
+\file{nav-item-component.html}{Example of an Angular template.}{HTML5}
+
+Like many \gls{mvvm} frameworks Angular supports Bindings. These are used to display data obtained in the \gls{ts} part of the component or in case of input controls send data back to the \gls{ts}. To display data interpolation is used. The syntax used by Angular is \{\{\lstcode{myObject.myProperty}\}\} like shown in \mylineref{lst:nav-item-component.html}{navItem_interpolation}. Angular will evalute the text between the curly brakets as an expression and then display the result. The context for the expression usually is the component instance.
+
+\cite{angularTemplateSyntax}
+
 
 
 \Subsection{Services}

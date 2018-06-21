@@ -5,7 +5,7 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './nav-item.component.html', |\label{line:comp_templateUrl}|
   styleUrls: ['./nav-item.component.css'] |\label{line:comp_styleUrls}|
 })
-export class NavItemComponent implements OnInit {
+export class NavItemComponent implements OnInit { |\label{line:comp_OnInit}|
   constructor() { }
-  ngOnInit() {  }
+  ngOnInit() {  } |\label{line:comp_ngOnInit}|
 }
