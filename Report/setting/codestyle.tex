@@ -17,7 +17,7 @@
 	tabsize=2,                      % sets default tabsize to 2 spaces
 	captionpos=b,                   % sets the caption-position to bottom
 	breaklines=true,                % sets automatic line breaking
-	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+	breakatwhitespace=true,        % sets if automatic breaks should only happen at whitespace
 	title=\lstname,                   % show the filename of files included with \lstinputlisting;
 	aboveskip=2em,
 	% also try caption instead of title
@@ -110,7 +110,7 @@
 \lstdefinelanguage{HTML5}{
 	language=html,
 	sensitive=true,
-	alsoletter={<>=-},
+	alsoletter={<>=-*},
 	morecomment=[s]{<!-}{-->},
 	tag=[s],
 	otherkeywords={
@@ -128,11 +128,15 @@
 		% scripts
 		</script, <script,
 		% More tags...
-		<canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>, <header, </header, <article, </article
+		<canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>, <header, </header, <article, </article,
+		%Angular Tags
+		<mat-expansion-panel, </mat-expansion-panel, <mat-expansion-panel-header, </mat-expansion-panel-header, <mat-panel-title, </mat-panel-title, <app-nav-item, </app-nav-item, <mat-list-item, </mat-list-item
+	},
+	emph={
+	*ngFor=, *ngIf=
 	},
 	ndkeywords={
 		% General
-		=,
 		% HTML attributes
 		charset=, src=, id=, width=, height=, style=, type=, rel=, href=,
 		% SVG attributes
@@ -142,6 +146,9 @@
 		% CSS3 properties
 		transform:, -moz-transform:, -webkit-transform:,
 		animation:, -webkit-animation:,
-		transition:,  transition-duration:, transition-property:, transition-timing-function:,
-	}
+		transition:,  transition-duration:, transition-property:, transition-timing-function:
+	},
+	commentstyle=\color{vs_comment},
+	keywordstyle=\color{vs_class},
+	emphstyle=\color{vs_keyword},
 }
