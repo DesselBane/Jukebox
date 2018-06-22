@@ -39,6 +39,12 @@ If said Item contains children each of these child items has to be displayed. Fo
 
 The third built-in directive is the switch-case directive which lets the developer show content based on a property. \mylineref{lst:nav-item-component.html}{navItem_switch} to \ref{line:navItem_switch_end} is an example of how the \lstcode{NavItem} template could have been debuged.
 
+\Subsubsection{Template Syntax - Pipes}
+
+Angular also offers support for pipes which are very similar to \gls{wpf} Converters, with the exception that an Angular pipe only works in one direction. This is usefull for formatting the \enquote{raw} data \zB \lstcode{\{\{title | uppercase | lowercase\}\}}. As shown in the example pipes can be chained. It is also possible to add parameters to a pipe one example would be the \lstcode{date} pipe where the name for a date format can be passed as an argument \zB \lstcode{\{\{ myDate | date:'longDate'\}\}}. Angular offers many built-in pipes but it is also possible to create a custom one. To do so the developer needs to create a new class which implements the \lstcode{PipeTransform} method and use the \lstcode{@Pipe()} decorator like shown in \myautoref{lst:boolean-yes-no-pipe.ts}.
+
+\file{boolean-yes-no-pipe.ts}{A custom pipe to convert a boolean to 'Yes' or 'No'.}{JavaScript}
+
 \cite{angularTemplateSyntax}
 
 
