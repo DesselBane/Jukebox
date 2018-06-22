@@ -1,11 +1,17 @@
-<mat-expansion-panel *ngIf="CurrentItem.type === 'submenu'">
+<mat-expansion-panel *ngIf="CurrentItem.type === 'submenu'"> |\label{line:navItem_ngIf}|
   <mat-expansion-panel-header>
     <mat-panel-title>{{CurrentItem.label}}</mat-panel-title> |\label{line:navItem_interpolation}|
   </mat-expansion-panel-header>
-  <app-nav-item *ngFor="let subItem of CurrentItem.submenu" [CurrentItem]="subItem" (ItemClicked)="ItemClicked.emit()">
+  <app-nav-item *ngFor="let subItem of CurrentItem.submenu; let i=index" [CurrentItem]="subItem" (ItemClicked)="ItemClicked.emit()"> |\label{line:navItem_inputProperty}| |\label{line:navItem_ngFor}|
   </app-nav-item>
 </mat-expansion-panel>
 
 <mat-list-item *ngIf="CurrentItem.type === 'normal' && CurrentItem.visible" (click)="itemClickHandler()">
   <p> {{CurrentItem.label}} </p>
 </mat-list-item>
+
+<div [ngSwitch]="CurrentItem.type"> |\label{line:navItem_switch}|
+  <p *ngSwitchCase="'submenu'"> Item has children </p>
+  <p *ngSwitchCase="'normal'"> Item doesn't have children </p>
+  <p *ngSwitchCase="'separator'"> This is a separator </p>
+</div> |\label{line:navItem_switch_end}|

@@ -77,10 +77,10 @@
 
 % JavaScript
 \lstdefinelanguage{JavaScript}{
-	morekeywords={ import, class, export, @NgModule, from, @Component, implements, extends }, % keywords
+	morekeywords={ import, class, export, @NgModule, from, @Component, implements, extends,  @Input, @Output, new }, % keywords
 	basicstyle=\ttfamily \color{black} \small \smaller,
 	emphstyle={\color{vs_class}},
-	emph={ AssignmentSearchComponent, AssignmentEditComponent, PipeModule, ModalModule, TooltipModule, ModelViewModul, TimepickerModule, FormsModule, CommonModule, assignmentRouting, AssignmentComponent, AssignmentOverviewComponent, AssignmentService, AssignmentModule, NgModule, OnInit, NavItemComponent, Component }, % classnames
+	emph={ AssignmentSearchComponent, AssignmentEditComponent, PipeModule, ModalModule, TooltipModule, ModelViewModul, TimepickerModule, FormsModule, CommonModule, assignmentRouting, AssignmentComponent, AssignmentOverviewComponent, AssignmentService, AssignmentModule, NgModule, OnInit, NavItemComponent, Component, EventEmitter, Input, Output, AngularMenuItem }, % classnames
 	showspaces=false,
 	showtabs=false,
 	breaklines=true,
@@ -133,7 +133,7 @@
 		<mat-expansion-panel, </mat-expansion-panel, <mat-expansion-panel-header, </mat-expansion-panel-header, <mat-panel-title, </mat-panel-title, <app-nav-item, </app-nav-item, <mat-list-item, </mat-list-item
 	},
 	emph={
-	*ngFor=, *ngIf=
+	*ngFor=, *ngIf=, *ngSwitchCase=
 	},
 	ndkeywords={
 		% General

@@ -17,12 +17,27 @@ The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corres
 \Subsubsection{Lifecycle Hooks}
 Each components lifecycle is managed by the Angular framework. The developer can implement diferent Interfaces to be able to respond to these lifecycle events. Although since at runtime the executed code is JavaScript it is not necessary to implement these Interfaces. Angular will check any component if it contains a method like \zB \lstcode{ngOnInit()} and if so will call this method. One of these hooks is the \lstcode{OnInit} Interface with its \lstcode{ngOnInit()} Method, as shown in \mylineref{lst:example-component.ts}{comp_OnInit} and \ref{line:comp_ngOnInit}. Every components lifecycle starts with a call to its constructor and is then followed by the events: \lstcode{NgOnChanges()}, \lstcode{ngOnInit()}, \lstcode{ngDoCheck()}, \lstcode{ngAfterContentInit()}, \lstcode{ngAfterContentChecked()}, \lstcode{ngAfterViewInit()}, \lstcode{ngAfterViewChecked()}, \lstcode{ngOnDestroy()}. \cite{angularLifecycleHooks}
 
-\Subsubsection{Template Syntax}
+\Subsubsection{Template Syntax - Bindings}
 A Template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} don't make much sense. The official tags are extended through tags that refer to components like described in \myref{subsec:components}.
 
 \file{nav-item-component.html}{Example of an Angular template.}{HTML5}
 
-Like many \gls{mvvm} frameworks Angular supports Bindings. These are used to display data obtained in the \gls{ts} part of the component or in case of input controls send data back to the \gls{ts}. To display data interpolation is used. The syntax used by Angular is \{\{\lstcode{myObject.myProperty}\}\} like shown in \mylineref{lst:nav-item-component.html}{navItem_interpolation}. Angular will evalute the text between the curly brakets as an expression and then display the result. The context for the expression usually is the component instance.
+Like many \gls{mvvm} frameworks Angular supports Bindings. These are used to display data obtained from the ViewModel or in case of input controls send data back to the ViewModel. To display data interpolation is used. The syntax used by Angular is \{\{\lstcode{myObject.myProperty}\}\} like shown in \mylineref{lst:nav-item-component.html}{navItem_interpolation}. Angular will evalute the text between the curly brakets as an expression and then display the result. The context for the expression usually is the component instance.
+
+In case data from the ViewModel should be passed on to another component, which is referenced via its \gls{html} tag, the square braket notation is used (\mylineref{lst:nav-item-component.html}{navItem_inputProperty}). It is also possible to use the \lstcode{bind-} prefix \zB \lstcode{bind-CurrentItem="subItem"}. For both of these methods to work the receiving component needs a property in its ViewModel which is decalred with the \lstcode{@Input()} decorator, see \mylineref{lst:example-component.ts}{comp_input}.
+
+For events the standard \gls{js} round braket notation (\mylineref{lst:nav-item-component.html}{navItem_inputProperty}) or the \lstcode{on-} prefix \zB \lstcode{on-ItemClicked="ItemClicked.emit()"} are used. Custom conponents can declare their own events using the \lstcode{@Output()} decorator on a property (\mylineref{lst:example-component.ts}{comp_output}). The property usually is of type \lstcode{EventEmitter}. If RxJS Observables are used \lstcode{Observable<T>}, or \lstcode{Subject<T>} are also possible.
+
+Forms often present the user with a \enquote{Combobox} or \enquote{Dropdown} of which the \lstcode{SelectedItem} is supposed to be \enquote{mirrored} to a property in the component, to give the developer easy access to read but also change the value from within the ViewModel. In this case a two-way binding can be used. Angular uses the \enquote{Banana-in-a-box} notation which are round brakets inside square brakets \zB \lstcode{[(SelectedItem)]="userSelection"}. The two-way binding can also be achived using the \lstcode{bindon-} prefix \zB \lstcode{bindon-SelectedItem="userSelection"}.
+
+\Subsubsection{Template Syntax - Directives}
+
+Angular also exposes different directives which add some functionality to the \gls{html}. The \lstcode{*ngIf} directive determines if the tag it is contained in as well as its children should or shouldn't be part of the \gls{dom}. This was used in the Jukebox project for showing NavItems as an expander if the Item in question had children or if it didn't as a regular Item like shown in \mylineref{lst:nav-item-component.html}{navItem_ngIf}.
+
+If said Item contains children each of these child items has to be displayed. For this the \lstcode{*ngFor} directive is used. Its syntax (\mylineref{lst:nav-item-component.html}{navItem_ngFor}) is similar to the \lstcode{foreach} syntaxes of many popular languages. The index tracking is optional but usefull in some cases. Also it is possible to useds the trackBy feature. This is similar to the \lstcode{equals()} C\# method. It allows the \lstcode{*ngFor} directive to deceide the equallity of an item not by its instance reference but a custom defined method. For this to work the developer is required to implement a method with following signature:\\
+\lstcode{public myTrackBy(index: number, object: object): number}\\
+
+The third built-in directive is the switch-case directive which lets the developer show content based on a property. \mylineref{lst:nav-item-component.html}{navItem_switch} to \ref{line:navItem_switch_end} is an example of how the \lstcode{NavItem} template could have been debuged.
 
 \cite{angularTemplateSyntax}
 
