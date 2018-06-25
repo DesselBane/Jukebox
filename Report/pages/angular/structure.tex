@@ -50,5 +50,14 @@ Angular also offers support for pipes which are very similar to \gls{wpf} Conver
 
 
 \Subsection{Services}
-\Subsection{Interception}
+
+An Angular Service is a class which is used to do a specific well defined task. It usually performs operations on data or \revMark{talks} to outside services. This may be to obtain or push data to an \gls{api} the website uses to store its data.
+
+\file{menu-item-service.ts}{A service for managing menu items.}{JavaScript}
+
+Angular services are written in \gls{ts}. They are a class with the \lstcode{@Injectable()} decorator (\mylineref{lst:menu-item-service.ts}{service_cons}) which makes this class visible to the \gls{di} components of the Angular framework. Other then this decorator a services is simply a class which can implement interfaces and declare methods like any other class.
+
+Services should be used to encapsulate functionallity which helps promote reusibility and modularity. To distinguish weather a method should be implement in a service or a component the question is: Is the method related to how something is displayed? If the answer to this question is yes then the method should be implemented in a component, if its no it should be implemented in a service class.
+
+
 \Subsection{Modules}
