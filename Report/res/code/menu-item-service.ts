@@ -12,6 +12,6 @@ export class MenuItemService {
 
   public createElectronMenuItem(menuItem: AngularMenuItem)
     : Electron.MenuItem
-  { ... }
+  { [...] }
 
 }

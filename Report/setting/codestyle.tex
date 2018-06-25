@@ -9,7 +9,6 @@
 	numbersep=5pt,                  % how far the line-numbers are from the code
 	backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
 	showspaces=false,               % show spaces adding particular underscores
-	commentstyle=\color{dkgreen},
 	showstringspaces=false,         % underline spaces within strings
 	showtabs=false,                 % show tabs within strings adding particular underscores
 	frame=single,                   % adds a frame around the code
@@ -77,10 +76,10 @@
 
 % JavaScript
 \lstdefinelanguage{JavaScript}{
-	morekeywords={ import, class, export, @NgModule, from, @Component, implements, extends,  @Input, @Output, new, return, @Pipe, public, private, interface, enum, @Injectable, constructor }, % keywords
+	morekeywords={ import, class, export, @NgModule, from, @Component, implements, extends,  @Input, @Output, new, return, @Pipe, public, private, interface, enum, @Injectable, constructor, declarations, imports, providers,  schemas, bootstrap, export, true, false}, % keywords
 	basicstyle=\ttfamily \color{black} \small \smaller,
 	emphstyle={\color{vs_class}},
-	emph={ AssignmentSearchComponent, AssignmentEditComponent, PipeModule, ModalModule, TooltipModule, ModelViewModul, TimepickerModule, FormsModule, CommonModule, assignmentRouting, AssignmentComponent, AssignmentOverviewComponent, AssignmentService, AssignmentModule, NgModule, OnInit, NavItemComponent, Component, EventEmitter, Input, Output, AngularMenuItem, Pipe, PipeTransform, BooleanYesNoPipe, boolean, string, Injectable, ElectronService, MenuItemService, AngularMenuItem, Electron, MenuItem }, % classnames
+	emph={ AssignmentSearchComponent, AssignmentEditComponent, PipeModule, ModalModule, TooltipModule, ModelViewModul, TimepickerModule, FormsModule, CommonModule, assignmentRouting, AssignmentComponent, AssignmentOverviewComponent, AssignmentService, AssignmentModule, NgModule, OnInit, NavItemComponent, Component, EventEmitter, Input, Output, AngularMenuItem, Pipe, PipeTransform, BooleanYesNoPipe, boolean, string, Injectable, ElectronService, MenuItemService, AngularMenuItem, Electron, MenuItem, BrowserModule, AppModule, MenuModule, AppComponent, AppRoutingModule, AuthGuard, HTTP_INTERCEPTORS, HttpClientErrorInterceptor, AuthenticationInterceptor, ElectronUrlInterceptor, CUSTOM_ELEMENTS_SCHEMA }, % classnames
 	showspaces=false,
 	showtabs=false,
 	breaklines=true,
@@ -88,6 +87,7 @@
 	breakatwhitespace=true,
 	morestring=[b]',
 	morestring=[b]",
+	morecomment=[l]{//},
 	commentstyle=\color{vs_comment},
 	keywordstyle=\color{vs_keyword},
 	stringstyle=\color{vs_string},
