@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-[imports ...]
+[Imports...]
 
 @NgModule({ |\label{line:module_decorator}|
   declarations: [ |\label{line:module_declarations}|
@@ -14,6 +14,7 @@ import {BrowserModule} from '@angular/platform-browser';
     //Has to be last !!!
     AppRoutingModule
   ],
+  exports: [], |\label{line:module_exports}|
   providers: [ |\label{line:module_providers}|
     AuthGuard,
     {
@@ -21,7 +22,7 @@ import {BrowserModule} from '@angular/platform-browser';
       useClass: HttpClientErrorInterceptor,
       multi: true
     },
-    [Interceptors ...]
+    [Interceptors...]
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], |\label{line:module_schemas}|
   bootstrap: [AppComponent] |\label{line:module_bootstrap}|
