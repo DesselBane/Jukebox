@@ -18,7 +18,7 @@ import {BrowserModule} from '@angular/platform-browser';
   providers: [ |\label{line:module_providers}|
     AuthGuard,
     {
-      provide: HTTP_INTERCEPTORS,
+      provide: HTTP_INTERCEPTORS, |\label{line:module_interceptor}|
       useClass: HttpClientErrorInterceptor,
       multi: true
     },
