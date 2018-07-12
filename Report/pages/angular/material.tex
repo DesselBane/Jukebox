@@ -2,6 +2,11 @@
 
 \Section{Angular Material}
 
-\Subsection{Theming}
+Angular Material is a framework, also developed by Google, which provides pre-built controls. These include buttons, trees, datepicker and many more. All of these controls are styled with the Google Material style guidelines in mind. To be able to use this framework the developer has to install it via \gls{npm} or a similar package management tool. \cite{angularMaterial}
+
 \Subsection{Components}
+Each control is an Angular component. This means that controls can be used in the \gls{html} by inculing the corresponding tag, as shown in \mylineref{lst:navigation-bar.html}{navbar_mat_toolbar}. Any \gls{html} tag which starts with the \lstcode{mat-} prefix is referencing an Angular Material control/component.
+
+This prefix was changed from \lstcode{md-} to the current \lstcode{mat-}. Also with that change Angular Material changed how the components are organized into modules. It used to be a single module called \lstcode{MaterialModule} which became deprecated and replaced by many modules each for a single control \zB \lstcode{MatButtonModule}. In the Jukebox project there are currently 17 different controls in use which means 17 different modules have to be imported. To keep the app.moudle.ts file tidy a custom module was created. This so called \lstcode{MaterialMetaModule} imports and exports all 17 \enquote{submodules} so that in the \lstcode{AppModule} only has to import this meta module.
+
 \Subsection{Icons}
