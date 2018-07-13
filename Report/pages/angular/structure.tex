@@ -17,7 +17,7 @@ The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corres
 \Subsubsection{Lifecycle Hooks}
 The Angular framework manages the lifecycle of each component. Throughout this lifecycle Angular offers the possibility to respond to certain events \zB \lstcode{ngOnDestroy()} where the developer could run a cleanup routine. In order to respond to any of these events the developer has to implement one method per event. The method signatures are defined by the Angular framework and exposed as interfaces. Since the executed code at runtime is \gls{js} code, interfaces aren't necessary. Nonetheless it is considered \enquote{best-practice} to use these interfaces.
 
-\Subsubsection{Template Syntax - Bindings}
+\Subsubsection[bindings]{Template Syntax - Bindings}
 A template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} don't make much sense. The official set of tags is extended with tags that refer to components as described in \myref{subsec:components}.
 
 \file{nav-item-component.html}{Example of an Angular template.}{HTML5}
