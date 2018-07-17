@@ -2,6 +2,18 @@
 
 \Section{Notifications}
 
+Electron provides a basic \gls{api} for all operating systems to send notifications to the user. This is done through the \gls{html} 5 notification \gls{api}.
+
+
+The globally available \lstcode{Notification} object is used to manage a websites permission to display notifications. This is done through the static \lstcode{Notification.permission} property which returns one of the three following values: \enquote{granted}, \enquote{denied}, \enquote{default}. The \enquote{default} values tells the developer that the user choice is unknown at this moment. In this state the browser behaves as if the user denied permission which results in no notifications beeing shown. With the static \lstcode{Notification.requestPermission()} method the user is asked whether he want to see netofications or not.
+
+\file{html-notification.ts}{Displaying a basic HTML notification.}{JavaScript}
+
+Once permission is granted a notification can be displayed as shown in \myautoref{lst:html-notification.ts}.
+
 \Subsection{Windows}
+
+
+
 \Subsection{Linux}
 \Subsection{Mac}
