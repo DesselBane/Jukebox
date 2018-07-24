@@ -1,0 +1,76 @@
+% !TEX root=../../report.tex
+
+\Chapter{Electron}
+
+Electron (formerly known as Atom Shell \cite{atomShell}) is an open-source framework developed and maintained by GitHub \cite{electron}. It is based on the Chromium V8 browser engine \cite{chromium} and the Node.js JavaScript runtime \cite{nodejs}. This framework was initially developed for the Atom text editor \cite{atom} in 2013 and both were opend sourced in the beginning of 2014 \cite{aboutElectron}.
+
+Electron enables a developer to build cross-platform applications which are written in \gls{html}, \gls{css}, and \gls{js}. Its \gls{api} offers desktop integration with \gls{api}s such as the OSX and Windows notifications, the Windows taskbar, the Ubuntu launcher and many more. With this framework it is possible to maintain a single code-base while serving all major desktop operating systems as well as hosting a website on a traditional web server.
+
+This chapter will describe the Electron framework as well as discuss which \gls{api}s are a bit more difficult to use correctly in a cross-platform environment.
+
+\Section{Electron's Architecture}
+
+Every Electron appilcation has a main file which is the root or starting point for the application. This file is specified in the package.json configuration file with the key \enquote{main}. By convention this file is called \enquote{main.js} but any name is possible.
+
+
+This main file is mostly used to set event handlers on the app object. These include handlers for the \enquote{ready}, \enquote{window-all-closed}, and \enquote{activate} events (see \myautoref{lst:main-ready.js}). Also the event handler for the ready event usually contains code to create a \lstcode{BrowserWindow} object and load some \gls{html}. In the Jukebox project the main.js file is used for the entire application startup sequence as well as some Electron debugging methods.
+
+\file{main-ready.js}{The Jukebox app \enquote{ready} event handler.}{JavaScript}
+
+Electron uses the multi-process architecture of its underlying Chromium V8 engine. This means that the main.js file is called from the main process but every \enquote{web page} is running in a separate window and process, which is called a renderer process \cite{electronAppArch}. This is illustrated in \myautoref{fig:electronArch.png}.
+
+\image[scale=.2]{electronArch.png}{Electron architectural overview \cite{electronArch}}
+
+There is exactly one main process at all times. It is responsible for managing all of the renderer processes. A renderer process only knows its web page and is isolated from the rest of the application. It is thightly coupled to the \lstcode{BrowserWindow} object. If the window is destroyed the process is also terminated.
+
+\Subsubsection{Inter-process Communication}
+
+Every renderer process is isolated from the main process as well as all the other renderer processes therefore there needs to be a way to communicate data between those processes. This is done via the Electron \gls{ipc} \gls{api}. It is split into the \lstcode{ipcMain} and \lstcode{ipcRenderer} objects, which are both instances of \lstcode{EventEmitter}.
+
+\file{ipcMain.js}{Handling messages with the ipcMain module. \cite{ipcMain}}{JavaScript}
+
+The \lstcode{ipcMain} is only accessable in the main process. It is used to handle asynchronous as well as synchronous messages sent from a renderer process (\myautoref{lst:ipcMain.js}). To handle messages the \lstcode{ipcMain.on()} method is used. Its first argument is a string which is used as a key and has to be the same on the sending as well as on the receiving end. The second argument is a delegate which takes an event object as well as many arguments. This delegate will be executed every time a renderer process sends a message using the specified key.
+
+The \lstcode{ipcMain} object also provides methods for haveing a listener be executed only once or removeing a single or all listeners. As shown in \myautoref{lst:ipcMain.js} the main process can reply via the \lstcode{event.returnValue} property which results in a synchronous message or it can send another message to the renderer which would be an example of an asynchronous communication. The \lstcode{ipcMain} object does not contain a send method like the \lstcode{ipcRenderer} since it would not be clear where to send the message. Instead the \lstcode{webContents} object of a given \lstcode{BrowserWindow} provides this method. This is the same object that the \lstcode{event.sender} property holds. \cite{ipcMain}
+
+The \lstcode{ipcRenderer} object is only available inside a renderer process and is similar to the \lstcode{ipcMain} object. The only notable difference are the \lstcode{send} methods. It is possible to send asynchronous as well as synchronous messages. The \lstcode{ipcRenderer.send()} method always sends the message to the main process. If the message needs be sent to a different renderer process the \lstcode{ipcRenderer.sendTo()} method may be used. \cite{ipcRenderer}
+
+\gls{ipc} was used in the Jukebox project to quit the application from the taskbar item. This was neccessary since the \lstcode{app} object is only available from within the main process but the system tray is set up inside an Angular service class which runs in a renderer process. Also \gls{ipc} may be used if results of a \zB settings dialog have to be communicated back to the main application.
+
+\Subsubsection{App}
+
+Electron's \lstcode{app} object provides access to the application's lifecycle events as well as properties which hold information about the appilcation. This includes methods to manipulate the the Windows jumplist. With this it is possible to add items to the taskbar context menu. It is possible to import certificates, get application metrics, access the OSX dock, or get the application's root folder path. In the Jukebox project this was used for the notifications and system tray functionalities and will be described in more detail in \revMark{those} sections.
+
+\Subsubsection{Node}
+
+Node.js is a \gls{js} runtime environment which offers libraries for a variety \revMark{of typically desktop application task}. In the Jukebox project mostly the \enquote{fs} and \enquote{os} libraries were used.
+
+The \enquote{fs} library grants access to the filesystem \cite{nodejsFS}. It was used to check if the Windows start menu folder for this application exists and if it does not create it (\mylineref{lst:setupWindowsNotifications.js}{swn_fs}). This library would have been used to access the music files if there was no \gls{asp} server.
+
+The \enquote{os} library provides access to operating specific information and methods \cite{nodejsOS}. This was used to determin the currently running system and architecture to be able to register the correct notification libraries.
+
+
+
+\Section{Menus}
+
+\Subsubsection{Application Menu}
+
+\Subsubsection{Systemtray}
+
+\Section{Notifications}
+
+Electron provides a basic \gls{api} for all operating systems to send notifications to the user. This is done through the \gls{html} 5 notification \gls{api}.
+
+
+The globally available \lstcode{Notification} object is used to manage a websites permission to display notifications. This is done through the static \lstcode{Notification.permission} property which returns one of the three following values: \enquote{granted}, \enquote{denied}, \enquote{default}. The \enquote{default} values tells the developer that the user choice is unknown at this moment. In this state the browser behaves as if the user denied permission which results in no notifications beeing shown. With the static \lstcode{Notification.requestPermission()} method the user is asked whether he want to see netofications or not.
+
+\file{html-notification.ts}{Displaying a basic HTML notification.}{JavaScript}
+
+Once permission is granted a notification can be displayed as shown in \myautoref{lst:html-notification.ts}.
+
+\Subsection{Windows}
+
+\file{setupWindowsNotifications.js}{TODO think of title}{JavaScript}
+
+\Subsection{Linux}
+\Subsection{Mac}
