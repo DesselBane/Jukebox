@@ -2,66 +2,63 @@
 
 \Chapter{Electron}
 
-Electron (formerly known as Atom Shell \cite{atomShell}) is an open-source framework developed and maintained by GitHub \cite{electron}. It is based on the Chromium V8 browser engine \cite{chromium} and the Node.js JavaScript runtime \cite{nodejs}. This framework was initially developed for the Atom text editor \cite{atom} in 2013 and both were opend sourced in the beginning of 2014 \cite{aboutElectron}.
+Electron (formerly known as Atom Shell \cite{atomShell}) is an open-source framework developed and maintained by GitHub \cite{electron}. It is based on the Chromium V8 browser engine \cite{chromium} and the Node.js JavaScript runtime \cite{nodejs}. The Electron framework was initially developed for the Atom text editor \cite{atom} in 2013 and both were open-sourced in the beginning of 2014 \cite{aboutElectron}.
 
-Electron enables a developer to build cross-platform applications which are written in \gls{html}, \gls{css}, and \gls{js}. Its \gls{api} offers desktop integration with \gls{api}s such as the OSX and Windows notifications, the Windows taskbar, the Ubuntu launcher and many more. With this framework it is possible to maintain a single code-base while serving all major desktop operating systems as well as hosting a website on a traditional web server.
-
-This chapter will describe the Electron framework as well as discuss which \gls{api}s are a bit more difficult to use correctly in a cross-platform environment.
+Electron enables a developer to build cross-platform applications which are written in \gls{html}, \gls{css}, and \gls{js}. Its \gls{api} offers desktop integration with \gls{api}s such as the OSX and Windows notifications, the Windows taskbar, the Ubuntu launcher and many more. With this framework, it is possible to maintain a single code-base while serving all major desktop operating systems, as well as hosting a website on a traditional web server.
 
 \Section{Electron's Architecture}
 
-Every Electron appilcation has a main file which is the root or starting point for the application. This file is specified in the package.json configuration file with the key \enquote{main}. By convention this file is called \enquote{main.js} but any name is possible.
+Every Electron application has a main file which is the root or starting point for the application. This file is specified in the package.json configuration file with the key \enquote{main}. By convention, this file is called \enquote{main.js}, but any name is possible.
 
-
-This main file is mostly used to set event handlers on the app object. These include handlers for the \enquote{ready}, \enquote{window-all-closed}, and \enquote{activate} events (see \myautoref{lst:main-ready.js}). Also the event handler for the ready event usually contains code to create a \lstcode{BrowserWindow} object and load some \gls{html}. In the Jukebox project the main.js file is used for the entire application startup sequence as well as some Electron debugging methods.
+This main file is mostly used to set event handlers on the app object. These include handlers for the \enquote{ready}, \enquote{window-all-closed}, and \enquote{activate} events (see \myautoref{lst:main-ready.js}). Also the event handler for the ready event usually contains code to create a \lstcode{BrowserWindow} object and load some \gls{html}. In the Jukebox project, the main.js file is used for the entire application startup sequence as well as for some Electron debugging methods.
 
 \file{main-ready.js}{The Jukebox app \enquote{ready} event handler.}{JavaScript}
 
-Electron uses the multi-process architecture of its underlying Chromium V8 engine. This means that the main.js file is called from the main process but every \enquote{web page} is running in a separate window and process, which is called a renderer process \cite{electronAppArch}. This is illustrated in \myautoref{fig:electronArch.png}.
+Electron uses the multi-process architecture of its underlying Chromium V8 engine. This means that the main.js file is called from the main process but every \enquote{web page} is running in a separate window and process, which is called a renderer process \cite{electronAppArch}. \myautoref{fig:electronArch.png} illustrates the multi-process architecture.
 
-\image[scale=.2]{electronArch.png}{Electron architectural overview \cite{electronArch}}
+\image[scale=.2]{electronArch.png}{Electron architectural overview. \cite{electronArch}}
 
-There is exactly one main process at all times. It is responsible for managing all of the renderer processes. A renderer process only knows its web page and is isolated from the rest of the application. It is thightly coupled to the \lstcode{BrowserWindow} object. If the window is destroyed the process is also terminated.
+There is exactly one main process at all times. It is responsible for managing all of the renderer processes. A renderer process only knows its web page and is isolated from the rest of the application. It is thightly coupled to the \lstcode{BrowserWindow} object. If the window is destroyed, the process is also terminated.
 
 \Subsubsection{Inter-process Communication}
 
-Every renderer process is isolated from the main process as well as all the other renderer processes therefore there needs to be a way to communicate data between those processes. This is done via the Electron \gls{ipc} \gls{api}. It is split into the \lstcode{ipcMain} and \lstcode{ipcRenderer} objects, which are both instances of \lstcode{EventEmitter}.
+As all renderer processes are isolated from the main process as well as each other, there needs to be a way to communicate data between those processes. This is done via the Electron \gls{ipc} \gls{api} which is split into the \lstcode{ipcMain} and \lstcode{ipcRenderer} objects, which are both instances of \lstcode{EventEmitter}.
 
 \file{ipcMain.js}{Handling messages with the ipcMain module. \cite{ipcMain}}{JavaScript}
 
-The \lstcode{ipcMain} is only accessable in the main process. It is used to handle asynchronous as well as synchronous messages sent from a renderer process (\myautoref{lst:ipcMain.js}). To handle messages the \lstcode{ipcMain.on()} method is used. Its first argument is a string which is used as a key and has to be the same on the sending as well as on the receiving end. The second argument is a delegate which takes an event object as well as many arguments. This delegate will be executed every time a renderer process sends a message using the specified key.
+The \lstcode{ipcMain} is only accessible in the main process. It is used to handle asynchronous as well as synchronous messages sent from a renderer process (\myautoref{lst:ipcMain.js}). To handle messages the \lstcode{ipcMain.on()} method is used. Its first argument is a string which is referred to as \enquote{channel} and used as a key. The same channel has to be used for the sender and the receiver. The second argument is a delegate which takes an event object as well as many arguments. This delegate will be executed every time a renderer process sends a message using the specified channel.
 
-The \lstcode{ipcMain} object also provides methods for haveing a listener be executed only once or removeing a single or all listeners. As shown in \myautoref{lst:ipcMain.js} the main process can reply via the \lstcode{event.returnValue} property which results in a synchronous message or it can send another message to the renderer which would be an example of an asynchronous communication. The \lstcode{ipcMain} object does not contain a send method like the \lstcode{ipcRenderer} since it would not be clear where to send the message. Instead the \lstcode{webContents} object of a given \lstcode{BrowserWindow} provides this method. This is the same object that the \lstcode{event.sender} property holds. \cite{ipcMain}
+The \lstcode{ipcMain} object also provides several other methods, \zB a method to execute a listener only once, another method to remove a single or all listeners. As shown in \myautoref{lst:ipcMain.js} the main process can reply via the \lstcode{event.returnValue} property which results in a synchronous message. It could also send a new message to the renderer which would be an example of an asynchronous communication. The \lstcode{ipcMain} object does not contain a send method like the \lstcode{ipcRenderer}, since it would not be clear where to send the message. Instead, the \lstcode{webContents} object of a given \lstcode{BrowserWindow} provides this method. This is the same object held by the \lstcode{event.sender} property. \cite{ipcMain}
 
-The \lstcode{ipcRenderer} object is only available inside a renderer process and is similar to the \lstcode{ipcMain} object. The only notable difference are the \lstcode{send} methods. It is possible to send asynchronous as well as synchronous messages. The \lstcode{ipcRenderer.send()} method always sends the message to the main process. If the message needs be sent to a different renderer process the \lstcode{ipcRenderer.sendTo()} method may be used. \cite{ipcRenderer}
+The \lstcode{ipcRenderer} object is only available inside a renderer process and is similar to the \lstcode{ipcMain} object. The only notable differences are the \lstcode{send} methods. It is possible to send asynchronous as well as synchronous messages. The \lstcode{ipcRenderer.send()} method always sends the message to the main process. If the message needs to be sent to a different renderer process, the \lstcode{ipcRenderer.sendTo()} method may be used. \cite{ipcRenderer}
 
-\gls{ipc} was used in the Jukebox project to quit the application from the taskbar item. This was neccessary since the \lstcode{app} object is only available from within the main process but the system tray is set up inside an Angular service class which runs in a renderer process. Also \gls{ipc} may be used if results of a \zB settings dialog have to be communicated back to the main application.
+\gls{ipc} was used in the Jukebox project to quit the application from the taskbar item. This was neccessary since the \lstcode{app} object is only available within the main process, but the system tray is set up inside an Angular service class which runs in a renderer process. Also, \gls{ipc} may be used if results of a dialog have to be communicated back to the main application.
 
 \Subsubsection{App}
 
-Electron's \lstcode{app} object provides access to the application's lifecycle events as well as properties which hold information about the appilcation. This includes methods to manipulate the the Windows jumplist. With this it is possible to add items to the taskbar context menu. It is possible to import certificates, get application metrics, access the OSX dock, or get the application's root folder path. In the Jukebox project this was used for the notifications and system tray functionalities and will be described in more detail in \revMark{those} sections.
+Electron's \lstcode{app} object provides access to the application's lifecycle events, as well as properties which hold information about the application. This includes methods to manipulate the Windows jumplist in order to add items to the taskbar context menu. It is possible to import certificates, get application metrics, access the OSX dock, or get the application's root folder path. In the Jukebox project, this was used for the notifications and system tray functionalities and will be described in more detail in the corresponding sections.
 
 \Subsubsection{Node}
 
-Node.js is a \gls{js} runtime environment which offers libraries for a variety \revMark{of typically desktop application task}. In the Jukebox project mostly the \enquote{fs} and \enquote{os} libraries were used.
+Node.js is a \gls{js} runtime environment which offers libraries for a variety of typical desktop application tasks. The Jukebox project uses mostly the \enquote{fs} and \enquote{os} libraries.
 
-The \enquote{fs} library grants access to the filesystem \cite{nodejsFS}. It was used to check if the Windows start menu folder for this application exists and if it does not create it (\mylineref{lst:setupWindowsNotifications.js}{swn_fs}). This library would have been used to access the music files if there was no \gls{asp} server.
+The \enquote{fs} library grants access to the filesystem \cite{nodejsFS}. It was used to check that the Windows start menu folder for this application exists and if not, create it (\mylineref{lst:setupWindowsNotifications.js}{swn_fs}). Without the \gls{asp} server this library would  be used to access the music files.
 
-The \enquote{os} library provides access to operating specific information and methods \cite{nodejsOS}. This was used to determin the currently running system and architecture to be able to register the correct notification libraries.
+The \enquote{os} library provides access to operating system specific information and methods \cite{nodejsOS}. This was used to determine the current operating system and architecture to be able to register the correct notification libraries.
 
 \Section{Accessing Electron APIs from within Angular}
 
-One of the challenges in the Jukebox project was accessing the Electron \gls{api}s from within Angualr. This was needed for setting the Menus and their corresponding \lstcode{click()} handlers as well as showing notifications or determining the current environment.
+One of the challenges in the Jukebox project was accessing the Electron \gls{api}s from within Angular. This access was needed for setting the menus and their corresponding \lstcode{click()} handlers, as well as showing notifications or determining the current environment.
 
 \Subsubsection{require('electron')}
 
-The first approach was to try and \lstcode{import} or \lstcode{require} the Electron package. This however fails due to configuration errors. Angular can be configured via system.js or webpack but the developer rarly gets to see or manipulate these files since they are beeing generated by the Angular \gls{cli} during the build only. It is possible to eject the webpack configuration file and change it to be able to \lstcode{require} the Electron package. This however is very complicated and creates problems with other packages since the Angular \gls{cli} is not automatically adapting the configuration file anymore. \cite{electronRequireError}
+The first approach was to try and \lstcode{import} or \lstcode{require()} the Electron package. This, however, failed due to configuration errors. Angular can be configured via system.js or webpack, but the developer rarely gets to see or manipulate these files, since they are generated by the Angular \gls{cli} during the build only. It is possible to \enquote{eject} the webpack configuration file and change it to be able to \lstcode{require()} the Electron package. However, this is rather complicated and creates problems with other packages, since the Angular \gls{cli} does not automatically adapt the configuration file anymore. \cite{electronRequireError}
 
 \Subsubsection{ngx-electron}
 
-The alternative to \lstcode{require('electron')} is to use the ngx-electron package \cite{ngxElectron}. This package provides an Angular service, the \lstcode{ElectronService}, which is exposed as an interface an contains properties for all of the Electron \gls{api}s.
+The alternative to \lstcode{require('electron')} is to use the ngx-electron package \cite{ngxElectron}. This package provides an Angular service, the \lstcode{ElectronService}, which is exposed as an interface and contains properties for all of the Electron \gls{api}s.
 
-This package checks the user agent property if the application is running inside Electron. If it is, the Electron package is required if not all properties of the \lstcode{ElectronService}, except for \lstcode{isElectronApp}, return \lstcode{undefined}. This \lstcode{isElectronApp} property returns a \lstcode{boolean} and makes it simple to check if the application is running inside Electron or as a web page in some browser.
+This package checks the user agent property to determine whether the application is running inside Electron. If it is, the Electron package is \lstcode{required()}. If not, all properties of the \lstcode{ElectronService} return \lstcode{undefined}, except for the \lstcode{isElectronApp} property. This property returns a \lstcode{boolean} and makes it simple to check whether the application is running inside Electron or as a web page in some browser.
 
 \Section{Menus}
 
