@@ -73,11 +73,17 @@ For the Jukebox project a custom \lstcode{MenuItem} class was created, the \lstc
 
 \Subsubsection{Systemtray}
 
-Another form of menu is the system tray and its menu. Especially for applications which are supposed to run in the background and only show a notification if an event occurs, the ability to minimize it to the system tray is important. Electron supports this with the \lstcode{Electron.remote.Tray} \gls{api}. For this a picture has to be set and then a menu may be specified.
+Another form of menu is the system tray and its menu. Especially for applications which are supposed to run in the background and only show a notification if an event occurs, the ability to minimize it to the system tray is important. Electron supports this with the \lstcode{Electron.remote.Tray} \gls{api}.
+
+For this a picture has to be set and then a menu may be specified. The \lstcode{Electron.remote.Tray} object takes a \lstcode{Electron.remote.NativImage} or a \lstcode{string} as constructor arguments. Both variants were tried but the \lstcode{string} variant did not show the picture even though the system tray was there and clickable.
+
+\file{browserWindowClose.js}{The modified \lstcode{BrowserWindow.close()} event.}{JavaScript}
+
+In the Jukebox project the system tray was used to minimize the application without quitting it when all windows were closed. To close the application a \enquote{Quit} menu item was added to the system tray. To make this work the \lstcode{BrowserWindow.close()} event had to be modified, as shown in \myautoref{lst:browserWindowClose.js}. The \enquote{Quit} menu item's \lstcode{click()} handler then used \gls{ipc} to tell the main process to quit the application via a call to \lstcode{app.quit()}.
 
 \file{trayMenuTemplate.ts}{Example of a menu template.}{JavaScript}
 
-In the Jukebox project the system tray menu was implemented using templates, as shown in \myautoref{lst:trayMenuTemplate.ts}. This means an array of anonymous objects is created which all follow a certain signature. The properties of these objects are then read by the Electron framework and a \lstcode{Electron.MenuItem} is created using this blueprint. The advantages are that the developer only has to specify the properties needed for this menu item and the framework can ignore additional properties. Therefore it is possible to use existing custom objects in this array, without the need of implementing interfaces.
+In the Jukebox project the system tray menu was implemented using templates, as shown in \myautoref{lst:trayMenuTemplate.ts}. This means an array of anonymous objects is created which all follow a certain signature. The properties of these objects are then read by the Electron framework and a \lstcode{Electron.MenuItem} is created using this blueprint. The advantages are that the developer only has to specify the properties needed for this menu item and the framework can ignore additional properties. Therefore it is possible to use existing custom objects in this array, without the need for implementing interfaces.
 
 \Subsubsection{Challenges while implementing Menus}
 
@@ -96,15 +102,46 @@ Another issue is that of top level menu items not behaving correctly. This is an
 Electron provides a basic \gls{api} for all operating systems to send notifications to the user. This is done through the \gls{html} 5 notification \gls{api}.
 
 
-The globally available \lstcode{Notification} object is used to manage a websites permission to display notifications. This is done through the static \lstcode{Notification.permission} property which returns one of the three following values: \enquote{granted}, \enquote{denied}, \enquote{default}. The \enquote{default} values tells the developer that the user choice is unknown at this moment. In this state the browser behaves as if the user denied permission which results in no notifications beeing shown. With the static \lstcode{Notification.requestPermission()} method the user is asked whether he want to see netofications or not.
+The globally available \lstcode{Notification} object is used to manage a websites permission to display notifications. This is done through the static \lstcode{Notification.permission} property which returns one of the three following values: \enquote{granted}, \enquote{denied}, or \enquote{default}. The \enquote{default} values tells the developer that the user choice is unknown at this moment. In this state the browser behaves as if the user denied permission which results in no notifications beeing shown. With the static \lstcode{Notification.requestPermission()} method the user is asked whether he wants to see netofications or not.
 
 \file{html-notification.ts}{Displaying a basic HTML notification.}{JavaScript}
 
-Once permission is granted a notification can be displayed as shown in \myautoref{lst:html-notification.ts}.
+Once permission is granted a notification can be displayed as shown in \myautoref{lst:html-notification.ts}. The \gls{html} 5 notification \gls{api} offers many more properties on a notification object but these are not implemented in all browsers and therefore should not be relyed on. The \lstcode{appId} property is not part of the \gls{html} 5 notification \gls{api} but used for the Windows specific package. Since the constructor uses templates it does not \revMark{hurt} to use it in other environments since it is simply beeing ignored. \cite{mdnNotification}
 
-\Subsection{Windows}
+\Subsubsection{Simple Windows Notifications}
 
-\file{setupWindowsNotifications.js}{TODO think of title}{JavaScript}
+Under Windows the \enquote{electron-windows-notifications} \cite{winNot} and \enquote{electron-windows-interactive-notifications} \cite{winIntNot} packages can be used to create more visually apealling notifications which also can be interacted with.
 
-\Subsection{Linux}
-\Subsection{Mac}
+The \enquote{electron-windows-notifications} package offers two kinds of notification. First the \lstcode{TileNotification}. This updates the primary or secondary tiles of the application and requires it to be run inside the \gls{uwp} model. Second is the \lstcode{ToastNotification}. This is the \enquote{standard} notification which is usually displayed on the right bottom and can later on be found in the Action Center.
+
+For any notification to be shown the application has to have an \lstcode{appId} set up. Configuring this \lstcode{appId} is a multi-step procedure. First a start menu folder has to be created for the application. Then a shortcut to the application has to be placed in this folder. During testing it was discovered that it does not matter where this shortcut points to, to show the notification. If, however, the shortcut points to the wrong file the click action on the notification might not work as expected. This shortcut then needs to have its \enquote{System.AppUserModel.ID} data store property set to the \lstcode{appId} \cite{eNotWinAppId}. For debugging purposes it is possible to tweak the windows registry to show the \enquote{System.AppUserModel.ID} in the file explorer details view \cite{showAppId}. Then during the startup sequence of the application the \lstcode{app.setAppUserModelId()} method has to be called. Finally every notification object whether it is the \lstcode{ToastNotification}, \lstcode{TileNotification}, or the \gls{html} 5 \lstcode{Notification} has to have the \lstcode{appId} property set. The \lstcode{appId} is an arbitrary \lstcode{string} which should be unique, in the Jukebox project a \gls{guid} was used.
+
+The notification package uses the \enquote{nodert-win10-au} native Node module to be able to call native windows \gls{api}s. Therefore the \lstcode{ToastNotification} and \lstcode{TileNotification} objects are used similar to their corresponding C++ classes. Most notably they are constructed via an \gls{xml} tempalte. This template allows for banner images, cropped images, and many more visual elements beeing placed in the notification.
+
+Although many features of the Windows 10 notification \gls{api} work not all do and some only do in certain circumstances. The \gls{wdc} page \zB lists a progress bar feature which is not working at all. Further there are many ways to display images \zB as app logo override, as hero image, or as inline image. Microsoft offers three different protocols to reference an image: \enquote{http://}, \enquote{ms-appx:///}, and \enquote{ms-appdata:///}. The \enquote{http://} protocol did not show an image while the \enquote{ms-appx:///} and \enquote{ms-appdata:///} worked but only if the application was run inside a \gls{uwp} model. \cite{toastContent}
+
+\Subsubsection{Interactive Windows Notifications}
+
+Windows notification also support buttons, comboboxes, and inline replys. These interactive elements are not supported by default and the additional \enquote{electron-windows-interactive-notifications} package is needed.
+
+This package works by registering a \gls{com} server. Whenever a notification is interacted with the \gls{com} server is called with the information about which action the user chose and any data \revMark{die dazugehört}. The \gls{com} server then encodes this data into a string and calls the application via a protocol link.
+
+There are two steps this package requires at installation time. First a \enquote{TOAST\_ACTIVATOR\_CLSID} has to be set. This needs to be a unique string and there it is strongly recomended to use a \gls{guid}. According to the packages documentation this can be achived through setting the CLSID in the package.json configuration file or setting the \enquote{TOAST\_ACTIVATOR\_CLSID} environment variable. During testing it was discovered that the package.json method does not work \cite{clsidPackageJson}. Second the application protocol has to be set. This is possible via package.json and environment variables and here the package.json is not working as well. Both of these values have to be set at installation time since a \gls{dll} will be compile during the installation of the package. In this \gls{dll} these two values are saved as constants.
+
+During the startup sequence of the Electron app the \gls{com} server has to be registered as well as the \enquote{TOAST\_ACTIVATOR\_CLSID}. This can be acived with the \lstcode{registerActivator()} and \lstcode{registerAppForNotificationSupport()} methods respectively, as shown in \myautoref{lst:setupWindowsNotifications.js}. To register the application as default protocol handler the \lstcode{app.setAsDefaultProtocolClient()} method may be used. This method requires the protocol name as well as a path to the executable as arguments.
+
+\file{setupWindowsNotifications.js}{Registration of the electron-windows-interactive-notifications package.}{JavaScript}
+
+Whenever the operating system calls a protocol link the application registered for that protocol is started. This means a new instance of the application is run. This is mostly not the desired behavior and therefore a way to communicate the information handed off to the second instance of the application, back to the first instance, is needed.
+
+Electron makes this possible with the \lstcode{app.makeSingleInstance()} method. This method returns a \lstcode{boolean} which returns \lstcode{false} if the currently running instance is the only one running and \lstcode{true} if not. Also this method takes a delegate which is executed only if another instance of the application is present. This delegate will be executed within the context of the main instance and is used to communicate any information transmitted via the protocol link (\myautoref{lst:singleInstance.js}).
+
+\file{singleInstance.js}{Jukebox startup code to handle multiple instances.}{JavaScript}
+
+\Subsubsection{Mac}
+
+\revMark{TBD}
+
+\Subsubsection{Linux}
+
+For Linux there are no special packages available. Notifications will be shown using the \enquote{libnotify} library which can show notifications on any desktop environment that follows the Desktop Notification Specifications \cite{desktopNotificationSpec} \cite{electronNotifications}.

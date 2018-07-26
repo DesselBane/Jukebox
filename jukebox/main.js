@@ -33,7 +33,6 @@ if (isSecondInstance) {
     createWindow();
     console.log(isSecondInstance);
   });
-
 }
 
 let menu = Menu.buildFromTemplate([
