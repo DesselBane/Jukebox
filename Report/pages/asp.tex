@@ -1,0 +1,30 @@
+% !TEX root=../report.tex
+
+\Chapter{ASP.NET Core}
+
+\revMark{TBD}
+
+\Section{ASP.NET Core Basics}
+
+\gls{asp} is a cross-platform, open-source framework for building cloud- and web-based applications. It is the latest of Microsoft's web frameworks. Although the name is very similar to the ASP.NET framework it is not its 5th version, but a new framework rewritten from the ground up. It combines the previously independent ASP.NET MVC and ASP.NET Web API frameworks into a single programming model. It uses the new .NET Core framework which is platform independent but projects may also target the windows only .NET framework. \cite{introASP}
+
+\Subsubsection{NuGet}
+
+The \gls{asp} framework relies on the NuGet Package Manager for its modularity. The NuGet Package Manager is very similar to Node's \gls{npm}. Which packages are used in a project can either be configured using the \gls{gui} tools most .NET Core \gls{ide}s provide, using the command line, or manually editing the *.csproj file. This makes it possible to download only the needed parts of the \gls{asp} framework. Microsoft also allows third-parties to publish libraries to its NuGet platform. This was used in the Jukebox project for some of the middlewares.
+
+\Subsubsection{OWIN}
+
+\gls{owin} is another big aspect of \gls{asp}s modularity. \gls{owin} is not a specific implementation but a specification which helps developers to create a modular architecture and is used for the framework itself. Katana is the codename Microsoft gave its \gls{owin} implementation and should not be confused with \gls{owin} itself.
+
+The most important concept for a developer is that of a middleware. In the \gls{owin} specification a middleware is defined as an exchangeable programming block with the following signature: \lstcode{Func<IDictionary<string, object>, Task>}. This means a middleware is a delegate which is given an \lstcode{IDictionary} object containing key-value-pairs and has to return a \lstcode{Task} object. By using a \lstcode{Task} Microsoft enables programmers to take advantage of the \gls{tpl} and its asynchronous programming model \cite{tpl}.
+
+Middleares are provided by the \gls{asp} framework or can be created by the developer for specific tasks. If a developer wants to create a middleware he may simply create a delegate with the correct signature. This, however, is more similar to functional programming therefore Microsoft also provided a method to use classes. If a class is used the \gls{asp} framework will check if this class contains a method which matches the signature of a middleware. Using this method the developer may take advantage of \gls{di} for any dependencies the custom middleware requires. \cite{owinKatana}
+
+Another concept defined by the \gls{owin} standarad is the middleware pipeline. Every \gls{http} request will traverse this pipeline to be processed. Depending on the circumstances a middleware might alter the request, also called context which is contained in the \lstcode{IDictionary} object of the delegate, and call the next middleware or complete the request. Each request starts at the first middleware but not every request reaches the last middleware since it might be processed before it gets there. Once a request is processed it travels back through the pipeline. This is illustrated in \myautoref{fig:owin-middleware-chain.png}.
+
+\autoImg{owin-middleware-chain.png}{Example of an OWIN middleware pipeline. \cite{owinKatana}}
+
+\Section{ASP.NET Core Websockets}
+
+\Section{Remember these points}
+NuGet
