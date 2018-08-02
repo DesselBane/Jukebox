@@ -12,7 +12,7 @@ This Section describes how an Angular application is structued. \revMark{TBD}
 
 An Angular component can be compared to a View and ViewModel combo from the \gls{mvvm} pattern. It is composed of three files. There is one \gls{html} and one \gls{css} file which make up the View. The ViewModel is a \gls{ts} file which contains the essential logic for the View. The component is always declared in the \gls{ts} file with the \lstcode{@Component} decorator, see \myautoref{lst:example-component.ts}.
 
-\file{example-component.ts}{Example of an Angular Component TypeScript File}{JavaScript}
+\file{example-component.ts}{Example of an Angular Component TypeScript File.}{JavaScript}
 
 The \lstcode{@Component} decorator can take many arguments, but the commonly used ones are: \enquote{selector}, \enquote{templateUrl}, and \enquote{styleUrls} \cite{ngcomponent}. The selector is a string which starts by convention with \enquote{app} and is then followed by the component's name, see \mylineref{lst:example-component.ts}{comp_selector}. The selector is used to include this component in the \gls{html} of another component.
 
@@ -24,7 +24,7 @@ The Angular framework manages the lifecycle of each component. Throughout this l
 \Subsubsection[bindings]{Template Syntax - Bindings}
 A template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} don't make much sense. The official set of tags is extended with tags that refer to components as described in \myref{subsec:components}.
 
-\file{nav-item-component.html}{Example of an Angular template.}{HTML5}
+\file{nav-item-component.html}{Example of an Angular Template.}{HTML5}
 
 Like many \gls{mvvm} frameworks, Angular supports bindings. These are used to display data obtained from the ViewModel or, in case of input controls, send data back to the ViewModel. Interpolation is used to display data. The syntax used by Angular is \{\{\lstcode{myObject.myProperty}\}\} as shown in \mylineref{lst:nav-item-component.html}{navItem_interpolation}. Angular will evalute the text between the curly brackets as an expression and then display the result. The context for the expression usually is the component's instance.
 
@@ -47,7 +47,7 @@ The third built-in directive is the switch-case directive which lets the develop
 
 Angular also offers support for pipes which are very similar to \gls{wpf} Converters, with the exception that an Angular pipe only works in one direction. This is useful for formatting the \enquote{raw} data \zB \lstcode{\{\{title | uppercase | lowercase\}\}}. As shown in the example, pipes can be chained. It is also possible to add parameters to a pipe, one example is the \lstcode{date} pipe, where the name for a date format can be passed as an argument \zB \lstcode{\{\{ myDate | date:'longDate'\}\}}. Angular offers many built-in pipes, but it is also possible to create a custom one. To do so, the developer creates a new class which implements the \lstcode{PipeTransform} interface and uses the \lstcode{@Pipe()} decorator as shown in \myautoref{lst:boolean-yes-no-pipe.ts}.
 
-\file{boolean-yes-no-pipe.ts}{A custom pipe to convert a boolean to 'Yes' or 'No'.}{JavaScript}
+\file{boolean-yes-no-pipe.ts}{A Custom Pipe to Convert a Boolean to 'Yes' or 'No'.}{JavaScript}
 
 \cite{angularTemplateSyntax}
 

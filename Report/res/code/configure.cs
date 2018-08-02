@@ -7,8 +7,8 @@ public virtual void Configure(IApplicationBuilder app,
     loggerFactory.AddConsole(Configuration.GetSection("Logging"));
     loggerFactory.AddDebug();
     app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly);
-    app.UseAuthentication();
     app.UseSpaMiddleware();
+    app.UseAuthentication();
     var websocketOptions = app.ApplicationServices
                                  .GetService<IOptions<WebsocketOptions>>()
                                  .Value;
