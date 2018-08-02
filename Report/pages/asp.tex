@@ -24,7 +24,34 @@ Another concept defined by the \gls{owin} standarad is the middleware pipeline. 
 
 \autoImg{owin-middleware-chain.png}{Example of an OWIN middleware pipeline. \cite{owinKatana}}
 
+\Subsubsection{The \lstcode{Program} class}
+
+Like any other C\# project, an \gls{asp} project has its root in the \lstcode{Program} class and its \lstcode{Main()} method. Since .NET Core 2.x the code required to start a Webhost has changed to a simplified form, as shown in \myautoref{lst:main.cs} \cite{aspFundamentals}. In case of the Jukebox project the \gls{url} was explicitly defined. This will overwrite any configuration done via the launchSettings.json file. It is still possible to configure options like the \gls{iis} integration, a custom content root path, and many more through the \lstcode{WebHostBuilder} class.
+
+\file{main.cs}{The \lstcode{Main()} method of the Jukebox project.}{NC_CSharp}
+
+Kestrel is the underlying webserver of \gls{asp}. It is a minimalistic web server which should be used in combination with another web server like \gls{iis}, Nginx or Apache \cite{kestrel}.
+
+\Subsubsection{The \lstcode{Startup} class}
+
+The \lstcode{Startup} class is used to configure an \gls{asp} application. It is separated into two methods the \lstcode{ConfigureServices()} and \lstcode{Configure()} methods. This class is called \lstcode{Startup} by convention but may be named differently. If a different name was choosen the developer needs to specify it via the \lstcode{WebHostBuilder.UseStartup<T>()} method as shown in \myautoref{lst:main.cs}. The \lstcode{Startup} class also does not implement any interfaces. The \gls{asp} framework detects the required methods via reflection. This is necessary sice these methods have multiple applicable signatures which the framework handles differently.
+
+\gls{di} is an integral part of the \gls{asp} framework and is configured in the \lstcode{ConfigureServices()} method. This method has one parameter of type \lstcode{IServiceCollection} which is an Interface similar to the AutoFac \lstcode{ConatinerBuilder} class. Needed classes and framework parts, \zB the \gls{mvc} functionality of \gls{asp}, have to be registered using this interface before they are available later on.
+
+The \lstcode{IServiceCollection} interface provides many features which are sufficient for most projects but it is not possible to configure interception using this interface. If the developer needs or wants to use interception he has to change the signature of the \lstcode{ConfigureServices()} method to return an \lstcode{IServiceProvider} interface. This interface is Microsoft's abstraction a \lstcode{Container} class which is used to resolve dependencies. In the Jukebox project the AutoFac \gls{di} framework was used since it provieds great support for \gls{asp} \cite{autofacCoreDoc}. It should be noted that it is also possible to use other \gls{di} frameworks but custom adapters may have to be implemented \cite{aspCustomDI}.
+
+In the Jukebox project, a dual approach was used. \gls{asp} components are registered via the \lstcode{IServiceCollection} interface since there are extension methods available. All other classes were registered using the \lstcode{ContainerBuilder} class to enable interception. Then all registrations from the \lstcode{IServiceCollection} interface are transfered over to the \lstcode{ContainerBuilder} using the \lstcode{Populate()} method. Finally a \lstcode{IServiceProvider} is created using the AutoFac \lstcode{AutofacServiceProvider} class. This is illustrated in \myautoref{lst:configureJukebox.cs}.
+
+\file{configureJukebox.cs}{Configuring the \lstcode{IServiceCollection} in combination with an AutoFac \lstcode{ContainerBuilder}.}{NC_CSharp}
+
+Once all components are registered the \gls{asp} framework calls the \lstcode{Configure()} method. This method is used to build up the \gls{owin} middleware pipeline. Its first argument is of type \lstcode{IApplicationBuilder} which is required. The second and third arguments are of type \lstcode{IHostingEnvironment} and \lstcode{ILoggerFactory} respectively and are optional.
+
+The \lstcode{IApplicationBuilder} interface is used to build up the pipeline. \gls{asp} provieds extension methods for all of the framework's middlewares. To register a custom middleware there are multiple options. With the \lstcode{IApplicationBuilder.Run()} method a delegate can be specified which will run but also terminate the pipeline at this point. If middlewares need to be chained the \lstcode{IApplicationBuilder.Use()} method is required. This method also takes a delegate. To be able to use middlewares which are written as a class the \lstcode{IApplicationBuilder.UseMiddleware<T>()} method is needed. \cite{aspMiddleware}
+
+It is important to bear in mind that the middleware which is registered first will always be the first one called by the framework for each request that is processed. This means that the authentication middleware should always be registered before the \gls{mvc} middleware or otherwise requests might not be authenticated property. In the Jukebox project, the \lstcode{ExceptionMiddleware} is registered first since it is supposed to catch any excption thrown in the pipeline later on. After that the \lstcode{Swagger} and \lstcode{SpaMiddleware} are added since they do not need authentication. Then \lstcode{Authentication}, \gls{mvc}, and \lstcode{WebSocket} middlewares are added. Lastly the \lstcode{StaticFiles} middleware is added.
+
+\file{configure.cs}{Building the OWIN middleware pipeline.}{NC_CSharp}
+
 \Section{ASP.NET Core Websockets}
 
 \Section{Remember these points}
-NuGet
