@@ -52,6 +52,63 @@ It is important to bear in mind that the middleware, which is registered first, 
 
 \file{configure.cs}{Building the OWIN middleware pipeline.}{NC_CSharp}
 
+\Section{ASP.NET MVC Core}
+
+
+Middlewares are a great concept, but developing an entire application on the basis of just middlewares is very tedious. Instead \gls{asp} offers the \gls{mvc} middleware. This pre-built middleware allows the developer to write his code in seperate independent classes which know nothing about \gls{owin} or the concept of a middleware. This, as the name suggest, follows the \gls{mvc} pattern. To use the \gls{mvc} package it has to be registered with the \gls{di} container, as shown in \myautoref{lst:configureMvc.cs}.
+
+\gls{mvc} is a popular pattern in software development and consist of three main components: Model, View, and Controller (\myautoref{fig:mvc.png}). The model represents the state of the application and any buisiness logic or operations needed. All visuals and any logic to manipulate these are the View. In the \gls{asp} context the Razor view engine is used to embed .NET code in the \gls{html}. This allows for easily manipulating the view. The controller is responsible for handling user interactions. It deceides which view to render and which methods to call to manipulate the model. In case of the Jukebox project, the view part was not used since all view related actions take place inside the Angular code. \cite{mvcOverview}
+
+\image[scale=.5]{mvc.png}{The three main components of the MVC pattern. \cite{mvcOverview}}
+
+\Subsubsection{Jukebox MVC configuration}
+
+The \lstcode{AddMvc()} extension method offers the posibillity to configure the \gls{mvc} middleware. In the Jukebox project configurations for authorization handling and controller registration were made.
+
+The \gls{mvc} package offers many ways to protect certain routes or actions. A developer may choose between filters and attributes or accept the defaults. It is important to note that the \gls{mvc} package is not authenticating or authorizing any request by itself. For this part a special middleware is used. \gls{mvc} only checks the \lstcode{HttpContext} for information about if and how a request is authorized and acts accordingly. The default is that every route is unprotected. In many cases certain actions should only be executed if the request is authorized. There are two common solutions to this problem. First, a blacklist approach where every route is accessible and only some are protected explicitly. In this case the developer uses the \lstcode{Authorize} attribute on any controller method which should be protected. The second method is to use a whitelist approach where every route is protected and the unprotected routes are specified explicitly. This approach is used in the Jukebox project. As shown in \myautoref{lst:configureMvc.cs}, a filter is created using the \lstcode{AuthorizationPolicyBuilder} class and applied to all routes. Then any route which is supposed to be accessible without authorization is marked with the \lstcode{[AllowAnonymous]} attribute.
+
+The \lstcode{AddControllersAsServices()} (\mylineref{lst:configureMvc.cs}{confMvc_controller}) configuration option forces the developer to register all controller classes explicitly. This has the advantage of registering all controllers with a custom container and was used to register all controllers with an interceptor that checks for invalid data passed in a request.
+
+\file{configureMvc.cs}{Registering the MVC package.}{NC_CSharp}
+
+
+\Subsubsection[mappingUrls]{Mapping URLs}
+
+Mapping of a \gls{url} to a controller action works by convention or explicit configuration. If nothing is specified the convention is to map a \gls{url} to the controller's name followed by the method's name. For example the \enquote{/Home/Authors} \gls{url} maps to the \lstcode{HomeController} and its \lstcode{Authors()} method. Custom conventions may be specified when adding the \gls{mvc} middleware to the middleware pipeline. As shown in \myautoref{lst:mapRoute.cs}, a default route which mapps to the \lstcode{HomeController} and its \lstcode{Index()} method is created.
+
+\file{mapRoute.cs}{A custom route mapping convention. \cite{routeConvention}}{NC_CSharp}
+
+Another way of explicitly configurating mappings are Attributes. For a controller there exists the \lstcode{[Route]} attribute. This was used in the Jukebox project since all controllers are supposed to be part of the \enquote{api/} route. The \lstcode{[Route]} attribute also offers macros. This allows the developer to use the same attribute for all controllers, namely: \lstcode{[Route("api/[controller]/[action]")]}. The \lstcode{[controller]} macro tells the framework to use the name of the controller which is decorated by this attribute. Similarly the \lstcode{[action]} macro specifies to use the name of the method or its custom specified route.
+
+For methods, also called actions, there are several attributes which are derived from the abstract \lstcode{HttpMethodAttribute} class. These include \lstcode{[HttpPost]}, \lstcode{[HttpGet]}, and more, one for every \gls{http} verb. Their main purpose is to specify the \gls{http} verb but they also include a template option to configure the \gls{mvc} mapping. This is needed if two \gls{url}s only differ in their verbs to deceide which method on the controller should be called. Also many \gls{rest} \gls{api}s use integers in the \gls{url} to reference business objects by their ID. This is supported through the curly brackets notation. An example of this would be if the \lstcode{Player} object with ID 11 should do something a \gls{url} like \enquote{/api/player/11/doSomething} could be mapped with the \lstcode{[HttpPost("\{playerId\}/doSomething")]} attribute.
+
+\Subsubsection{Transfering Data}
+
+Especially in case of a web \gls{api} transfering data is very important. The most common options to transfer data via a \gls{http} request are sending the data in the \gls{http} body, embedding the data into the \gls{url} using a query string, or inserting IDs into the \gls{url} as described in \myref{subsubsec:mappingUrls}. For small bits of information like a \lstcode{string} or \lstcode{int} the query string method should be used. To tell \gls{asp} that a method argument should be mapped to a query string argument the \lstcode{[FromQuery]} attribute is used, as shown in \mylineref{lst:dataTransfer.cs}{dataT_query}.
+
+In case of one or many objects which need to be transferred the \gls{http} body should be used. This is done via the \lstcode{[FromBody]} attribute, as shown in \mylineref{lst:dataTransfer.cs}{dataT_body}. The transfered data is usually in form of a \gls{json} string although it is also possible to use \gls{xml}. \gls{asp} automatically tries to parse the \gls{json} string into an object of the specified type, in this example an object of type \lstcode{PlayerCommand}.
+
+For the Jukebox project many classes like the \lstcode{PlayerCommand} were written. These classes are refered to as \gls{dto} and are usually \lstcode{sealed} classes which only contain properties as well as different contructors. Each \gls{dto} is annotated with the \lstcode{[DataContract]} attribute and every property which is intended to be serealized is annotated with the \lstcode{[DataMemeber]} attribute. Some properties are used to convert data from one type to another and are therefore not annotated with the \lstcode{[DataMember]} attribute, which causes the framework to ignore them during the serialization. This works well for most data types, the only exception are enums. Enums are by default serialized as integers since in C\# the integer is the underlying type of a default enum. This default behavior can be changed with the \lstcode{[JsonConverter(typeof(StringEnumConverter))]} attribute to serialize enums as a string which improves readability on the frontend part and helps compatability with the \gls{ts} implementation of an enum.
+
+\file{dataTransfer.cs}{Different data transfer methods in ASP.NET Core.}{NC_CSharp}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\Subsubsection{JWT Bearer Token}
+
+\Section{Custom Middlewares}
+
 \Section{ASP.NET Core Websockets}
 
 \Section{Remember these points}
