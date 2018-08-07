@@ -80,7 +80,7 @@ Mapping a \gls{url} to a controller action works either by convention or by expl
 
 Attributes are another way of explicitly configuring mappings. The \lstcode{[Route]} attribute is used for controllers only. This attribute was used in the Jukebox project, since all controllers are supposed to be part of the \enquote{api/} route. The \lstcode{[Route]} attribute also offers macros. With macros it is possible to use the same attribute for all controllers: \lstcode{[Route("api/[controller]/[action]")]}. The \lstcode{[controller]} macro tells the framework to use the name of the controller which is decorated by the \lstcode{[Route]} attribute. Similarly, the \lstcode{[action]} macro references the name of the method or its custom-specified route.
 
-For methods, also called actions, there are several attributes which are derived from the abstract \lstcode{HttpMethodAttribute} class. There is a matching attribute for each \gls{http} verb, \zB \lstcode{[HttpPost]}, \lstcode{[HttpGet]}, and so forth. Their main purpose is to specify the \gls{http} verb, in addition they include a template option to configure the \gls{mvc} mapping. This is neccessary to decide which method should be called on the controller if two \gls{url}s only differ in their \gls{http} verbs. A custom route is specified as a parameter in the \gls{http} verb attribute, \zB \lstcode{[HttpPost("my/custom/route")]}. Also, many \gls{rest} \gls{api}s use integers in the \gls{url} to reference a business object by its ID. This is supported through the curly bracket notation. A possible scenario is: some method should be executed on the \lstcode{Player} object with ID 11. This could be mapped to a \gls{url} like \enquote{/api/player/11/doSomething} and would result in an attribute such as \lstcode{[HttpPost("\{playerId\}/doSomething")]}.
+For methods, also called actions, there are several attributes which are derived from the abstract \lstcode{HttpMethodAttribute} class. There is a matching attribute for each \gls{http} verb, \zB \lstcode{[HttpPost]}, \lstcode{[HttpGet]}, and so forth. Their main purpose is to specify the \gls{http} verb, in addition they include a template option to configure the \gls{mvc} mapping. This is neccessary to decide which method should be called on the controller if two \gls{url}s only differ in their \gls{http} verbs. A custom route is specified as a parameter in the \gls{http} verb attribute, \zB \lstcode{[HttpPost("my/custom/route")]}. Also, many \gls{rest} \gls{api}s use integers in the \gls{url} to reference a business object by its ID. This is supported through the curly bracket notation. A possible scenario is: some method should be executed on the \lstcode{Player} object with ID 11. This could be mapped to a \gls{url} like \enquote{/api/player/11/doSomething} and would result in an attribute such as \lstcode{[HttpPost("\{playerId\}/doSomething")]}. \cite{mvcRouting}
 
 
 
@@ -92,23 +92,42 @@ For the transfer of objects or large amounts of data the \gls{http} body should 
 
 \file{dataTransfer.cs}{Different data transfer methods in ASP.NET Core.}{NC_CSharp}
 
-For the Jukebox project, many classes like the \lstcode{PlayerCommand} class were written. These classes are referred to as a \gls{dto} and are usually \lstcode{sealed} classes which only contain properties and constructors. Each \gls{dto} is annotated with the \lstcode{[DataContract]} attribute and every property to be serialized is annotated with the \lstcode{[DataMember]} attribute. Some properties are used to convert data from one type to another. These are not annotated with the \lstcode{[DataMember]} attribute and are therefore ignored during serialization. This works well for most data types, the only exception are enums. Enums are serialized as integers by default, because the integer is the underlying type of a default enum in C\#. The default behavior can be changed with the \lstcode{[JsonConverter(typeof(StringEnumConverter))]} attribute to serialize an enum as a string. This improves readability on the frontend part and provides compatibility for the \gls{ts} implementation of an enum.
+For the Jukebox project, many classes like the \lstcode{PlayerCommand} class were written. These classes are referred to as a \gls{dto} and are usually \lstcode{sealed} classes which only contain properties and constructors. Each \gls{dto} is annotated with the \lstcode{[DataContract]} attribute and every property to be serialized is annotated with the \lstcode{[DataMember]} attribute. Some properties are used to convert data from one type to another. These are not annotated with the \lstcode{[DataMember]} attribute and are therefore ignored during serialization. This works well for most data types, the only exception are enums. Enums are serialized as integers by default, because the integer is the underlying type of a default enum in C\#. The default behavior can be changed with the \lstcode{[JsonConverter(typeof(StringEnumConverter))]} attribute to serialize an enum as a string. This improves readability on the frontend part and provides compatibility for the \gls{ts} implementation of an enum. \cite{mvcModelBinding}
+
+\Section{Security in ASP.NET Core}
+
+Securing an application against data leaks and malicious activity is especially importent for a web application because it will be accessible by almost any person on this planet. In \gls{asp} the security aspect is split into two topics: authentication and authorization.
+
+\Subsubsection{ASP.NET Core Authentication}
+
+Authentication is the process where a client proves that he is the one he claims to be. Traditionally a client will provide a username and a password. The server will check them against a database and decide whether the client provided valid credentials or not. This basic form of authentication is still possible and is mostly referred to as \enquote{cookie authentication}. Its benefit is its simplicity but the drawback is its inflexibility. With the ASP.NET Core Identity package the developer can choose between a simple username-password-combination or an external login provider such as Facebook, Google, Microsoft Account, Twitter or others. This works by utilizing the OAuth 2.0 \cite{oauth2} or OpenID Connect \cite{openID} protocols.
+
+\Subsubsection[jwt]{JWT Bearer Token Authentication}
+
+\glslocalreset{jwt}
+
+For the Jukebox project the \gls{jwt} Bearer authentication was choosen \cite{jwt}. \gls{jwt} is an open standard for securly transmitting information in a self-contained, compact \gls{json} object. The information is secured either using the symmetric \gls{hmac} algorithm \cite{hmac} or one of the asymmetric algorithms \gls{rsa} or \gls{ecdsa} \cite{ecdsa}. \gls{jwt} was choosen because it does not only yield a token a server uses to authenticate a client but also transmitts authorization information. This is especially important because the frontend can use this information to hide protected parts of the application a user is not authorized for.
+
+Configuring the \gls{jwt} package is a multi-step procedure. First the \lstcode{TokenValidationParameters} have to be set (shown in \myautoref{lst:configureJwt.cs}). Then a \lstcode{JwtTokenOptions} object is configured (\myautoref{lst:configureJwtTokenOptions.cs}) and a method for creating a \gls{jwt} token is implemented (\myautoref{lst:generateBasicAuthToken.cs}). Finally the \gls{jwt} package is added to the middleware pipeline using the \lstcode{app.UseAuthentication()} extension method.
+
+For the \lstcode{TokenValidationParameter} a \lstcode{SymmetricSecurityKey} object is created which must be identical to the key object which is later on used to validate a \gls{jwt} token. Then an \enquote{Issuer} and an \enquote{Audience} are set, both are optional. This is mainly for the purpose of identifying the application (issuer) and the client (audience). Finally, the option to validate the lifetime of a token is set to true and the clock skew is set to zero. \cite{jwtTokenAuth}
+
+\file{configureJwt.cs}{Configuration of the JWT package.}{NC_CSharp}
+
+The \lstcode{JwtTokenOptions} is an object written specifically for the Jukebox project which stores information needed to create new \gls{jwt} tokens. It consists of properties for the \enquote{Issuer} and \enquote{Audience}. Further there are properties which define the expiration timespan of the \gls{jwt} token itself as well as the expiration timespan of the refresh token. Finally, it contains the \lstcode{SigningCredentials} which constist of the key and an enum to determine which algorithm is used. As shown in \myautoref{lst:configureJwtTokenOptions.cs} the \gls{hmac} algorithm is used in the Jukebox project.
+
+\file{configureJwtTokenOptions.cs}{Configuration of the \lstcode{JwtTokenOptions}.}{NC_CSharp}
+
+The last step in setting up the \gls{jwt} authentication package is to create a method which issues a new token. This method is part of the \lstcode{JwtAuthenticationService} in the Jukebox project. A \lstcode{ClaimsIdentity} and a \lstcode{JwtTokenOptions} object are passed into the method. The \lstcode{ClaimsIdentity} is the C\# object to manage users when using a claims-based authorization system (described in \myref{subsubsec:claimsAuth}). First a list of claims is created. For this, the \gls{jwt} Subject \enquote{Sub}, \gls{jwt} ID \enquote{Jti}, and Issued At \enquote{Iat} claims are created. The subject usually is the username or email address, the \gls{jwt} ID is a unique identitfier, in the Jukebox project a \gls{guid} is used, and the Issued At claim contains the current timestamp in \gls{utc} time. Then all claims stored in the \lstcode{ClaimsIdentity} are added. These are claims defined by the web application and \zB could contain a claim which grants access to the administrativ section of the application. Then a \lstcode{JwtSecurityToken} object is created. For this the \lstcode{JwtTokenOptions} are used to set the expiration timespan, the issuer, and so on. Then a refresh token is created. For simplicity the Jukebox project uses a \gls{guid} as a refresh token. Finally a \lstcode{AuthToken} \gls{dto} object is created which is used to send the information back to the client. So far the \lstcode{JwtSecurityToken} is a C\# object which still needs to be serialized into a \gls{json} string. The serialization is handled by the \lstcode{JwtSecurityTokenHandler.WriteToken()} method. Both the \lstcode{JwtSecurityToken} and the \lstcode{JwtSecurityTokenHandler} classes are provided by the \gls{jwt} package.
 
 
+\file{generateBasicAuthToken.cs}{Generating the JWT Token.}{NC_CSharp}
 
+\Subsubsection[claimsAuth]{Claims-Based Authorization}
 
+After a client is authenticated the \gls{jwt} token will be read and all claims will be extracted. These claims are used to check whether the client is authorized to execute an action. A claim describes an individual right or action this client posseses. It can also be proof of a piece of information about the client, such as his email address, birth date, or phone number.
 
-
-
-
-
-
-
-
-
-
-
-\Subsubsection[jwt]{JWT Bearer Token}
+For the Jukebox project, two custom claims were implemented. First, the \lstcode{UsernameClaim} which is used to store the username of a client. Second, the \lstcode{RoleClaim}. This claim is used to identify a client as \enquote{SystemAdmin}, \lstcode{IndexAdmin}, or \lstcode{PlayerAdmin} and grants the right to execute certain actions. Claims will be serialized when they are sent to client inside the \gls{jwt} token. To still identify a claim after it has been serialized, the claim needs a unique type which is saved as a string. By convention a \gls{url} is used. For example the \enquote{http://Jukebox/Claims/Security/Username} string is assigned to the \lstcode{UsernameClaim} type. \cite{claimsBasedAuth}
 
 \Section{Custom Middlewares}
 
