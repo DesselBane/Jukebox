@@ -131,7 +131,62 @@ For the Jukebox project, two custom claims were implemented. First, the \lstcode
 
 \Section{Custom Middlewares}
 
-\Subsubsection[exceptionMiddleware]{Exception Middleware}
+In the Jukebox project two custom middlewares are used. First, the \lstcode{ExceptionMiddleware} which translates custom exceptions thrown later in the middleware pipeline into \gls{http} responses. Second, the \lstcode{SpaMiddleware} which is needed to enable deep links into a \gls{spa}.
+
+\Subsubsection[exceptionMiddleware]{ExceptionMiddleware}
+
+The \lstcode{ExceptionMiddleware}, shown in \myautoref{lst:exceptionMiddleware.cs}, is the first middleware in the \gls{owin} pipeline. This middleware encloses the rest of the pipeline in a try-catch block which catches any \lstcode{InvalidRestOperationException}. The \lstcode{InvalidRestOperationException} class is an abstract base class for exceptions like the \lstcode{NoContentException} (\gls{http} 204), \lstcode{ForbiddenException} (\gls{http} 403), and many more. Each exception derived from the \lstcode{InvalidRestOperationException} is required to override the \lstcode{ResponseCode} property which specifies the \gls{http} status code to be returned. Furthermore the \lstcode{InvalidRestOperationException} contains a \lstcode{CustomErrorCode} property. This proerty is of type \gls{guid} and has to be set via a constructor argument.
+
+Once such an exception is thrown it will be caught in the catch block of the middleware. In this catch block the \lstcode{StatusCode} property of the \lstcode{HttpContext.Response} object will be set. Then, an \lstcode{ExceptionDTO} object will be created which contains the error message and error \gls{guid}. This extra object is used because an exception is a serializable object itself but will be serialized with its stack trace and other debug information not relevent in this scenario. Finally, the \lstcode{ExceptionDTO} will be serialized to a \gls{json} string and sent to the client.
+
+\file{exceptionMiddleware.cs}{The \lstcode{ExceptionMiddleware}.}{NC_CSharp}
+
+
+\Subsubsection{SpaMiddleware}
+
+\glslocalreset{spa}
+
+\gls{asp} is intended to be used in combination with the Razor view engine to create traditional web applications. A \gls{spa} works quite differently because there only exists one \gls{html} file for the entire application instead of one for every subsite. Additionally the, in this case Angular, frontend framework oftentimes comes with its own routing component. This means that a user might see a \gls{url} like \enquote{http://jukebox/accout/settings}. This \gls{url} is used by the frontend framework to show the settings component but the backend knows nothing about such a \gls{url} and therefore would return a \gls{http} 404 error code.
+
+These \glspl{url} are called deep links and are used by many web applications. The \lstcode{SpaMiddleware} is a piece of code which enables the deep link feature for web applications hosted via \gls{asp}. It has to be added to the middleware pipeline befor the \gls{mvc} middleware and since no authentication is needed should also be added before any authentication middleware. As shown in \myautoref{lst:spaMiddleware.cs}, the middleware checks any request to determine whether it is a deep link or not.
+
+Whether a \gls{url} is a deep link or not is determined by a set of rules. Most importantly the middleware checks whether the request has a file extension or not. This is needed because in the index.html file there are other files referenced such as the bundle.js file. Furthermore, a configuration object is used. This configuration object stores paths which are no deep links because they are part of another middleware or feature of the web server. In the Jukebox project, the Swagger web \gls{api} documentation tool was used which may be accessed through the \gls{url} \enquote{http://jukebox/swagger} \cite{swagger}. Therefore the Swagger \gls{url} is considered a \enquote{SpecialRoute}.
+
+When a deep link is found the middleware sets the \gls{http} status code to 200 OK and returns the index.html file. First attemts used a redirect mechanism to serve the index.html. This worked in the sense that the index.html file was served but failed overall because the deep links was lost due to the redirect. Since redirecting is not possible the \lstcode{SpaMiddleware} needs to know where the index.html file is located. This may be done by convention or explicit configuration. The middleware checks the \gls{asp} ContentRoot folder if it contains a file called \enquote{index.html} while ignoring capitalization. If no file is found and none is specified through the \lstcode{PathToIndex} property on the configuration object an exception is thrown.
+
+\file{spaMiddleware.cs}{The \lstcode{SpaMiddleware}}{NC_CSharp}
+
+\Section{Entity Framework Core}
+
+\glslocalreset{ef}
+
+To manage its users and song index the Jukebox project uses the \gls{ef} \cite{efCore}. \gls{ef} is a \gls{orm} framework which enables developers to work with databases using .NET objects and programming paradigms like Fluent \gls{api}, it also eliminates the need to write \gls{sql} code. It features many different database providers to access \gls{mysql}, \gls{mssql}, SQLite, and many more database engines.
+
+\Subsubsection{SQLite}
+For the Jukebox project a datastore was needed but an entire database server would have been to unwieldily in its configuration and maintenence. Therefore the SQLite database engine was choosen \cite{sqlite}. SQLite is self-contained file-based database engine which does not require any server application to connect to. Compared to a \gls{mssql}, or a \gls{mysql} database engine there are some limitations \cite{sqliteLimitations} but these features are not needed in the Jukebox project.
+
+\Subsubsection{Configuration}
+
+When configuring a database with \gls{ef} the developer may choose between the \enquote{Model-First-Approach} and the \enquote{Code-First-Approach}. In the \enquote{Model-First-Approach} an \gls{er} is created and saved as a *.edmx file. The developer can manipulate this model via \gls{gui} tools. The *.edmx file is then used to create a class structure which represents the database. This approach however requires an \gls{ide} which supports *.edmx modeling files. Furthermore, this approach lacks flexibility since the classes created from the model are not ment to be edited yet the \gls{gui} tools oftentimes limit functionality.
+
+The \enquote{Code-First-Approach} is the more widley used and also the suggested way of configuring a database with \gls{ef} \cite{efCreateModel}. This approach is more tedious since the developer will have to write all classes himself but offers much greater control over the model. It offers the developer three choices \revMark{for how he wants to configure his database}: Annotations, Fluent \gls{api}, and accepting the default conventions.
+
+The easiest way is to accept the default conventions. \gls{ef} will use properties which are called \enquote{Id} as a primery key, create foreign keys for properties of types registered in the \lstcode{DbContext}, and use the classe's name as a table name \cite{efConventions}. This method is apropriate for small databases or \revMark{test-dummies}.
+
+The second option is to use DataAnnotations (\myautoref{lst:song.cs}). These are attributes placed on properties which instruct the framework to handle these properties in a special way. Examples for Annotations are the \lstcode{[Key]}, \lstcode{[ForeignKey]}, and \lstcode{[NotMapped]} attributes. This works great for configuring columns and tables.
+
+\file{song.cs}{Configuration of the \lstcode{Song} class using DataAnnotations.}{NC_CSharp}
+
+The third method is to use the Fluent \gls{api} (\myautoref{lst:songConfiguration.cs}). The \lstcode{DbContext} abstract base class contains a protected virtual method called \lstcode{OnModelCreating}. This method has to be overwritten to use the Fluent \gls{api}. Its only argument is of type \lstcode{ModelBuilder} and is used to get access to the \lstcode{EntityTypeBuilder<T>} configuration objects. These \lstcode{EntityTypeBuilder<T>} objects are then used to configure properties as primary keys, set the table name, configure the \lstcode{CascadeOnDeletion} option, and many more. With the Fluent \gls{api} anything related to the database can be configured but the drawback is \revMark{invisibility} since a developer does not know how an entity is configured by simply looking at the entity class.
+
+\file{songConfiguration.cs}{Configuration of the \lstcode{Song} class using Fluent API.}{NC_CSharp}
+
+In the Jukebox project, a mix of all three approaches was used. Properties which are called \enquote{Id} are using the default conventions to be marked as primary keys. Properties which are not part of the database but part of the C\# class are using the \lstcode{[NotMapped]} annotation and everything else is configured using the Fluent API.
+
+\Subsubsection{Migrations}
+
+
+\Section{Service Architecture}
 
 \Section{ASP.NET Core Websockets}
 
