@@ -185,7 +185,13 @@ A mixture of all three approaches has proven to be more practical than sticking 
 
 \Subsubsection{Migrations}
 
+An application's data model will grow during the development of the application. \gls{ef} supports changes in the data model with its migrations feature. A new migration can be created using the command line tools with the command \lstcode{dotnet ef migrations add <migrationName>}, smiliarly the \lstcode{remove} command can be used to remove a migration. With the \lstcode{add} command \gls{ef} core will create or update the model snapshot class as well as create a migration's class. The model snapshot class is used as a base line for comparison when adding a new migration. The created migration's class contains code which describes the differences of the old model, \revMark{known through the snapshot}, and the current model, \revMark{knwon through the class structure}. Every migration is derived from the abstract base class \lstcode{Migration} and has to implement the \lstcode{Up()} and \lstcode{Down()} methods. As shown in \myautoref{lst:migration.cs}, the \lstcode{Up()} method contains instructions on how to apply the migration and the \lstcode{Down()} method contains instructions on how to revert the migration. \cite{efMigrations}
 
+Applying a single or multiple migrations can be achived via two ways. The first solution is to use the \gls{ef} command line tools to directly migrate the database with the command: \lstcode{dotnet ef database update}. This is usually the prefered method but may not be possible depending on the setup of the database. When direct migration is not possible the \gls{ef} command line tools also offer the possibility to create a \gls{sql} script. This is achived using the command: \lstcode{dotnet ef migrations script}. Both methods offer the option to revert the database by specifying the \lstcode{From} and \lstcode{To} migrations explcitly.
+
+One limitation when using the SQLite database engine is that a table or column can not be dropped once it is created. Therefore, the Jukebox project only contains one migration. This also makes it almost impossible to actually migrate a database. The solution which is used is to create a new database each time a migration is needed. This is not problematic as long as an application is under development but as soon as it is used productivly a migration strategy will have to be developed seperatly.
+
+\file{migration.cs}{Excerpt of a migration's class.}{NC_CSharp}
 
 \Section{Service Architecture}
 
