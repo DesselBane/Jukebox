@@ -12,7 +12,7 @@
 
 The \gls{asp} framework relies on the NuGet Package Manager for its modularity. The NuGet Package Manager is very similar to Node's \gls{npm}. The packages to be used in a project can either be configured using the command line, or directly editing the *.csproj file, or using the \gls{gui} tools most .NET Core \gls{ide}s provide. This makes it possible to download the necessary parts of the \gls{asp} framework only. Microsoft also allows third parties to publish libraries on its NuGet platform. This was also done in the Jukebox project for some of the middlewares.
 
-\Subsubsection{OWIN}
+\Subsubsection[owin]{OWIN}
 
 \gls{owin} is another big aspect of \gls{asp}'s modularity. \gls{owin} is not a specific implementation, but rather a specification which helps developers to create a modular architecture and was used to create the \gls{asp} framework. Katana is the codename Microsoft gave its \gls{owin} implementation and should not be confused with \gls{owin} itself.
 
@@ -193,7 +193,35 @@ One limitation when using the SQLite database engine is that a table or column c
 
 \file{migration.cs}{Excerpt of a migration's class.}{NC_CSharp}
 
-\Section{Service Architecture}
+\Section{Architecture}
+
+A key aspect when developing any application is modularity. In \gls{asp} modularity can be achived through multiple ways, one of which are middlewares as discused in \myref{subsubsec:owin}. Although this is a good start even when using middlewares there are many parts of an application which can be \revMark{modularized}, for example seperating database code, business logic, and validation logic from each other.
+
+\Subsubsection{Projectstructure}
+
+The backend C\# solution, shown in \myautoref{fig:projectStructure.png}, contains six different projects. They are seperated into database related projects, framework projects, acceptance tests, and the \gls{asp} project.
+
+The database related projects contain two different projects one for the SQLite database and one for an in-memory database. Both projects do not contain domain classes or the abstract data context but helper classes, a specific SQLite context, and the SQLite migrations. This way it is simple to support \zB the \gls{mssql} server later on. Also the simplest way to support multiple database engines is to create a project for each engine which contains the migrations specific to this engine.
+
+The framework solution folder contains the \lstcode{Jukebox.Common} and \lstcode{Jukebox.Common.Abstractions} projects. All interfaces for business logic and validation logic classes are part of the \lstcode{Jukebox.Common.Abstractions} project. Furthermore the data model is part of this \gls{dll}. All business and validation classes are contained in the \lstcode{Jukebox.Common} project. This seperation makes it possible to swap out the implementations without breaking a lot of dependencies.
+
+Every good application should be tested to a certain degree to ensure its working correctly. The Jukebox project does not contain many tests because it is more of a proof of concept application but acceptance tests are easy to write and maintain which makes them a good compromise between \revMark{testing and time}.
+
+Lastly the \gls{asp} project contains the \gls{asp} specific code. This is also the only project to reference any \gls{asp} \glspl{dll}.
+
+\image[scale=.8]{projectStructure.png}{C\# project structure.}
+
+\Subsubsection{Services and Validation}
+
+Another step towards a \revMark{modularized} application is to use a service layer. This service layer handles all the business logic the application needs to funktion. An example for this is the \lstcode{IPlayerService}, shown in \myautoref{lst:IPlayerService.cs}. This service contains methods for creating a \lstcode{Player} object, executing a command on a certain player, or getting details about one specific or all players available.
+
+For each domain there is one service class. These services are accessed through constructor injection and are used in controllers as well as other services. Each service as well as all of the controllers are using the \gls{tpl} and the C\# Async and Await pattern \cite{tpl}. This pattern makes asynchronous programming simple as long as the programmer abides to certain practices. Once the developer chooses to use the Async and Await pattern every method should return a \lstcode{Task} object which in turn means no part of the application should rely on synchronous programming anymore. A \lstcode{Task} should never be awaited using the \lstcode{Result} property or \lstcode{Wait()} method since they may cause deadlocks but instead the \lstcode{await} keyword should be used.
+
+\file{IPlayerService.cs}{The \lstcode{IPlayerService} interface.}{NC_CSharp}
+
+Validation is an important aspect. The backend has to verify that the data sent by a client is structurally as well as semantically correct and that the client is authorized to execute the action. This is done though the use of interception in the Jukebox project. Each service has got an associated interceptor as well as a associated validator class. The interceptor deceides which aspects of a method have to be validated and the validator class contains the logic for the validation. This separation is necessary because the interceptor is tightly coupled to the service it is intercepting while the validator should only be concerned with the object it is supposed to validate. Looking at the \lstcode{IPlayerService} interface (\myautoref{lst:IPlayerService.cs}), it contains a mehtod called \lstcode{AddSongToPlayerAsync()}. This method will be intercepted and the interceptor has to validate that both the player and the song with the given ID exist. For this purpose the interceptor holds a reference to the \lstcode{PlayerValidator} and the \lstcode{SongValidator} objects which contain the methods for validation, as shown in \myautoref{lst:addSongToPlayerAsync.cs}. If the validator methods would reside inside the interceptor this scenario would not be possible.
+
+\file{addSongToPlayerAsync.cs}{Intercepting the \lstcode{AddSongToPlayerAsync} method.}{NC_CSharp}
 
 \Section{ASP.NET Core Websockets}
 
