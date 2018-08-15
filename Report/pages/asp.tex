@@ -225,6 +225,12 @@ Validation is an important aspect. The backend has to verify that the data sent 
 
 \Section{ASP.NET Core Websockets}
 
+To use websockets in \gls{asp} the websocket middleware has to be added to the middleware pipeline. Here the developer can configure settings like the \lstcode{KeepAliveInterval} and the \lstcode{ReceiveBufferSize}. Whether a request is a request for a websocket or not can be detected using the \lstcode{IsWebSocketRequest} property on the \lstcode{HttpContext.WebSockets} object. When such a request is detected the communication can be established using the \lstcode{AcceptWebSocketAsync()} method on the \lstcode{HttpContext.WebSocket} object. This method returns a \lstcode{Task<WebSocket>} of which the \lstcode{WebSocket} is used for the rest of the communication. \cite{aspWebsockets}
+
+After accepting the socket the Jukebox \gls{asp} server will authenticate the client and if the authentication was successfull create a \lstcode{Player} object. Since the communication is only supposed to go from the server to the client the server will use a \enquote{keep-alive loop}. This loop will wait for any message comming from the player. Once such a message arraives the server checks whether the client wants to terminate the session or sent data. In case of termination the \lstcode{Player} object will be destroyed and the websocket will be closed. If the client sent data the server will handle the message in its \lstcode{HandlePlayerMessage()} method.
+
+\file{HandlePlayerOwnerWebsocket.cs}{The \enquote{keep-alive loop} for a websocket.}{NC_CSharp}
+
 \Section{Remember these points}
 developers can be female (duh)
 recognized
