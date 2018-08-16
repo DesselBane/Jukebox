@@ -2,27 +2,27 @@
 
 \Chapter{Angular}
 
-\revMark{TBD}
+Angular is an open-sorce front-end web application framework which is written in \gls{ts}. It is developed by Google and contributers. When talking about Angular it is important to distinguish between AngularJS, also called Angular 1.x, and Angular 2+. For the Jukebox project Angular 2+ was used. In the following text Angular always refers to Angular 2+. \revMark{proofread}
 
 \Section{Structure}
 
-This Section describes how an Angular application is structued. \revMark{TBD}
+When using the Angular framework a developer will implement his view logic using Components, Modules, Services and many more pre-defined Angular classes. This section describes which elements are offered by the Angular framework and how they should be used. \revMark{proofread}
 
-\Subsection[components]{Components}
+\Subsubsection[components]{Components}
 
-An Angular component can be compared to a View and ViewModel combo from the \gls{mvvm} pattern. It is composed of three files. There is one \gls{html} and one \gls{css} file which make up the View. The ViewModel is a \gls{ts} file which contains the essential logic for the View. The component is always declared in the \gls{ts} file with the \lstcode{@Component} decorator, see \myautoref{lst:example-component.ts}.
+An Angular component can be compared to a View and ViewModel combination from the \gls{mvvm} pattern. It is composed of three files. There is one \gls{html} and one \gls{css} file which make up the View. The ViewModel is a \gls{ts} file which contains the essential logic for the View. The component is always declared in the \gls{ts} file with the \lstcode{@Component} decorator, see \myautoref{lst:example-component.ts}.
 
 \file{example-component.ts}{Example of an Angular Component TypeScript File.}{JavaScript}
 
 The \lstcode{@Component} decorator can take many arguments, but the commonly used ones are: \enquote{selector}, \enquote{templateUrl}, and \enquote{styleUrls} \cite{ngcomponent}. The selector is a string which starts by convention with \enquote{app} and is then followed by the component's name, see \mylineref{lst:example-component.ts}{comp_selector}. The selector is used to include this component in the \gls{html} of another component.
 
-The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corresponding \gls{html} and \gls{css} files respectively (\mylineref{lst:example-component.ts}{comp_templateUrl} and \ref{line:comp_styleUrls}). Both arguments take a relative path, \enquote{templateUrl} is always related to a single file, \enquote{styleUrls} may be related to multiple files in the project. Inline variants may be used for both arguments, though out of readability concerns they should be avoided when possible.
+The \enquote{templateUrl} and \enquote{styleUrls} arguments reference the corresponding \gls{html} and \gls{css} files, respectively (\mylineref{lst:example-component.ts}{comp_templateUrl} and \ref{line:comp_styleUrls}). Both arguments take a relative path, \enquote{templateUrl} is always related to a single file, \enquote{styleUrls} may be related to multiple files in the project. Inline variants may be used for both arguments, though out of readability concerns they should be avoided when possible.
 
 \Subsubsection{Lifecycle Hooks}
-The Angular framework manages the lifecycle of each component. Throughout this lifecycle Angular offers the possibility to respond to certain events \zB \lstcode{ngOnDestroy()} where the developer could run a cleanup routine. In order to respond to any of these events the developer has to implement one method per event. The method signatures are defined by the Angular framework and exposed as interfaces. Since the executed code at runtime is \gls{js} code, interfaces aren't necessary. Nonetheless it is considered \enquote{best-practice} to use these interfaces.
+The Angular framework manages the lifecycle of each component. Throughout this lifecycle Angular offers the possibility to respond to certain events \zB \lstcode{ngOnDestroy()} where the developer could run a cleanup routine. In order to respond to any of these events the developer has to implement one method per event. The method signatures are defined by the Angular framework and exposed as interfaces. Since the executed code at runtime is \gls{js} code, interfaces are not necessary. Nonetheless it is considered \enquote{best-practice} to use these interfaces.
 
 \Subsubsection[bindings]{Template Syntax - Bindings}
-A template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} don't make much sense. The official set of tags is extended with tags that refer to components as described in \myref{subsec:components}.
+A template in the Angular context is equivalent to a \gls{mvvm} View and is written in \gls{html}. All \gls{html} tags are allowed, though some tags like \lstcode{<html>} or \lstcode{<body>} are meaningless in this context. The official set of tags is extended with tags that refer to components as described in \myref{subsubsec:components}.
 
 \file{nav-item-component.html}{Example of an Angular Template.}{HTML5}
 
@@ -30,30 +30,27 @@ Like many \gls{mvvm} frameworks, Angular supports bindings. These are used to di
 
 In case data from the ViewModel should be passed on to another component, which is referenced via its \gls{html} tag, the square bracket notation is used (\mylineref{lst:nav-item-component.html}{navItem_inputProperty}). It is also possible to use the \lstcode{bind-} prefix \zB \lstcode{bind-CurrentItem="subItem"}. For both of these methods to work, the receiving component needs a property in its ViewModel which is declared with the \lstcode{@Input()} decorator, see \mylineref{lst:example-component.ts}{comp_input}.
 
-For events, the standard \gls{js} round bracket notation (\mylineref{lst:nav-item-component.html}{navItem_inputProperty}) or the \lstcode{on-} prefix \zB \lstcode{on-ItemClicked="ItemClicked.emit()"} are used. Custom conponents can declare their own events using the \lstcode{@Output()} decorator on a property (\mylineref{lst:example-component.ts}{comp_output}). The property usually is of type \lstcode{EventEmitter}. If RxJS Observables are used, \lstcode{Observable<T>} or \lstcode{Subject<T>} are also possible \cite{rxjs}.
+For events, the standard \gls{js} round bracket notation (\mylineref{lst:nav-item-component.html}{navItem_inputProperty}) or the \lstcode{on-} prefix \zB \lstcode{on-ItemClicked="ItemClicked.emit()"} are used. Custom components can declare their own events using the \lstcode{@Output()} decorator on a property (\mylineref{lst:example-component.ts}{comp_output}). The property usually is of type \lstcode{EventEmitter}. If RxJS Observables are used, \lstcode{Observable<T>} or \lstcode{Subject<T>} are also possible \cite{rxjs}.
 
-Forms often use elements like a \enquote{Combobox} or \enquote{Dropdown} menu of which the \lstcode{SelectedItem} property is supposed to be \enquote{mirrored} to a property in the component. This gives the developer easy access to read but also change the value from within the ViewModel. In this case a two-way binding can be used. Angular uses the \enquote{Banana-in-a-box} notation which are round brackets inside square brackets \zB \lstcode{[(SelectedItem)]="userSelection"}. The two-way binding can also be achived using the \lstcode{bindon-} prefix \zB \lstcode{bindon-SelectedItem="userSelection"}.
+Forms often use elements like a \enquote{Combobox} or \enquote{Dropdown} menu of which the \lstcode{SelectedItem} property is supposed to be \enquote{mirrored} to a property in the component. This gives the developer easy access to read but also change the value from within the ViewModel. In this case a two-way binding can be used. Angular uses the \enquote{Banana-in-a-box} notation which are round brackets inside square brackets \zB \lstcode{[(SelectedItem)]="userSelection"}. The two-way binding can also be achived using the \lstcode{bindon-} prefix \zB \lstcode{bindon-SelectedItem="userSelection"}. \cite{angularTemplateSyntax}
 
 \Subsubsection{Template Syntax - Directives}
 
 Angular exposes different directives which add certain functionality to the \gls{html}. The \lstcode{*ngIf} directive determines whether the containing tag, as well as its children, should or should not be part of the \gls{dom}. This was used in the Jukebox project for showing \lstcode{NavItems} as an expander for items with children, or regular for single items, as shown in \mylineref{lst:nav-item-component.html}{navItem_ngIf}.
 
 If an item contains children each of these child items has to be displayed. For this the \lstcode{*ngFor} directive is used. Its syntax (\mylineref{lst:nav-item-component.html}{navItem_ngFor}) is similar to the \lstcode{foreach} syntaxes of many popular languages. The index tracking is optional, but useful in some cases. Also, it is possible to use the trackBy feature. This is similar to the \lstcode{equals()} C\# method. It allows the \lstcode{*ngFor} directive to decide on the equality of two items not by their instance references, but a custom-defined method. For this to work, the developer is required to implement a method with the following signature:\\
-\lstcode{public myTrackBy(index: number, object: object): number}\\
+\hspace*{1cm} \lstcode{public myTrackBy(index: number, object: object): number}
 
 The third built-in directive is the switch-case directive which lets the developer show content based on a property. \mylineref{lst:nav-item-component.html}{navItem_switch} to \ref{line:navItem_switch_end} is an example of how the \lstcode{NavItem} template could be debugged.
 
 \Subsubsection{Template Syntax - Pipes}
 
-Angular also offers support for pipes which are very similar to \gls{wpf} Converters, with the exception that an Angular pipe only works in one direction. This is useful for formatting the \enquote{raw} data \zB \lstcode{\{\{title | uppercase | lowercase\}\}}. As shown in the example, pipes can be chained. It is also possible to add parameters to a pipe, one example is the \lstcode{date} pipe, where the name for a date format can be passed as an argument \zB \lstcode{\{\{ myDate | date:'longDate'\}\}}. Angular offers many built-in pipes, but it is also possible to create a custom one. To do so, the developer creates a new class which implements the \lstcode{PipeTransform} interface and uses the \lstcode{@Pipe()} decorator as shown in \myautoref{lst:boolean-yes-no-pipe.ts}.
+Angular also offers support for pipes which are very similar to \gls{wpf} converters, with the exception that an Angular pipe only works in one direction. This is useful for formatting the \enquote{raw} data \zB \lstcode{\{\{title | uppercase | lowercase\}\}}. As shown in the example, pipes can be chained. It is also possible to add parameters to a pipe, one example is the \lstcode{date} pipe, where the name for a date format can be passed as an argument \zB \lstcode{\{\{ myDate | date:'longDate'\}\}}. Angular offers many built-in pipes, but it is also possible to create a custom one. To do so, the developer creates a new class which implements the \lstcode{PipeTransform} interface and uses the \lstcode{@Pipe()} decorator as shown in \myautoref{lst:boolean-yes-no-pipe.ts}. \cite{angularTemplateSyntax}
 
 \file{boolean-yes-no-pipe.ts}{A Custom Pipe to Convert a Boolean to 'Yes' or 'No'.}{JavaScript}
 
-\cite{angularTemplateSyntax}
 
-
-
-\Subsection{Services}
+\Subsubsection{Services}
 
 An Angular service is a class which is used to do a specific, well-defined task. It usually performs operations on data or communicates with outside services for the purpose of obtaining or pushing data to an \gls{api}.
 
@@ -64,7 +61,7 @@ Angular services are written in \gls{ts}. They are a class with the \lstcode{@In
 Services are used to encapsulate functionality which helps promote reusability and modularity. To determine whether a method should be implemented in a service or a component, the question is: Is the method related to how something is displayed? If the answer to this question is yes, then the method should be implemented in a component, if the answer is no, it should be implemented in a service class.
 
 
-\Subsection[ngmodules]{Modules}
+\Subsubsection[ngmodules]{Modules}
 
 When talking about modules in an Angular application, it is important to distinguish between Angular modules, also called NgModules, and \gls{js} (ES2015) modules. Those two are different concepts and can be used side by side. While \gls{js} modules are used to manage collections of \gls{js} objects, NgModules are more like containers for related chunks of code. An NgModule contains components, services, and/or other code files which all belong to one domain, a workflow, or are performing similar tasks. From an architectural perspective they bear great resemblance to a code library like a \gls{dll}. Like \gls{dll}s, they can import other NgModules and choose which classes, services, and/or components should be exported and which should only be visibile to classes inside the NgModule in question.
 
@@ -72,7 +69,7 @@ When talking about modules in an Angular application, it is important to disting
 
 NgModules are \gls{ts} classes which are decorated with the \lstcode{NgModule()} annotation (\mylineref{lst:app-module.ts}{module_decorator}). Oftentimes the class is completly empty, since the decorator arguments are the important part of the module, essentially the module's metadata. Each application has to have at least one module, the AppModule.
 
-The \textbf{declarations} argument (\mylineref{lst:app-module.ts}{module_declarations}) is used to specify all components which are part of this module. If a module wants to import other modules, those modules need to be listed using the \textbf{imports} argument (\mylineref{lst:app-module.ts}{module_imports}). If the developer chooses to encapsulate the routing configurations into separate modules, these modules should always be the last ones imported to avoid dependency issues. The \textbf{exports} argument (\mylineref{lst:app-module.ts}{module_exports}) defines which components, services, and/or modules are visible to other modules which import this module. Angular's \gls{di} configuration is strongly tied to its NgModules. The \textbf{providers} argument references all services, pipes, and guards the developer wants to be available for injection. It is also possible to use interception, which has to be defined here as well. To be able to use custom \gls{html} tags (see \myref{subsec:components}), the \lstcode{CUSTOM\_ELEMENTS\_SCHEMA} must be included under the \textbf{schemas} argument. The \textbf{bootstrap} argument is rarely used, usually in the AppModule. All components which are added here are marked as entry components for the app start.
+The \textbf{declarations} argument (\mylineref{lst:app-module.ts}{module_declarations}) is used to specify all components which are part of this module. If a module wants to import other modules, those modules need to be listed using the \textbf{imports} argument (\mylineref{lst:app-module.ts}{module_imports}). If the developer chooses to encapsulate the routing configurations into separate modules, these modules should always be the last ones imported to avoid dependency issues. The \textbf{exports} argument (\mylineref{lst:app-module.ts}{module_exports}) defines which components, services, and/or modules are visible to other modules which import this module. Angular's \gls{di} configuration is strongly tied to its NgModules. The \textbf{providers} argument references all services, pipes, and guards the developer wants to be available for injection. It is also possible to use interception, which has to be defined here as well. To be able to use custom \gls{html} tags (see \myref{subsubsec:components}), the \lstcode{CUSTOM\_ELEMENTS\_SCHEMA} must be included under the \textbf{schemas} argument. The \textbf{bootstrap} argument is rarely used, usually in the AppModule. All components which are added here are marked as entry components for the app start.
 
 \Subsubsection[routing]{Routing}
 
@@ -96,20 +93,22 @@ Angular also allows the use of asynchronous routing, also called lazy loading. T
 
 \Subsubsection{Dependency Injection and Interception}
 
-The Angular framework relies heavily on \gls{di} and, as of version 4.3 \cite{interceptorAngularVersion} also offers Interception. As described in \myref{subsec:ngmodules}, the configuration of Angular's \gls{di} capabilities is achieved through the metadata of NgModules. Every component and provider listed in the module can be requested. Additionally, it is possible to configure providers in the \lstcode{@Injectable()} and \lstcode{@Component()} decorators. In doing so, the configuration will override any configuration done at the NgModule level. To make the injection work, Angular uses its own \lstcode{Injector} class. Instances of this class are created by the framework and the developer doesn't have to touch them in most cases. Though, if required by a certain action, it is possible to create and manipulate instances of this class. Every service is a singleton inside its scope, which is the \lstcode{Injector} instance. Angular automatically nests \lstcode{Injector} instances. Every component has its own \lstcode{Injector} instance which mirrors the component tree structure (see \revMark{INSERT figure Angular component tree}). A request bubbles up from the \lstcode{Injector} instance of the component it was requested in. The first \lstcode{Injector} which can satisfy the request is used to resolve the dependency.
+The Angular framework relies heavily on \gls{di} and, as of version 4.3 \cite{interceptorAngularVersion} also offers Interception. As described in \myref{subsubsec:ngmodules}, the configuration of Angular's \gls{di} capabilities is achieved through the metadata of NgModules. Every component and provider listed in the module can be requested. Additionally, it is possible to configure providers in the \lstcode{@Injectable()} and \lstcode{@Component()} decorators. In doing so, the configuration will override any configuration done at the NgModule level. To make the injection work, Angular uses its own \lstcode{Injector} class. Instances of this class are created by the framework and the developer doesn't have to touch them in most cases. Though, if required by a certain action, it is possible to create and manipulate instances of this class. Every service is a singleton inside its scope, which is the \lstcode{Injector} instance. Angular automatically nests \lstcode{Injector} instances. Every component has its own \lstcode{Injector} instance which mirrors the component tree structure (see \myautoref{fig:componentHierarchy.png}). A request bubbles up from the \lstcode{Injector} instance of the component it was requested in. The first \lstcode{Injector} which can satisfy the request is used to resolve the dependency.
+
+\autoImg{componentHierarchy.png}{The Angular component hierarchy \cite{componentHierarchy}.}
 
 As of version 4.3 Angular offers the possibility of interception. Angular's interception is limited to only the \lstcode{HttpClient} class, contrary to other \gls{di} frameworks where any class can be intercepted. To specify one or multiple interceptors, the developer has to configure a provider as shown in \mylineref{lst:app-module.ts}{module_interceptor}.
 
 \file{authentication-interceptor.ts}{The Jukebox interceptor to automatically include a JWT Token.}{JavaScript}
 
-The interceptor is a class which implements the \lstcode{HttpInterceptor} interface and thus the \\ \lstcode{intercept((req: HttpRequest<any>, next: HttpHandler): \\ \hspace*{1cm} Observable<HttpEvent<any>>} \\ method. In the Jukebox project, it was used to automatically include a \gls{jwt} as well as the \enquote{Content-Type} header (\myautoref{lst:authentication-interceptor.ts}). With this technique it is also possible to catch any request which returns a 401 \gls{http} status code, get a new \gls{jwt} access token and then retry the request without any service noticing that the initial request failed.
+The interceptor is a class which implements the \lstcode{HttpInterceptor} interface and thus the \\ \hspace*{1cm} \lstcode{intercept((req: HttpRequest<any>, next: HttpHandler): \\ \hspace*{2cm} Observable<HttpEvent<any>>} \\ method. In the Jukebox project, it was used to automatically include a \gls{jwt} as well as the \enquote{Content-Type} header (\myautoref{lst:authentication-interceptor.ts}). With this technique it is also possible to catch any request which returns a 401 \gls{http} status code, get a new \gls{jwt} access token and then retry the request without any service noticing that the initial request failed.
 
 
 \Section{Angular Material}
 
 Angular Material is a framework, also developed by Google, which provides pre-built controls. These include buttons, trees, datepickers and many more. All of these controls are styled with the Google Material style guidelines in mind. To be able to use this framework, the developer has to install it via \gls{npm} or a similar package management tool. \cite{angularMaterial}
 
-\Subsection{Components}
+\Subsubsection{Components}
 Each control is an Angular component. This means that controls can be used in the \gls{html} by inculding the corresponding tag, as shown in \mylineref{lst:navigation-bar.html}{navbar_mat_toolbar}. Any \gls{html} tag which starts with the \lstcode{mat-} prefix references an Angular Material control/component.
 
 This prefix was changed from \lstcode{md-} to the current \lstcode{mat-}. At the same time, Angular Material changed how the components are organized into modules. Previously, there was a single module called \lstcode{MaterialModule} which became deprecated and was replaced by dedicated modules for each single control, \zB \lstcode{MatButtonModule}. The Jukebox project currently uses 17 different controls, which results in having to import 17 different modules. To keep the app.moudle.ts file tidy, a custom module was created. This so-called \lstcode{MaterialMetaModule} imports and exports all 17 \enquote{submodules}, so that the \lstcode{AppModule} only has to import this one meta module.
@@ -127,7 +126,7 @@ The \lstcode{MatDialog.open()} method returns a reference to the newly created d
 Once the \lstcode{MatDialog.open()} method is called, the required component will be created. During that process all necessary objects will be injected into this component. At this point, the developer can request dialog-specific objects next to the service classes which the component needs to function. A reference to the displaying dialog is necessary in almost any case. For this purpose, the developer asks for an object of type \lstcode{MatDialogRef<T>} where \lstcode{T} is the type of the displayed component (\mylineref{lst:filePickerComponent.ts}{filePicker_dialogRef}). With this reference, it is possible to close the dialog from within the \gls{ts} code, as shown in line \ref{line:filePicker_close}. If a configuration object was passed, its data can be accessed via the \lstcode{@Inject()} decorator (\mylineref{lst:filePickerComponent.ts}{filePicker_config}). For this to work the \lstcode{MAT\_DIALOG\_DATA} argument must be passed into the decorator. \cite{matDialog}
 
 
-\Subsection{Icons}
+\Subsubsection{Icons}
 
 Using intuitive icons is a big part of the visual design of any application. There are many ways how icons can be encoded and used, \zB they can be images or vector graphics. Angular Material uses another, also popular method called \enquote{Font Icons}. The same concept is used by FontAwesome \cite{fontAwesome} and many others. A font usually displays some sort of letter but technically it is just a way of representing a scalable image. Icons are mostly used in buttons or menus which are all designed to work with some sort of font. Also, fonts are an old concept which means support for them is fairly good.
 
