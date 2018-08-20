@@ -1,3 +1,27 @@
 % !TEX root=../report.tex
 
 \Chapter{Results}
+
+
+The Jukebox project makes use of most of Electron's prominent features. These include the notification \gls{api}, the menu \gls{api}, the system tray \gls{api}, Electron's \gls{ipc} components, and a number of smaller features. None of these features is completly unusable given this specific combination of frameworks. Adaptations and third-party libraries were needed to make the communication between Electron's \glspl{api} and Angular's services work (\myref{sec:accessElectronApis}). A solution for connecting an Electron menu item with a click event handler which calls Angular \glspl{api} (\myref{sec:electronMenus}) is neither documented in the Electron nor in the Angular manual. Research provided little information on this topic, apparently this use case is not very common. Compared to the challenges posed by the menu \gls{api}, Electron's \gls{ipc} \gls{api} works very well, even the communication back and forth between an Angular service inside a renderer process and Electron's main process is simple to implement and works as described in the documentation. In conclusion, even though not everything works without further adjustment, it is possible to use this combination of frameworks to create a platform-independent application.
+
+
+Compared to a pure web application, the hybrid Electron approach does require more architectural decisions. It has to be considered whether the application shall be hosted as a web page in addition to being hosted through Electron or not. Electron's \glspl{api} abstract most of the low level \glspl{api} provided by the operating systems. Nonetheless, there are still \glspl{api} like the notification \gls{api} which require different implementations for each operating system. They can be abstracted, but the developer will have to implement these abstraction layers because they are not provided by the framework. Additionally, if the application is hosted in a web environment, some \glspl{api} might not be accessible because they require special hardware or other components not available there.Therefore, these functionalities require a modularized approach in order to easily exclude them in a web environment. One such example from the Jukebox project are menus. When hosted as an Electron application, Electron's menu \gls{api} is used. The web page version of the application uses Angular menu items. One solution is to always use Angular menu items because they are available in both environments. However, the Jukebox project uses an Angular service to abstract menu items. This service then checks the environment and applies the correct menu items for each environment.
+
+The obvious benefit of this hybrid approach as opposed to a pure web application is its offline usability.  The main advantage, howerever, is the set of numerous and more comprehensive features available. Although some of these features require native node modules, the possibility to implement them at all is well worth the effort involved. Many native node modules are provided through various web portals. For other, more specific use cases, a custom implementation is needed.
+
+
+A reason for using a pure desktop application might be performance problems. This is due to the fact that it is difficult to implement multithreading using the Electron framework. \gls{js} generally runs in one single thread. Libraries like RxJS might give the impression to be multithreaded because of the terminology of awaitables an so forth but this is not the case. They still work with just one thread and use an event loop to simulate multithreading. It is possible to create more then one thread which is usually referred to as a \enquote{Web Worker} but there are no real means to synchronize two threads using locks, semaphores, or monitors \cite{jsWebWorkers}. Electrons documentation also discourages the use of nativ node modules inside a web worker because most of the nativ node modules were not designed to work in a multithreaded environment \cite{electronMultithreading}.
+
+
+
+
+\Subsubsection{compare to pure web}
+negative: more design choices, not completly abstracted from OS (but similar to browsers)
+
+positiv: can be used offline, more possibilities then web page
+
+\Subsubsection{compare to pure desktop}
+negative: native modules, threading is hard, performance
+
+positiv: single codebase, easy language

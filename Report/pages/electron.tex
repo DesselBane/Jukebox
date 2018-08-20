@@ -46,7 +46,7 @@ The \enquote{fs} library grants access to the filesystem \cite{nodejsFS}. It was
 
 The \enquote{os} library provides access to operating system specific information and methods \cite{nodejsOS}. This was used to determine the current operating system and architecture to be able to register the correct notification libraries.
 
-\Section{Accessing Electron APIs from within Angular}
+\Section[accessElectronApis]{Accessing Electron APIs from within Angular}
 
 One of the challenges in the Jukebox project was accessing the Electron \gls{api}s from within Angular. This access was needed for setting the menus and their corresponding \lstcode{click()} handlers, as well as showing notifications or determining the current environment.
 
@@ -60,7 +60,7 @@ The alternative to \lstcode{require('electron')} is to use the ngx-electron pack
 
 This package checks the user agent property to determine whether the application is running inside Electron. If it is, the Electron package is \lstcode{required()}. If not, all properties of the \lstcode{ElectronService} return \lstcode{undefined}, except for the \lstcode{isElectronApp} property. This property returns a \lstcode{boolean} and makes it simple to check whether the application is running inside Electron or as a web page in some browser.
 
-\Section{Menus}
+\Section[electronMenus]{Menus}
 
 A big difference between web pages and traditional desktop applications is the placement of menues. Web applications often integrate menues into the web page, sometimes as navigation bars, sometimes at prominent locations in the layout. For desktop applications the placement of the menu is rather clear. For Windows applications it is a menu bar right under the top border of your application window and for Ubuntu (Unity) and OSX it is also a menu bar, but located at the top of your screen.
 
