@@ -90,7 +90,7 @@
 											"font": "Arial;13;0",
 											"left": -128,
 											"top": 16,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -180,7 +180,7 @@
 											"top": 127,
 											"width": 199.38623046875,
 											"height": 13,
-											"text": "Check if this is the first Instance"
+											"text": "Check if this is the first instance"
 										},
 										{
 											"_type": "LabelView",
@@ -192,7 +192,7 @@
 											"font": "Arial;13;0",
 											"left": -64,
 											"top": 16,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -296,9 +296,9 @@
 											"font": "Arial;13;1",
 											"left": 653,
 											"top": 103,
-											"width": 191,
+											"width": 199,
 											"height": 13,
-											"text": "Send data to first Instance"
+											"text": "Send data to first instance"
 										},
 										{
 											"_type": "LabelView",
@@ -310,7 +310,7 @@
 											"font": "Arial;13;0",
 											"left": -32,
 											"top": -16,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -331,7 +331,7 @@
 									"font": "Arial;13;0",
 									"left": 648,
 									"top": 96,
-									"width": 201,
+									"width": 209,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFlQnHiWJMmMQA="
@@ -351,7 +351,7 @@
 							"containerChangeable": true,
 							"left": 648,
 							"top": 96,
-							"width": 201,
+							"width": 209,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFlQnHiWJMl4Go="
@@ -832,7 +832,7 @@
 								"$ref": "AAAAAAFlQnHiWJMk3to="
 							},
 							"lineStyle": 1,
-							"points": "849:118;960:120;963:207",
+							"points": "857:118;960:120;963:207",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFlQnMYy5OlsPY="
@@ -885,9 +885,9 @@
 											"font": "Arial;13;1",
 											"left": 653,
 											"top": 159,
-											"width": 191,
+											"width": 199,
 											"height": 13,
-											"text": "Setup Notifications"
+											"text": "Set up notifications"
 										},
 										{
 											"_type": "LabelView",
@@ -899,7 +899,7 @@
 											"font": "Arial;13;0",
 											"left": 1008,
 											"top": -80,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -920,7 +920,7 @@
 									"font": "Arial;13;0",
 									"left": 648,
 									"top": 152,
-									"width": 201,
+									"width": 209,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFlQnNW0pO5GlE="
@@ -940,7 +940,7 @@
 							"containerChangeable": true,
 							"left": 648,
 							"top": 152,
-							"width": 201,
+							"width": 209,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFlQnNW0pO4Eug="
@@ -986,7 +986,7 @@
 											"font": "Arial;13;1",
 											"left": 653,
 											"top": 215,
-											"width": 191,
+											"width": 199,
 											"height": 13,
 											"text": "Start web server"
 										},
@@ -999,7 +999,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 624,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -1019,7 +1019,7 @@
 									"font": "Arial;13;0",
 									"left": 648,
 									"top": 208,
-									"width": 201,
+									"width": 209,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFlQnO8JZPT+XU="
@@ -1039,7 +1039,7 @@
 							"containerChangeable": true,
 							"left": 648,
 							"top": 208,
-							"width": 201,
+							"width": 209,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFlQnO8JZPSMRg="
@@ -1086,7 +1086,7 @@
 											"font": "Arial;13;1",
 											"left": 653,
 											"top": 271,
-											"width": 191,
+											"width": 199,
 											"height": 13,
 											"text": "Create BrowserWindow"
 										},
@@ -1100,7 +1100,7 @@
 											"font": "Arial;13;0",
 											"left": 144,
 											"top": 80,
-											"width": 86.6708984375,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -1121,7 +1121,7 @@
 									"font": "Arial;13;0",
 									"left": 648,
 									"top": 264,
-									"width": 201,
+									"width": 209,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFlQnQrtZPtNvQ="
@@ -1141,7 +1141,7 @@
 							"containerChangeable": true,
 							"left": 648,
 							"top": 264,
-							"width": 201,
+							"width": 209,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFlQnQrtZPsSA8="
@@ -1263,7 +1263,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 762,
+									"left": 766,
 									"top": 193,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1284,7 +1284,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 777,
+									"left": 781,
 									"top": 193,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1305,7 +1305,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 733,
+									"left": 737,
 									"top": 194,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -1324,7 +1324,7 @@
 								"$ref": "AAAAAAFlQnNW0pO3r98="
 							},
 							"lineStyle": 1,
-							"points": "748:193;748:207",
+							"points": "752:193;752:207",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFlQnWtPJQluFE="
@@ -1357,7 +1357,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 762,
+									"left": 766,
 									"top": 249,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1378,7 +1378,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 777,
+									"left": 781,
 									"top": 249,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1399,7 +1399,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 733,
+									"left": 737,
 									"top": 250,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -1418,7 +1418,7 @@
 								"$ref": "AAAAAAFlQnO8JZPReiY="
 							},
 							"lineStyle": 1,
-							"points": "748:249;748:263",
+							"points": "752:249;752:263",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFlQnXAR5Q2qhk="
@@ -1459,7 +1459,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -64,
-											"top": -48,
+											"top": -64,
 											"height": 13
 										},
 										{
@@ -1470,10 +1470,10 @@
 											},
 											"font": "Arial;13;1",
 											"left": 653,
-											"top": 327,
-											"width": 194.52392578125,
+											"top": 319,
+											"width": 198.14208984375,
 											"height": 13,
-											"text": "Wait for application termination"
+											"text": "Wait for application to terminate"
 										},
 										{
 											"_type": "LabelView",
@@ -1484,8 +1484,8 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -64,
-											"top": -48,
-											"width": 86.6708984375,
+											"top": -64,
+											"width": 88,
 											"height": 13,
 											"text": "(from Activity1)"
 										},
@@ -1498,15 +1498,15 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -64,
-											"top": -48,
+											"top": -64,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 648,
-									"top": 320,
-									"width": 204.52392578125,
+									"top": 312,
+									"width": 208.14208984375,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFlQnYaSpRl5DQ="
@@ -1525,8 +1525,8 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 648,
-							"top": 320,
-							"width": 204.52392578125,
+							"top": 312,
+							"width": 208.14208984375,
 							"height": 41,
 							"nameCompartment": {
 								"$ref": "AAAAAAFlQnYaSpRkpxU="
@@ -1553,8 +1553,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 762,
-									"top": 303,
+									"left": 765,
+									"top": 301,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1574,7 +1574,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 777,
+									"left": 780,
 									"top": 301,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1595,8 +1595,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 733,
-									"top": 308,
+									"left": 736,
+									"top": 302,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -1614,7 +1614,7 @@
 								"$ref": "AAAAAAFlQnQrtZPr2YE="
 							},
 							"lineStyle": 1,
-							"points": "748:305;749:319",
+							"points": "752:305;751:311",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFlQnaPOJSCWV0="
@@ -1708,7 +1708,7 @@
 								"$ref": "AAAAAAFlQnYaSpRjnFc="
 							},
 							"lineStyle": 1,
-							"points": "853:338;960:336;964:234",
+							"points": "856:334;960:336;964:234",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFlQnamjZSTCYY="
@@ -1746,7 +1746,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFlQm/NIZLYsV4="
 					},
-					"name": "Check if this is the first Instance"
+					"name": "Check if this is the first instance"
 				},
 				{
 					"_type": "UMLDecisionNode",
@@ -1762,7 +1762,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFlQm/NIZLYsV4="
 					},
-					"name": "Send data to first Instance"
+					"name": "Send data to first instance"
 				},
 				{
 					"_type": "UMLActivityFinalNode",
@@ -1778,7 +1778,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFlQm/NIZLYsV4="
 					},
-					"name": "Setup Notifications"
+					"name": "Set up notifications"
 				},
 				{
 					"_type": "UMLAction",
@@ -1802,7 +1802,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFlQm/NIZLYsV4="
 					},
-					"name": "Wait for application termination"
+					"name": "Wait for application to terminate"
 				}
 			],
 			"edges": [
