@@ -67,9 +67,13 @@ A big difference between web pages and traditional desktop applications is the p
 \Subsubsection{Application Menu}
 
 
-For the Jukebox project, a custom \lstcode{MenuItem} class was created: the \lstcode{AngularMenuItem}. This is due to the fact that a menu is needed for both the web version as well as the desktop version. With this approach, the custom class can be used for the entire project and only a small part, namely the \lstcode{MenuItemService}, depends on the Electron \gls{api}s. Since Electron is doing some initialization, it is not possible to use a custom \lstcode{MenuItem} object, even if the custom object has the same signature. Therefore, a converter method was implemented, as shown in \myautoref{lst:createElectronMenuItem.ts}. This method creates an instance of \lstcode{Electron.MenuItem} for each \lstcode{AngularMenuItem} recursively.
+For the Jukebox project, a custom \lstcode{MenuItem} class was created: the \lstcode{Angular\-MenuItem}. This is due to the fact that a menu is needed for both the web version as well as the desktop version. With this approach, the custom class can be used for the entire project and only a small part, namely the \lstcode{MenuItemService}, depends on the Electron \gls{api}s. Since Electron is doing some initialization, it is not possible to use a custom \lstcode{MenuItem} object, even if the custom object has the same signature. Therefore, a converter method was implemented, as shown in \myautoref{lst:createElectronMenuItem.ts}. This method creates an instance of \lstcode{Electron.MenuItem} for each \lstcode{AngularMenuItem} recursively.
 
-\file{createElectronMenuItem.ts}{Excerpt of the Jukebox MenuItemService class.}{JavaScript}
+\revMark{maybe say something more about this}
+
+\newpage
+
+\file{createElectronMenuItem.ts}{Excerpt of the Jukebox \lstcode{MenuItemService} class.}{JavaScript}
 
 \Subsubsection{System Tray}
 
@@ -103,9 +107,10 @@ Electron provides a basic \gls{api} for all operating systems to send notificati
 
 The globally available \lstcode{Notification} object is used to manage the permission to display notifications for each web page. This is done through the static \lstcode{Notification.permission} property which returns one of the three following values: \enquote{granted}, \enquote{denied}, or \enquote{default}. The \enquote{default} value tells the developer that the user's choice is unknown at this moment. In this state, the browser behaves as if the user denied permission, which results in showing no notifications at all. Using the static \lstcode{Notification.requestPermission()} method, the user is asked whether he wants to see notifications or not.
 
+Once permission is granted, a notification can be displayed, as shown in \myautoref{lst:html-notification.ts}. The \gls{html} 5 notification \gls{api} offers many more properties on a notification object, but these are not implemented in all browsers and therefore should not be relied on. The \lstcode{appId} property is not part of the \gls{html} 5 notification \gls{api}, but is needed for the Windows operating system, if omitted Windows will not show any notification at all \revMark{proofread}. The property can be used in non-Windows environments without risk because the constructor uses templates and the property will simply be ignored, if not needed. \cite{mdnNotification}
+
 \file{html-notification.ts}{Displaying a basic HTML notification.}{JavaScript}
 
-Once permission is granted, a notification can be displayed, as shown in \myautoref{lst:html-notification.ts}. The \gls{html} 5 notification \gls{api} offers many more properties on a notification object, but these are not implemented in all browsers and therefore should not be relied on. The \lstcode{appId} property is not part of the \gls{html} 5 notification \gls{api}, but is needed for the Windows operating system, if omitted Windows will not show any notification at all \revMark{proofread}. The property can be used in non-Windows environments without risk because the constructor uses templates and the property will simply be ignored, if not needed. \cite{mdnNotification}
 
 \Subsubsection{Simple Windows Notifications}
 
@@ -127,15 +132,16 @@ This package works by registering a \gls{com} server. Whenever a user interacts 
 
 At installation time the package requires two parameters. The first parameter to be set is called \enquote{TOAST\_ACTIVATOR\_CLSID}. This needs to be a unique string and it is strongly recommended to use a \gls{guid}. According to the package's documentation, this can be achieved through setting the CLSID in the package.json configuration file or setting the \enquote{TOAST\_ACTIVATOR\_CLSID} environment variable. Tests showed that the package.json method does not work \cite{clsidPackageJson}. Second, the application protocol has to be set. This is possible via package.json and environment variables and here, the package.json does not work either. Both of these values have to be set at installation time, since a \gls{dll} will be compiled during the installation of the package. In the \gls{dll} these two values are saved as constants.
 
-During the startup sequence of the Electron app, both the \gls{com} server the \enquote{TOAST\_ACTIVATOR\_CLSID} have to be registered. This can be achieved with the \lstcode{registerActivator()} and \lstcode{registerAppForNotificationSupport()} methods, respectively, as shown in \myautoref{lst:setupWindowsNotifications.js}. To register the application as default protocol handler, the \lstcode{app.setAsDefaultProtocolClient()} method may be used. This method requires the protocol name as well as a path to the executable as arguments.
+During the startup sequence of the Electron app, both the \gls{com} server the \enquote{TOAST\_ACTIVATOR\_CLSID} have to be registered. This can be achieved with the \lstcode{registerActivator()} and \lstcode{registerAppForNotificationSupport()} methods, respectively, as shown in \myautoref{lst:setupWindowsNotifications.js}. To register the application as default protocol handler, the \lstcode{app.setAsDefaultProtocol\-Client()} method may be used. This method requires the protocol name as well as a path to the executable as arguments.
 
 \file{setupWindowsNotifications.js}{Registration of the electron-windows-interactive-notifications package.}{JavaScript}
 
 Whenever the operating system calls a protocol link, the application registered for that protocol is started. This means a new instance of the application is executed. In most cases this is not the desired behavior. In order to communicate the information back to the first instance a communication channel is needed.
 
+\file{singleInstance.js}{Jukebox startup code to handle multiple instances.}{JavaScript}
+
 Electron makes this possible with the \lstcode{app.makeSingleInstance()} method. This method returns a \lstcode{boolean} which is \lstcode{false}, if the current instance is the only one running, and is \lstcode{true}, if not. Also, this method takes a delegate which is executed only if another instance of the application is present. This delegate will be executed within the context of the main instance and is used to communicate any information transmitted via the protocol link (\myautoref{lst:singleInstance.js}).
 
-\file{singleInstance.js}{Jukebox startup code to handle multiple instances.}{JavaScript}
 
 \Subsubsection{Mac}
 
