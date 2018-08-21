@@ -21,7 +21,9 @@ The entry point for the Jukebox application is in the Electron main.js file. Fro
 
 Communication between the frameworks is usually initiated from within the Angular code. When communicating with Electron \glspl{api} the \enquote{ngx-electron} package is used (\myref{subsubsec:ngxElectron}). For the communication with the \gls{asp} \gls{http} class and websockets are used.
 
-\Subsubsection{deployment}
+\Subsubsection{Deployment}
+
+Each of the three frameworks comes with some sort of \gls{cli}, build tools, or required steps for the packaging process. For Electron the Squirrel \cite{squirrel} installer is recommended but during testing many problems were encountered and therefore no real installer is used. Instead Gulp scripts \cite{gulp} are used to create a complete packaged version of the application which then can be shipped with any installer framework or simply copied to the target system. Electron offers pre-built binaries for each operating system which can be downloaded from the Electron site. These binaries and all required \gls{npm} packages are copied to the target packaging location. Then, the \lstcode{electron-rebuild} \gls{npm} package is used to compile all \gls{npm} packages using the target Electron version. After this step is complete, the Angular \gls{cli} is used to build the Angular part of the application. This step is done twice because the first build targets the Electron version and the second build targets the pure web version of the Angular part. The Angular files are then placed in the \lstcode{/resources/app/dist} folder. Then, the \gls{asp} application is published. Publishing a \gls{asp} applicaiton first compiles the source code for a given platform and then copies the binaries including all .NET Core framework libraries to the target folder. For the Jukebox project this folder is located under \lstcode{/resources/app/api/win/} for the windows build. Finally, the \enquote{electron.exe} is renamed into \enquote{Jukebox.exe}.
 
 \Section{General stuff???}
 
