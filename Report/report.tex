@@ -37,7 +37,6 @@
 
 % create glossar
 \makeglossaries
-\setglossarystyle{listgroup}
 
 \bibliography{res/bib/citavi}
 
@@ -69,7 +68,8 @@
 
 % glossary
 \addcontentsline{toc}{chapter}{List of Abbreviations} % add to table of contents
-\setlist[description]{leftmargin=!, labelwidth=5em} % Change for glossaries
+\setglossarystyle{list}
+\setlist[description]{leftmargin=!, labelwidth=9em} % Change for glossaries
 \printglossary[title=List of Abbreviations]
 \setlist[description]{style=standard} % reset settings back to default
 
