@@ -1,6 +1,6 @@
 % !TEX root=../report.tex
 
-\Chapter{Results}
+\Chapter{Results and Conclusion}
 
 
 The Jukebox project makes use of most of Electron's prominent features. These include the notification \gls{api}, the menu \gls{api}, the system tray \gls{api}, Electron's \gls{ipc} components, and a number of smaller features. None of these features is completly unusable given this specific combination of frameworks. Adaptations and third-party libraries were needed to make the communication between Electron's \glspl{api} and Angular's services work (\myref{sec:accessElectronApis}). A solution for connecting an Electron menu item with a click event handler which calls Angular \glspl{api} (\myref{sec:electronMenus}) is neither documented in the Electron nor in the Angular manual. Research provided little information on this topic, apparently this use case is not very common. Compared to the challenges posed by the menu \gls{api}, Electron's \gls{ipc} \gls{api} works very well, even the communication back and forth between an Angular service inside a renderer process and Electron's main process is simple to implement and works as described in the documentation. In conclusion, even though not everything works without further adjustment, it is possible to use this combination of frameworks to create a platform-independent application.
