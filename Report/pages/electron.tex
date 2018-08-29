@@ -18,7 +18,7 @@ Electron uses the multi-process architecture of its underlying Chromium V8 engin
 
 \image[scale=.2]{electronArch.png}{Overview on the architecture of Electron. \cite{electronArch}}
 
-There is exactly one main process at all times. It is responsible for managing all of the renderer processes. A renderer process only knows its web page and is isolated from the rest of the application. It is thightly coupled to the \lstcode{BrowserWindow} object. If the window is destroyed, the process is also terminated.
+There is exactly one main process at all times. It is responsible for managing all of the renderer processes. A renderer process only knows its web page and is isolated from the rest of the application. It is tightly coupled to the \lstcode{BrowserWindow} object. If the window is destroyed, the process is also terminated.
 
 \Subsubsection{Inter-process Communication}
 
@@ -32,11 +32,11 @@ The \lstcode{ipcMain} object also provides several other methods, \zB a method t
 
 The \lstcode{ipcRenderer} object is only available inside a renderer process and is similar to the \lstcode{ipcMain} object. The only notable differences are the \lstcode{send} methods. It is possible to send asynchronous as well as synchronous messages. The \lstcode{ipcRenderer.send()} method always sends the message to the main process. If the message needs to be sent to a different renderer process, the \lstcode{ipcRenderer.sendTo()} method may be used. \cite{ipcRenderer}
 
-\gls{ipc} was used in the Jukebox project to quit the application from the taskbar item. This was neccessary since the \lstcode{app} object is only available within the main process, but the system tray is set up inside an Angular service class which runs in a renderer process. Also, \gls{ipc} may be used if results of a dialog have to be communicated back to the main application.
+\gls{ipc} was used in the Jukebox project to quit the application from the taskbar item. This was necessary since the \lstcode{app} object is only available within the main process, but the system tray is set up inside an Angular service class which runs in a renderer process. Also, \gls{ipc} may be used if results of a dialog have to be communicated back to the main application.
 
 \Subsubsection{The App Object}
 
-Electron's \lstcode{app} object provides access to the application's lifecycle events, as well as properties which hold information about the application. This includes methods to manipulate the Windows jumplist in order to add items to the taskbar context menu. It is possible to import certificates, get application metrics, access the OSX dock, or get the application's root folder path. In the Jukebox project, this was used for the notifications and system tray functionalities and will be described in more detail in the corresponding sections.
+Electron's \lstcode{app} object provides access to the application's lifecycle events, as well as properties which hold information about the application. This includes methods to manipulate the Windows jump list in order to add items to the taskbar context menu. It is possible to import certificates, get application metrics, access the OSX dock, or get the application's root folder path. In the Jukebox project, this was used for the notifications and system tray functionalities and will be described in more detail in the corresponding sections.
 
 \Subsubsection{Node}
 
@@ -99,7 +99,7 @@ To fix this situation, a reference to the \lstcode{NgZone} object is needed, whi
 
 \file{zoneNavigation.ts}{Fixed \lstcode{click()} handler.}{JavaScript}
 
-Another issue is that of top level menu items not behaving correctly. This is a known and ongoing issue of the Electron framework. It results in top level items ignoring the change of values of the \lstcode{enabled} and \lstcode{visibile} properties. Currently, there is no fix for this bug. \cite{topMenuItems}
+Another issue is that of top level menu items not behaving correctly. This is a known and ongoing issue of the Electron framework. It results in top level items ignoring the change of values of the \lstcode{enabled} and \lstcode{visible} properties. Currently, there is no fix for this bug. \cite{topMenuItems}
 
 \Section{Notifications}
 
@@ -126,7 +126,7 @@ Although many features of the Windows 10 notification \gls{api} work, not all do
 
 \Subsubsection{Interactive Windows Notifications}
 
-Windows notifications also support buttons, comboboxes, and inline replies. These interactive elements are not supported by default and the additional \enquote{electron-windows-interactive-notifications} package is needed.
+Windows notifications also support buttons, combo boxes, and inline replies. These interactive elements are not supported by default and the additional \enquote{electron-windows-interactive-notifications} package is needed.
 
 This package works by registering a \gls{com} server. Whenever a user interacts with a notification, the \gls{com} server is called with the information on the action chosen by the user and any related data. The \gls{com} server then encodes this data into a string and calls the application via a protocol link.
 
