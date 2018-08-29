@@ -69,8 +69,6 @@ A big difference between web pages and traditional desktop applications is the p
 
 For the Jukebox project, a custom \lstcode{MenuItem} class was created: the \lstcode{Angular\-MenuItem}. This is due to the fact that a menu is needed for both the web version as well as the desktop version. With this approach, the custom class can be used for the entire project and only a small part, namely the \lstcode{MenuItemService}, depends on the Electron \gls{api}s. Since Electron is doing some initialization, it is not possible to use a custom \lstcode{MenuItem} object, even if the custom object has the same signature. Therefore, a converter method was implemented, as shown in \myautoref{lst:createElectronMenuItem.ts}. This method creates an instance of the \lstcode{Electron.MenuItem} class for each \lstcode{AngularMenuItem} recursively.
 
-\revMark{maybe say something more about this}
-
 \newpage
 
 \file{createElectronMenuItem.ts}{Excerpt of the Jukebox \lstcode{MenuItemService} class.}{JavaScript}
