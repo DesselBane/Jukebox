@@ -2,7 +2,9 @@
   <mat-expansion-panel-header>
     <mat-panel-title>{{CurrentItem.label}}</mat-panel-title> |\label{line:navItem_interpolation}|
   </mat-expansion-panel-header>
-  <app-nav-item *ngFor="let subItem of CurrentItem.submenu; let i=index" [CurrentItem]="subItem" (ItemClicked)="ItemClicked.emit()"> |\label{line:navItem_inputProperty}| |\label{line:navItem_ngFor}|
+  <app-nav-item *ngFor="let subItem of CurrentItem.submenu; let i=index" |\label{line:navItem_ngFor}|
+    [CurrentItem]="subItem" |\label{line:navItem_inputProperty}|
+    (ItemClicked)="ItemClicked.emit()"> |\label{line:navItem_event}| 
   </app-nav-item>
 </mat-expansion-panel>
 

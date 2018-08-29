@@ -11,7 +11,7 @@ The thesis will discuss how to write an application using the Electron framework
 
 \Subsubsection{The Jukebox Project}
 
-The Jukebox project is the proof-of-concept application developed for this thesis. The application is a music player. The music files are read from disk by the \gls{asp} back-end, and then transmitted to the Angular web front-end for playback. The code parts which are responsible for handling the playback are referred to as the \enquote{player}. A requirement was that the player can be remote-controlled. For this purpose, the \gls{asp} server also hosts the application as a pure web page. A second client may use this web page to control the player created by the first client. Websockets are used for this feature. The application should have a system tray icon when run as an Electron desktop application. Any noteworthy event should be communicated to the user via notifications.
+The Jukebox project is the proof-of-concept application developed for this thesis. The application is a music player. The music files are read from disk by the \gls{asp} back-end, and then transmitted to the Angular web front-end for playback. The code parts which are responsible for handling the playback are referred to as the \enquote{player}. The player can be remote-controlled. For this purpose, the \gls{asp} server also hosts the application as a pure web page. A second client may use this web page to control the player created by the first client. Websockets are used to realize this feature. The application has a system tray icon when run as an Electron desktop application. Any noteworthy events are communicated to the user via notifications.
 
 \Subsubsection{Architecture Overview}
 
