@@ -1,18 +1,19 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {HttpClient} from "@angular/common/http";
-import {PlayerResponse} from "./models/player-response";
-import {PlayerCommandResponse} from "./models/player-command-response";
-import {NotificationService} from "../notification/notification.service";
-import {NotificationChannels} from "../notification/models/notification-channels.enum";
-import {NotificationResponse} from "../notification/models/notification-response";
-import {ElectronService} from "ngx-electron";
-import {WebPlayerService} from "./web-player.service";
-import {NavigationService} from "../menu/navigation.service";
-import {SongResponse} from "../song/models/song-response";
-import {SystemTrayService} from "../menu/system-tray.service";
-import {AngularMenuItem} from "../menu/models/angular-menu-item";
-import {PlayerCommandTypes} from "./models/player-command-types.enum";
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {PlayerResponse} from './models/player-response';
+import {PlayerCommandResponse} from './models/player-command-response';
+import {NotificationService} from '../notification/notification.service';
+import {NotificationChannels} from '../notification/models/notification-channels.enum';
+import {NotificationResponse} from '../notification/models/notification-response';
+import {ElectronService} from 'ngx-electron';
+import {WebPlayerService} from './web-player.service';
+import {NavigationService} from '../menu/navigation.service';
+import {SongResponse} from '../song/models/song-response';
+import {SystemTrayService} from '../menu/system-tray.service';
+import {AngularMenuItem} from '../menu/models/angular-menu-item';
+import {PlayerCommandTypes} from './models/player-command-types.enum';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable()
 export class PlayerService {
@@ -60,10 +61,10 @@ export class PlayerService {
         });
 
     notificationService.subscribeToChannel(NotificationChannels.PlayerInfo)
-      .filter((notification: NotificationResponse) => {
+      .pipe(filter((notification: NotificationResponse) => {
         let playerId = notification.Arguments.find(x => x[0] === "playerId");
         return playerId != null && this._activePlayer != null && Number(playerId[1]) === this._activePlayer.id;
-      })
+      }))
       .subscribe(() => this.updatePlayerInfo()
         , () => {
         }
@@ -142,7 +143,8 @@ export class PlayerService {
   public addSongToPlaylist(songId: number) : Observable<void>
   {
     return this._http.post(`api/player/${this._activePlayer.id}/addSong/${songId}`,"")
-      .map(() =>{});
+      .pipe(map(() => {
+      }));
   }
 
   public executePlayerCommand(cmd: PlayerCommandResponse) : Observable<void>
@@ -150,7 +152,8 @@ export class PlayerService {
     console.log(JSON.stringify(cmd));
 
     return this._http.post(`api/player/${this.activePlayer.id}/executeCommand`,JSON.stringify(cmd), {responseType: 'text'})
-      .map(() => {});
+      .pipe(map(() => {
+      }));
   }
 
   private updatePlayerInfo()

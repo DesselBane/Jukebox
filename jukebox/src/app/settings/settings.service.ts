@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class SettingsService {
@@ -21,17 +22,19 @@ export class SettingsService {
 
   public setMusicPaths(paths: string[]): Observable<void> {
     return this._http.post('api/settings/musicPaths', JSON.stringify(paths))
-      .map(() => {
-      });
+      .pipe(map(() => {
+      }));
   }
 
   public startIndexing(): Observable<void> {
     this._isIndexing = true;
 
     return this._http.post('api/song/index', "")
-      .map(() => {
-      })
-      .do(() => this._isIndexing = false);
+      .pipe(
+        map(() => {
+        }),
+        tap(() => this._isIndexing = false)
+      );
   }
 
 }

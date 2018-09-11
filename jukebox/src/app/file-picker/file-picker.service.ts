@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import {DirectoryResponse} from "./models/directory-response";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {DirectoryResponse} from './models/directory-response';
 
 @Injectable()
 export class FilePickerService {

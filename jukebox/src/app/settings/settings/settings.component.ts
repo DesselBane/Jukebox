@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingsService} from "../settings.service";
-import {MatDialog} from "@angular/material";
-import {FilePickerDialogComponent} from "../../file-picker/file-picker-dialog/file-picker-dialog.component";
-import {FilePickerConfig} from "../../file-picker/models/file-picker-config";
-import {Observable} from "rxjs/Observable";
-import "../../rxjs-extensions";
+import {SettingsService} from '../settings.service';
+import {MatDialog} from '@angular/material';
+import {FilePickerDialogComponent} from '../../file-picker/file-picker-dialog/file-picker-dialog.component';
+import {FilePickerConfig} from '../../file-picker/models/file-picker-config';
+import {filter, mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-settings',
@@ -44,13 +43,12 @@ export class SettingsComponent implements OnInit {
     this._dialog.open(FilePickerDialogComponent, {
       data: filePickerConfig
     }).afterClosed()
-      .mergeMap(() => {
-        if (filePickerConfig.selection.length < 1)
-          return Observable.empty<void>();
-
+      .pipe(
+        filter(() => filePickerConfig.selection.length < 1),
+        mergeMap(() => {
         this._musicPaths.push(filePickerConfig.selection[0]);
         return this._settingsService.setMusicPaths(this._musicPaths);
-      })
+        }))
       .subscribe();
   }
 

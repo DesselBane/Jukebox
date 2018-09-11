@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import {PlayerService} from "../player.service";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {PlayerService} from '../player.service';
 
 @Injectable()
 export class ActivePlayerNeededGuard implements CanActivate {

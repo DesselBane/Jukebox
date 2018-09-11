@@ -4,6 +4,8 @@
 *.db
 **/.vs/
 
+.node_modules/**/*
+
 *.DotSettings.user
 **/httpRequests/*
 .idea/**/*.xml

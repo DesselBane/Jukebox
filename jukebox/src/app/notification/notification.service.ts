@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {NotificationChannels} from './models/notification-channels.enum';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Observer, Subject} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {NotificationResponse} from './models/notification-response';
-import {Observer} from 'rxjs/Observer';
 import {environment} from '../../environments/environment';
-import {Subject} from 'rxjs/Subject';
 import {ElectronService} from 'ngx-electron';
 import {UserNotificationOptions} from './models/user-notification-options';
 import {HostEnvironment} from '../shared/models/host-environment.enum';
@@ -67,10 +66,11 @@ export class NotificationService {
 
   subscribeToChannel(channel: NotificationChannels): Observable<NotificationResponse> {
     return this._otherSubject.asObservable()
-
-      .filter((notification: NotificationResponse) => {
-        return notification.Channel == channel;
-      });
+      .pipe(
+        filter((notification: NotificationResponse) => {
+          return notification.Channel == channel;
+        })
+      )
   }
 
   private openNotificationSocket() {
@@ -114,58 +114,8 @@ export class NotificationService {
     if (!this.canSendNotifications)
       return;
 
-    switch (this._hostEnvironment) {
-      case HostEnvironment.Windows:
-        this.displayWindowsNotification(notificationOptions);
-        break;
-      case HostEnvironment.Web:
-      case HostEnvironment.Linux:
-        NotificationService.displayHTMLNotification(notificationOptions);
-        break;
-      case HostEnvironment.OSX:
-        this.dispolayMacNotification(notificationOptions);
-        break;
-    }
-  }
+    NotificationService.displayHTMLNotification(notificationOptions);
 
-  private displayWindowsNotification(notificationOptions: UserNotificationOptions) {
-    let notifications = this._electronService.remote.require('electron-windows-notifications');
-
-    /*<image placement="appLogoOverride" hint-crop="circle" src="ms-appx:///app/resources/app/dist/assets/jukebox_48_dark.png" />*/
-    /*<input id="message" type="text" placeHolderContent="Type a reply" />*/
-    /* <text placement="attribution">Via Electron :D</text> */
-
-    let actions = '<actions>';
-
-    notificationOptions.actions.forEach((action) => {
-      actions += `<action content='${action}' arguments='action=${action}' activationType='background'  />`
-    });
-
-    actions += '</actions>';
-
-    let template = `<toast>
-                        <visual><binding template="ToastGeneric">
-                            <text id="1">${notificationOptions.title}</text><text id="2">${notificationOptions.body}</text>
-                        </binding></visual>
-                        ${actions}
-                    </toast>`;
-
-    let winNot = new notifications.ToastNotification({
-      appId: environment.appId,
-      template: template
-    });
-
-    winNot.show();
-  }
-
-  private dispolayMacNotification(notificationOptions: UserNotificationOptions) {
-    let notificationConstructor = this._electronService.remote.require('node-mac-notifier');
-
-    let notification = new notificationConstructor(notificationOptions.title, {
-      body: notificationOptions.body
-    });
-
-    notification.addEventListener('click', () => console.log('Notification clicked'));
   }
 
 }

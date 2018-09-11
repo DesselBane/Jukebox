@@ -2,11 +2,10 @@ let gulp = require('gulp');
 let del = require('del');
 let exec = require('gulp-exec');
 let pathToElectron = require('electron-rebuild');
-let merge = require('merge-stream');
 let rename = require('gulp-rename');
 let vinylPaths = require('vinyl-paths');
 
-const electronVersion = '2.0.0';
+const electronVersion = '2.0.9';
 
 // Genral stuff
 
@@ -24,12 +23,12 @@ gulp.task('clean-api-angular', () => {
 
 gulp.task('build-electron-angular', () => {
   return gulp.src(__dirname)
-    .pipe(exec('ng build --bh ./'));
+      .pipe(exec('ng build --base-href ./'));
 });
 
 gulp.task('build-api-angular', () => {
   return gulp.src(__dirname + '/jukebox')
-    .pipe(exec(`ng build --op=${__dirname}/JukeboxAPI/wwwroot`));
+      .pipe(exec(`ng build --output-path=${__dirname}/JukeboxAPI/wwwroot`));
 });
 
 // Linux Build
@@ -89,7 +88,6 @@ gulp.task('build-win32', [
     'copy-package-json-win32',
     'copy-angular-win32',
     'rebuild-electron-modules-win32',
-    'copy-node_modules-win32',
     'rename-exe-win32'
 ], () => {
   console.log('Win 32 build complete');
@@ -133,26 +131,6 @@ gulp.task('rebuild-electron-modules-win32', ['copy-prebuilts-win32'], () => {
     });
 });
 
-gulp.task('copy-node_modules-win32', ['copy-prebuilts-win32', 'rebuild-electron-modules-win32'], () => {
-    let windowsNotifications = gulp.src(__dirname + '/node_modules/electron-windows-notifications/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/electron-windows-notifications/'));
-    let debug = gulp.src(__dirname + '/node_modules/debug/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/debug/'));
-    let ms = gulp.src(__dirname + '/node_modules/ms/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/ms/'));
-    let nodert = gulp.src(__dirname + '/node_modules/@nodert-win10-au/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/@nodert-win10-au/'));
-    let xmlEscape = gulp.src(__dirname + '/node_modules/xml-escape/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/xml-escape/'));
-    let sanitizeXmlString = gulp.src(__dirname + '/node_modules/sanitize-xml-string/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/sanitize-xml-string/'));
-    let uuid = gulp.src(__dirname + '/node_modules/uuid/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win32/resources/app/node_modules/uuid/'));
-
-
-    return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid);
-});
-
 gulp.task('rename-exe-win32', ['copy-prebuilts-win32'], () => {
     return gulp.src(__dirname + '/out/win32/electron.exe')
         .pipe(vinylPaths(del))
@@ -167,7 +145,6 @@ gulp.task('build-win64', [
     'copy-electron-win64',
     'copy-package-json-win64',
     'copy-angular-win64',
-    'copy-node_modules-win64',
     'rename-exe-win64'
 ], () => {
   console.log('Win 64 build complete');
@@ -209,30 +186,6 @@ gulp.task('copy-package-json-win64', ['copy-prebuilts-win64'], () => {
 gulp.task('copy-angular-win64', ['build-electron-angular', 'copy-prebuilts-win64'], () => {
   return gulp.src(__dirname + '/jukebox/dist/**/*')
     .pipe(gulp.dest(__dirname + '/out/win64/resources/app/dist/'));
-});
-
-gulp.task('copy-node_modules-win64', ['copy-prebuilts-win64', 'rebuild-electron-modules-win64'], () => {
-    let windowsNotifications = gulp.src(__dirname + '/node_modules/electron-windows-notifications/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/electron-windows-notifications/'));
-    let debug = gulp.src(__dirname + '/node_modules/debug/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/debug/'));
-    let ms = gulp.src(__dirname + '/node_modules/ms/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/ms/'));
-    let nodert = gulp.src(__dirname + '/node_modules/@nodert-win10-au/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/@nodert-win10-au/'));
-    let xmlEscape = gulp.src(__dirname + '/node_modules/xml-escape/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/xml-escape/'));
-    let sanitizeXmlString = gulp.src(__dirname + '/node_modules/sanitize-xml-string/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/sanitize-xml-string/'));
-    let uuid = gulp.src(__dirname + '/node_modules/uuid/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/uuid/'));
-    let interactive = gulp.src(__dirname + '/node_modules/electron-windows-interactive-notifications/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/electron-windows-interactive-notifications/'));
-    let bindings = gulp.src(__dirname + '/node_modules/bindings/**/*')
-        .pipe(gulp.dest(__dirname + '/out/win64/resources/app/node_modules/bindings/'));
-
-
-    return merge(windowsNotifications, debug, ms, nodert, xmlEscape, sanitizeXmlString, uuid, interactive, bindings);
 });
 
 gulp.task('rename-exe-win64', ['copy-prebuilts-win64'], () => {

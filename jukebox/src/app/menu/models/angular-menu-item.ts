@@ -1,6 +1,5 @@
-import {Subject} from "rxjs/Subject";
-import {Subscription} from "rxjs/Subscription";
-import {AngularMenuItemOptions} from "./angular-menu-item-options";
+import {Subject, Subscription} from 'rxjs';
+import {AngularMenuItemOptions} from './angular-menu-item-options';
 
 export class AngularMenuItem implements AngularMenuItemOptions {
 

@@ -1,9 +1,9 @@
 import {Injectable, NgZone} from '@angular/core';
-import {ElectronService} from "ngx-electron";
-import {Router} from "@angular/router";
-import {AngularMenuItem} from "./models/angular-menu-item";
-import {MenuItemService} from "./menu-item.service";
-import {Subject} from "rxjs/Subject";
+import {ElectronService} from 'ngx-electron';
+import {Router} from '@angular/router';
+import {AngularMenuItem} from './models/angular-menu-item';
+import {MenuItemService} from './menu-item.service';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class NavigationService {

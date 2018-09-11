@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NavigationService} from "../navigation.service";
+import {NavigationService} from '../navigation.service';
 import {MediaMatcher} from '@angular/cdk/layout';
-import {MatSidenav} from "@angular/material";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/observable/fromEvent";
-import {ElectronService} from "ngx-electron";
-import {AngularMenuItem} from "../models/angular-menu-item";
+import {MatSidenav} from '@angular/material';
+import {fromEvent, Observable} from 'rxjs';
+import {debounceTime, map} from 'rxjs/operators';
+import {ElectronService} from 'ngx-electron';
+import {AngularMenuItem} from '../models/angular-menu-item';
 
 
 @Component({
@@ -35,10 +35,12 @@ export class NavigationBarComponent implements OnInit {
     if (!this.isElectronApp) {
       this._mobileQuery = media.matchMedia('(max-width: 600px)');
 
-      this._resizeEvent = Observable.fromEvent(window, 'resize')
-        .map(() => {
-        })
-        .debounceTime(200);
+      this._resizeEvent = fromEvent(window, 'resize')
+        .pipe(
+          map(() => {
+          }),
+          debounceTime(200)
+        );
 
       this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
     }

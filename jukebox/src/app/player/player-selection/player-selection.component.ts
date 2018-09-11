@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PlayerService} from "../player.service";
-import {Router} from "@angular/router";
-import {PlayerResponse} from "../models/player-response";
-import {NotificationService} from "../../notification/notification.service";
-import {NotificationChannels} from "../../notification/models/notification-channels.enum";
-import {Subscription} from "rxjs/Subscription";
+import {PlayerService} from '../player.service';
+import {Router} from '@angular/router';
+import {PlayerResponse} from '../models/player-response';
+import {NotificationService} from '../../notification/notification.service';
+import {NotificationChannels} from '../../notification/models/notification-channels.enum';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-player-selection',

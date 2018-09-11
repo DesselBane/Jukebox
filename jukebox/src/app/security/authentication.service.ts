@@ -3,13 +3,13 @@
  */
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import '../rxjs-extensions';
-import {Observable} from 'rxjs/Observable';
-import {ILoginTokenResponse} from "../shared/models/ilogin-token-response";
-import {LoginTokenModel} from "../shared/models/login-token-model";
-import {NavigationService} from "../menu/navigation.service";
-import {ElectronService} from "ngx-electron";
-import {AngularMenuItem} from "../menu/models/angular-menu-item";
+import {Observable} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
+import {ILoginTokenResponse} from '../shared/models/ilogin-token-response';
+import {LoginTokenModel} from '../shared/models/login-token-model';
+import {NavigationService} from '../menu/navigation.service';
+import {ElectronService} from 'ngx-electron';
+import {AngularMenuItem} from '../menu/models/angular-menu-item';
 
 @Injectable()
 export class AuthenticationService {
@@ -119,16 +119,17 @@ export class AuthenticationService {
         username: username,
         password: password
       }))
-      .do(response => {
+      .pipe(tap(response => {
         AuthenticationService.loginTokenResponse = response;
         AuthenticationService.updateNavItems();
-      });
+      }));
   }
 
   refreshToken() : Observable<void>
   {
     return this.http.get('/api/ping', {responseType: 'text'})
-      .map(() => { });
+      .pipe(map(() => {
+      }));
   }
 
   changePassword(password: string, resetHash: string): Observable<void> {
@@ -136,18 +137,20 @@ export class AuthenticationService {
       {
         password: password,
         resetHash: resetHash
-      }), {responseType: 'text'}).map(() => {});
+      }), {responseType: 'text'})
+      .pipe(map(() => {
+      }));
   }
 
   resetPassword(username: string): Observable<void> {
     return this.http.post('/api/auth/resetPassword?username=' + username, '', {responseType: 'text'})
-      .map(() => {
-    })
+      .pipe(map(() => {
+      }));
   }
 
   register(username: string): Observable<void> {
-    return this.http.put(`/api/auth/register?username=${username}`, '', {responseType: 'text'}).map(() => {
-    });
+    return this.http.put(`/api/auth/register?username=${username}`, '', {responseType: 'text'}).pipe(map(() => {
+    }));
   }
 
   public initialize() {

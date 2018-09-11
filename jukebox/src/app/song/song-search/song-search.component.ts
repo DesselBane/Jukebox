@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Subject} from "rxjs/Subject";
-import {PlayerService} from "../../player/player.service";
-import {Observable} from "rxjs/Observable";
-import {SongResponse} from "../models/song-response";
-import {SongService} from "../song.service";
+import {of, Subject} from 'rxjs';
+import {PlayerService} from '../../player/player.service';
+import {SongResponse} from '../models/song-response';
+import {SongService} from '../song.service';
+import {catchError, debounceTime, mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-song-search',
@@ -27,11 +27,13 @@ export class SongSearchComponent implements OnInit {
     this._songService = songService;
 
     this.searchSubject.asObservable()
-      .debounceTime(500)
-      .mergeMap(value => this._songService.searchForSongs(value))
-      .catch(() => {
-        return Observable.of([])
-      })
+      .pipe(
+        debounceTime(500),
+        mergeMap(value => this._songService.searchForSongs(value)),
+        catchError(() => {
+          return of([]);
+        })
+      )
       .subscribe(songs => {
         this._availableSongs = songs;
       });

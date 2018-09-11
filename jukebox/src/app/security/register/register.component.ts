@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from '../authentication.service';
 import {AuthenticationErrorResolver} from '../authentication-errorResolver';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.loading = true;
     this._authService.register(this.email)
-      .finally(() => this.loading = false)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(() => {
         this._router.navigate(['/']);
       }, error => {

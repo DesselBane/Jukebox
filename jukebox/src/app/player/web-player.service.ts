@@ -1,16 +1,15 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {PlayerResponse} from "./models/player-response";
-import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
-import {Observer} from "rxjs/Observer";
-import {SongService} from "../song/song.service";
-import {AuthenticationService} from "../security/authentication.service";
-import {WebPlayerState} from "./models/web-player-state.enum";
-import {PlayerCommandResponse} from "./models/player-command-response";
-import {PlayerCommandTypes} from "./models/player-command-types.enum";
-import {Router} from "@angular/router";
-import {environment} from "../../environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {PlayerResponse} from './models/player-response';
+import {Observable, Observer, of, Subject} from 'rxjs';
+import {SongService} from '../song/song.service';
+import {AuthenticationService} from '../security/authentication.service';
+import {WebPlayerState} from './models/web-player-state.enum';
+import {PlayerCommandResponse} from './models/player-command-response';
+import {PlayerCommandTypes} from './models/player-command-types.enum';
+import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class WebPlayerService {
@@ -97,16 +96,18 @@ export class WebPlayerService {
       nextId = this._player.playlist[this._player.playlistIndex + 1].id;
 
     return this.loadTrackWithId(currentId)
-      .do(() => {
+      .pipe(
+        tap(() => {
         if(canPreload)
           this.loadTrackWithId(nextId)
             .subscribe();
-      })
-      .map(value => {
-        this._songCache.push([currentId,value]);
-        this._audio.src = value;
-        this._audio.load();
-      });
+        }),
+        map(value => {
+          this._songCache.push([currentId, value]);
+          this._audio.src = value;
+          this._audio.load();
+        })
+      );
 
   }
 
@@ -118,11 +119,11 @@ export class WebPlayerService {
 
     if(song === undefined)
       return this._songService.getSongByIdAsBlob(songId)
-        .do(value => {
+        .pipe(tap(value => {
           this._songCache.push([songId,value]);
-        });
+        }));
     else
-      return Observable.of(song[1]);
+      return of(song[1]);
   }
 
   private stop()
