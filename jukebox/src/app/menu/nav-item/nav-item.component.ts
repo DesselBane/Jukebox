@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AngularMenuItem} from "../models/angular-menu-item";
+import {AngularMenuItem} from '../models/angular-menu-item';
 
 @Component({
   selector: 'app-nav-item',
@@ -10,6 +10,9 @@ export class NavItemComponent implements OnInit {
 
   @Input()
   CurrentItem: AngularMenuItem;
+
+  @Input()
+  IsExpanded: boolean;
 
   @Output()
   ItemClicked = new EventEmitter();

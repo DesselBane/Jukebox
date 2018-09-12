@@ -13,36 +13,33 @@ export class AngularMenuItem implements AngularMenuItemOptions {
     this._visible = options.visible || true;
     this._id = options.id;
     this._position = options.position;
-
-    if (options.submenu != null)
-      options.submenu.forEach(subOptions => this._submenu.push(new AngularMenuItem(subOptions)));
   }
 
-  private _click: Function;
+  private readonly _click: Function;
 
   get click(): Function {
     return this._click;
   }
 
-  private _type: ('normal' | 'separator' | 'submenu');
+  private readonly _type: ('normal' | 'separator');
 
   get type() {
     return this._type;
   }
 
-  private _label: string;
+  private readonly _label: string;
 
   get label(): string {
     return this._label;
   }
 
-  private _accelerator: string;
+  private readonly _accelerator: string;
 
   get accelerator(): string {
     return this._accelerator;
   }
 
-  private _icon: string;
+  private readonly _icon: string;
 
   get icon(): string {
     return this._icon;
@@ -70,19 +67,13 @@ export class AngularMenuItem implements AngularMenuItemOptions {
     this.visibleChanged.next();
   }
 
-  private _submenu: AngularMenuItem[] = [];
-
-  get submenu(): AngularMenuItem[] {
-    return this._submenu;
-  }
-
-  private _id: string;
+  private readonly _id: string;
 
   get id(): string {
     return this._id;
   }
 
-  private _position: string;
+  private readonly _position: string;
 
   get position(): string {
     return this._position;

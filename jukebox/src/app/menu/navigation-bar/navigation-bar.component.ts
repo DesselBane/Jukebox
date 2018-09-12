@@ -20,6 +20,7 @@ export class NavigationBarComponent implements OnInit {
   private sidenav: MatSidenav;
   private _lastQuery: boolean = undefined;
   private _resizeEvent: Observable<void>;
+  public _isExpanded: boolean;
 
   constructor(navigation: NavigationService, media: MediaMatcher) {
     this._navigation = navigation;
@@ -39,6 +40,7 @@ export class NavigationBarComponent implements OnInit {
         );
 
       this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
+
   }
 
   private _mobileQuery: MediaQueryList;
@@ -59,11 +61,11 @@ export class NavigationBarComponent implements OnInit {
     this._lastQuery = this._mobileQuery.matches;
 
     if (this._lastQuery) {
-      this.sidenav.mode = "over";
+      this.sidenav.mode = 'over';
       this.sidenav.close();
     }
     else {
-      this.sidenav.mode = "side";
+      this.sidenav.mode = 'side';
       this.sidenav.open();
     }
   }
@@ -71,6 +73,14 @@ export class NavigationBarComponent implements OnInit {
   navItemClicked() {
     if (this._mobileQuery.matches)
       this.sidenav.toggle();
+  }
+
+  action_back(): void {
+    console.log('back button clicked');
+  }
+
+  newSidenavToggle(): void {
+    this._isExpanded = !this._isExpanded;
   }
 
 }

@@ -31,10 +31,9 @@ mat-toolbar {
   padding-bottom: 20px;
 }
 
-#btn_menu {
+#btn_back {
   grid-column: 1;
   grid-row: 1;
-
 }
 
 #title {

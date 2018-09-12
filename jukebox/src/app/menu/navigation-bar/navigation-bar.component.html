@@ -1,15 +1,24 @@
 <mat-toolbar color="primary">
-  <button mat-button id="btn_menu" (click)="sidenav.toggle()" *ngIf="!isElectronApp && mobileQuery.matches">
-    <mat-icon>menu</mat-icon>
+  <button mat-button id="btn_back" (click)="action_back()">
+    <mat-icon>arrow_back</mat-icon>
   </button>
+
   <span id="title">Jukebox</span>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav id="sidenavContainer">
+  <mat-sidenav #sidenav id="sidenavContainer" autosize>
 
     <mat-nav-list id="sidenavList">
-      <app-nav-item *ngFor="let item of _navItems" [CurrentItem]="item" (ItemClicked)="navItemClicked()"></app-nav-item>
+      <mat-list-item (click)="newSidenavToggle()">
+        <mat-icon>menu</mat-icon>
+      </mat-list-item>
+
+      <app-nav-item *ngFor="let item of _navItems"
+                    [CurrentItem]="item"
+                    (ItemClicked)="navItemClicked()"
+                    [IsExpanded]="_isExpanded">
+      </app-nav-item>
     </mat-nav-list>
 
   </mat-sidenav>
