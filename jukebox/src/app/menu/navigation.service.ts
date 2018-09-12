@@ -2,18 +2,15 @@ import {Injectable, NgZone} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {Router} from '@angular/router';
 import {AngularMenuItem} from './models/angular-menu-item';
-import {MenuItemService} from './menu-item.service';
 import {Subject} from 'rxjs';
 
 @Injectable()
 export class NavigationService {
-  private _menuItemService: MenuItemService;
 
-  constructor(electronService: ElectronService, router: Router, zone: NgZone, menuItemService: MenuItemService) {
+  constructor(electronService: ElectronService, router: Router, zone: NgZone) {
     this._electronService = electronService;
     this._router = router;
     this._zone = zone;
-    this._menuItemService = menuItemService;
 
     this.generateAppNavItems().forEach(item => this.registerNavItem(item));
   }
@@ -37,17 +34,6 @@ export class NavigationService {
   {
     this._navItemsRepo.push(item);
     this._navItemsChanged.next(this._navItemsRepo);
-
-    if(this._electronService.isElectronApp)
-    {
-      let menu = this._electronService.remote.Menu.getApplicationMenu();
-
-      let menuItem = this._menuItemService.createElectronMenuItem(item);
-
-      menu.append(menuItem);
-
-      this._electronService.remote.Menu.setApplicationMenu(menu);
-    }
   }
 
   public findNavItem(id: string): AngularMenuItem {
