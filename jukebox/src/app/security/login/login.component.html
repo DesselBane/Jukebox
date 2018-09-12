@@ -8,15 +8,15 @@
   <mat-card>
     <mat-card-content>
       <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate >
-        <mat-input-container id="in_username" [ngClass]="{ 'has-error': f.submitted }">
+        <mat-form-field id="in_username" [ngClass]="{ 'has-error': f.submitted }">
           <input matInput type="text" name="username" placeholder="Email" id="username" [(ngModel)]="username" required>
           <mat-error>Der Benutzername muss angegeben werden!</mat-error>
-        </mat-input-container>
-        <mat-input-container id="in_password">
+        </mat-form-field>
+        <mat-form-field id="in_password">
           <input matInput type="password" placeholder="Passwort" name="password" id="password" [(ngModel)]="password"
                  required>
           <mat-error>Das Passwort muss angegeben werden!</mat-error>
-        </mat-input-container>
+        </mat-form-field>
         <div >
           <button mat-raised-button color="primary" [disabled]="loading">Login</button>
           <br>

@@ -10,8 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "jukebox-build": "ng build --op JukeboxAPI/wwwroot",
-    "electron": "ng build --bh ./ && electron jukebox/",
+    "jukebox-build": "ng build --output-path JukeboxAPI/wwwroot",
+    "electron": "ng build --base-href ./ && electron jukebox/",
     "electron-no-build": "electron jukebox/",
     "electron-rebuild": "electron-rebuild"
   },

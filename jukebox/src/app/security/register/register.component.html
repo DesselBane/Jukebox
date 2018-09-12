@@ -2,10 +2,10 @@
   <mat-card>
     <form id="register" name="register" #f="ngForm" (ngSubmit)="f.valid && register()">
       <br>
-      <mat-input-container>
+      <mat-form-field>
         <input matInput type="email" id="email" placeholder="Email" value="" name="email" [(ngModel)]="email" required>
         <mat-error>Die E-Mail-Adresse muss angegeben werden!</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       <div>
         <button mat-raised-button color="primary" [disabled]="loading">Register</button>
       </div>

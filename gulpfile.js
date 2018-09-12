@@ -206,6 +206,15 @@ gulp.task('build-api-dev', ['clean-dev', 'build-api-angular'], () => {
         .pipe(exec(`cd JukeboxAPI && dotnet publish -r win10-x64 -c Release -o ${__dirname}/jukebox/api/win/`));
 });
 
+gulp.task('build-api-angular-dev', ['clean-dev'], () => {
+    return gulp.src(__dirname + '/jukebox')
+        .pipe(exec(`ng build --output-path=${__dirname}/jukebox/api/win/wwwroot`));
+});
+
+gulp.task('build-dev', ['build-api-dev', 'build-api-angular-dev'], () => {
+    console.log('build-dev complete');
+});
+
 // Default Task
 
 gulp.task('default', () => {

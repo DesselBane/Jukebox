@@ -18,9 +18,12 @@ export class SystemTrayService {
     this._menuItemService = menuItemService;
 
     if (!electronService.isElectronApp) {
+      console.log(`can operate ${this._canOperate}`);
+
       this._canOperate = false;
       return;
     }
+    console.log(`can operate ${this._canOperate}`);
 
     this._electronService = electronService;
     this.initialize();
@@ -42,6 +45,8 @@ export class SystemTrayService {
   }
 
   private initialize() {
+
+
     if (!this._canOperate)
       return;
 

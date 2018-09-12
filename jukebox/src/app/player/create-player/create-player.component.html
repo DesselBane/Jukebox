@@ -1,10 +1,10 @@
 <mat-card>
   <h1>Create a Player</h1>
   <form (ngSubmit)="createPlayer()" #f="ngForm">
-    <mat-input-container>
+    <mat-form-field>
       <input matInput placeholder="Playername" type="text" name="in_playername" required [(ngModel)]="playername">
       <mat-error>A Name is required</mat-error>
-    </mat-input-container>
+    </mat-form-field>
 
     <button mat-button type="submit">Create</button>
   </form>

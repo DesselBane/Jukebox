@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
       data: filePickerConfig
     }).afterClosed()
       .pipe(
-        filter(() => filePickerConfig.selection.length < 1),
+        filter(() => filePickerConfig.selection.length > 0),
         mergeMap(() => {
         this._musicPaths.push(filePickerConfig.selection[0]);
         return this._settingsService.setMusicPaths(this._musicPaths);
