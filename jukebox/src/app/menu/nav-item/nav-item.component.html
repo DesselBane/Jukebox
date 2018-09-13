@@ -1,6 +1,6 @@
 <mat-list-item *ngIf="CurrentItem.type === 'normal' && CurrentItem.visible" (click)="itemClickHandler()">
-  <mat-icon>{{icon}}</mat-icon>
-  <span>{{CurrentItem.label}}</span>
+  <mat-icon class="noselect">{{CurrentItem.icon}}</mat-icon>
+  <span class="description noselect" *ngIf="IsExpanded">{{CurrentItem.label}}</span>
 </mat-list-item>
 
 <mat-divider *ngIf="CurrentItem.type === 'separator' && CurrentItem.visible && IsExpanded"></mat-divider>

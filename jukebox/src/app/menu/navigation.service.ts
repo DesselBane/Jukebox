@@ -1,8 +1,8 @@
 import {Injectable, NgZone} from '@angular/core';
 import {ElectronService} from 'ngx-electron';
 import {Router} from '@angular/router';
-import {AngularMenuItem} from './models/angular-menu-item';
 import {Subject} from 'rxjs';
+import {AngularNavItem} from './models/angular-nav-item';
 
 @Injectable()
 export class NavigationService {
@@ -12,142 +12,65 @@ export class NavigationService {
     this._router = router;
     this._zone = zone;
 
-    this.generateAppNavItems().forEach(item => this.registerNavItem(item));
+    NavigationService.generateAppNavItems().forEach(item => this.registerNavItem(item));
   }
 
-  private _navItemsChanged = new Subject<AngularMenuItem[]>();
+  private _navItemsChanged = new Subject<AngularNavItem[]>();
   private _electronService: ElectronService;
   private _router: Router;
   private _zone: NgZone;
 
-  get navItemsChanged(): Subject<AngularMenuItem[]> {
+  get navItemsChanged(): Subject<AngularNavItem[]> {
     return this._navItemsChanged;
   }
 
-  private _navItemsRepo: AngularMenuItem[] = [];
+  private _navItemsRepo: AngularNavItem[] = [];
 
-  get navItemsRepo(): AngularMenuItem[] {
+  get navItemsRepo(): AngularNavItem[] {
     return this._navItemsRepo;
   }
 
-  public registerNavItem(item: AngularMenuItem): void
-  {
-    this._navItemsRepo.push(item);
-    this._navItemsChanged.next(this._navItemsRepo);
-  }
-
-  public findNavItem(id: string): AngularMenuItem {
-    for (let i = 0; i < this._navItemsRepo.length; i++) {
-      let result = this.findNavItemInItems(this._navItemsRepo[i], id);
-      if (result != null)
-        return result;
-    }
-
-    return null;
-  }
-
-  private findNavItemInItems(item: AngularMenuItem, id: string): AngularMenuItem {
-    if (item.id === id)
-      return item;
-
-    if (item.submenu == null || item.submenu.length < 1)
-      return null;
-
-    for (let i = 0; i < item.submenu.length; i++) {
-      let result = this.findNavItemInItems(item.submenu[i], id);
-      if (result != null)
-        return result;
-    }
-
-    return null;
-  }
-
-
-  private generateAppNavItems(): AngularMenuItem[] {
+  private static generateAppNavItems(): AngularNavItem[] {
     // Account Items
-    let accountItem = new AngularMenuItem({
+    let accountItem = new AngularNavItem({
       label: 'Account',
       id: 'account',
-      type: 'submenu',
-      submenu: [
-        {
-          label: 'Login',
-          id: 'account/login',
-          type: 'normal',
-          visible: false,
-          click: () => this._zone.run(() => this._router.navigateByUrl('/auth/login'))
-        },
-        {
-          label: 'Register',
-          id: 'account/register',
-          type: 'normal',
-          visible: false,
-          click: () => this._zone.run(() => this._router.navigateByUrl('/auth/register'))
-        },
-        {
-          label: 'Logout',
-          id: 'account/logout',
-          type: 'normal',
-          visible: false,
-          click: () => this._zone.run(() => this._router.navigateByUrl('/auth/logout'))
-        },
-        {
-          label: 'My Account',
-          id: 'account/my_account',
-          type: 'normal',
-          visible: true,
-          click: () => console.log('TODO: create My Account Page')
-        }
-      ]
+      type: 'normal',
+      location: 'auth/account',
+      icon: 'account_circle'
     });
 
-    let settingsItem = new AngularMenuItem({
+    let settingsItem = new AngularNavItem({
       label: 'Settings',
       id: 'settings',
-      type: 'submenu',
-      submenu: [
-        {
-          label: 'General',
-          id: 'settings/general',
-          type: 'normal',
-          click: () => this._zone.run(() => this._router.navigateByUrl('/settings'))
-        },
-        {
-          label: 'TEST',
-          id: 'settings/test',
-          type: 'normal',
-          click: () => console.log('test clicked')
-        }
-      ]
+      type: 'normal',
+      location: 'settings',
+      icon: 'settings'
     });
 
-    let playerItem = new AngularMenuItem({
-      label: 'Player',
-      id: 'player',
-      type: 'submenu',
-      submenu: [
-        {
-          label: 'Browse Music',
-          id: 'player/browse_music',
-          type: 'normal',
-          click: () => this._zone.run(() => this._router.navigateByUrl('/home'))
-        },
-        {
-          label: 'Select Player',
-          id: 'player/select_player',
-          type: 'normal',
-          click: () => this._zone.run(() => this._router.navigateByUrl('/player/select'))
-        },
-        {
-          label: 'Active Player',
-          id: 'player/active_player',
-          type: 'normal',
-          click: () => this._zone.run(() => this._router.navigateByUrl('/player/web'))
-        }
-      ]
+    let browseMusicItem = new AngularNavItem({
+      label: 'Music',
+      id: 'music',
+      type: 'normal',
+      location: '/home',
+      icon: 'library_music'
     });
 
-    return [accountItem, playerItem, settingsItem];
+    let selectPlayerItem = new AngularNavItem({
+      label: 'Select Player',
+      id: 'selectPlayer',
+      type: 'normal',
+      location: 'player/select',
+      icon: 'radio'
+    });
+
+
+    return [browseMusicItem, selectPlayerItem, accountItem, settingsItem];
+  }
+
+  public registerNavItem(item: AngularNavItem): void {
+    this._navItemsRepo.push(item);
+    this._navItemsChanged.next(this._navItemsRepo);
   }
 
 }

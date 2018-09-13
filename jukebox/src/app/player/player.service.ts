@@ -109,7 +109,6 @@ export class PlayerService {
     });
 
     this._trayService.addTrayMenuItem(playbackMenuItem);
-    this._navigationService.registerNavItem(playbackMenuItem);
   }
 
   get currentSong(): SongResponse {

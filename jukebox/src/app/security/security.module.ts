@@ -6,11 +6,12 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {SecurityRoutingModule} from './security-routing.module';
-import {MaterialMetaModule} from "../material-meta/material-meta.module";
-import {AuthenticationService} from "./authentication.service";
-import {CanDeactivateGuard} from "./can-deactivate.guard";
-import { LogoutComponent } from './logout/logout.component';
-import {AuthGuard} from "./auth.guard";
+import {MaterialMetaModule} from '../material-meta/material-meta.module';
+import {AuthenticationService} from './authentication.service';
+import {CanDeactivateGuard} from './can-deactivate.guard';
+import {LogoutComponent} from './logout/logout.component';
+import {AuthGuard} from './auth.guard';
+import {AccountOverviewComponent} from './account-overview/account-overview.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {AuthGuard} from "./auth.guard";
     ChangePasswordComponent,
     ResetPasswordComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    AccountOverviewComponent
   ],
   providers:[
     AuthenticationService,
@@ -35,8 +37,4 @@ import {AuthGuard} from "./auth.guard";
 })
 export class SecurityModule {
 
-  constructor(auth: AuthenticationService)
-  {
-      auth.initialize();
-  }
 }

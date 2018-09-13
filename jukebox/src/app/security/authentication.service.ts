@@ -9,17 +9,12 @@ import {ILoginTokenResponse} from '../shared/models/ilogin-token-response';
 import {LoginTokenModel} from '../shared/models/login-token-model';
 import {NavigationService} from '../menu/navigation.service';
 import {ElectronService} from 'ngx-electron';
-import {AngularMenuItem} from '../menu/models/angular-menu-item';
 
 @Injectable()
 export class AuthenticationService {
   private _navigation: NavigationService;
   private _electronService: ElectronService;
   private static _isElectronApp: boolean = false;
-
-  private static _loginItem: AngularMenuItem;
-  private static _registerItem: AngularMenuItem;
-  private static _logoutItem: AngularMenuItem;
 
   constructor(private http: HttpClient, navigation: NavigationService, electronService: ElectronService) {
     this._navigation = navigation;
@@ -38,8 +33,6 @@ export class AuthenticationService {
     }
 
   }
-
-  private static isInitialized = false;
 
   private static _loginToken: LoginTokenModel;
 
@@ -76,7 +69,6 @@ export class AuthenticationService {
   }
 
   static isLoggedIn(): boolean {
-    this.updateNavItems();
     return AuthenticationService.loginToken != null;
   }
 
@@ -94,23 +86,6 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('loginToken');
     AuthenticationService._loginToken = null;
-    this.updateNavItems();
-  }
-
-  private static updateNavItems() {
-    if (!AuthenticationService.isInitialized)
-      return;
-
-    if (AuthenticationService.loginToken != null && this.loginToken.isValid()) {
-      AuthenticationService._logoutItem.visible = true;
-      AuthenticationService._loginItem.visible = false;
-      AuthenticationService._registerItem.visible = false;
-    }
-    else {
-      AuthenticationService._logoutItem.visible = false;
-      AuthenticationService._loginItem.visible = true;
-      AuthenticationService._registerItem.visible = true;
-    }
   }
 
   login(username: string, password: string): Observable<ILoginTokenResponse> {
@@ -121,7 +96,6 @@ export class AuthenticationService {
       }))
       .pipe(tap(response => {
         AuthenticationService.loginTokenResponse = response;
-        AuthenticationService.updateNavItems();
       }));
   }
 
@@ -152,18 +126,4 @@ export class AuthenticationService {
     return this.http.put(`/api/auth/register?username=${username}`, '', {responseType: 'text'}).pipe(map(() => {
     }));
   }
-
-  public initialize() {
-    if (AuthenticationService.isInitialized)
-      return;
-    AuthenticationService.isInitialized = true;
-
-    AuthenticationService._loginItem = this._navigation.findNavItem('account/login');
-    AuthenticationService._registerItem = this._navigation.findNavItem('account/register');
-    AuthenticationService._logoutItem = this._navigation.findNavItem('account/logout');
-
-    AuthenticationService.updateNavItems();
-
-  }
-
 }

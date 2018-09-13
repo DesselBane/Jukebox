@@ -4,8 +4,9 @@ import {ChangePasswordComponent} from './changePassword/changePassword.component
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {ResetPasswordComponent} from './resetPassword/resetPassword.component';
-import {LogoutComponent} from "./logout/logout.component";
-import {AuthGuard} from "./auth.guard";
+import {LogoutComponent} from './logout/logout.component';
+import {AuthGuard} from './auth.guard';
+import {AccountOverviewComponent} from './account-overview/account-overview.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {AuthGuard} from "./auth.guard";
         {path: 'login', component: LoginComponent},
         {path: 'register', component: RegisterComponent},
         {path: 'resetPassword', component: ResetPasswordComponent},
-        {path:'logout', component: LogoutComponent, canActivate: [AuthGuard]}
+        {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
+        {path: 'account', component: AccountOverviewComponent, canActivate: [AuthGuard]}
       ]
     }])
   ],

@@ -3,43 +3,32 @@ import {AngularMenuItemOptions} from './angular-menu-item-options';
 
 export class AngularMenuItem implements AngularMenuItemOptions {
 
-  constructor(options: AngularMenuItemOptions) {
-    this._click = options.click;
-    this._type = options.type;
-    this._label = options.label;
-    this._accelerator = options.accelerator;
-    this._icon = options.icon;
-    this._enabled = options.enabled || true;
-    this._visible = options.visible || true;
-    this._id = options.id;
-    this._position = options.position;
-  }
-
-  private readonly _click: Function;
+  private _click: Function;
+  private _type: ('normal' | 'separator' | 'submenu');
 
   get click(): Function {
     return this._click;
   }
 
-  private readonly _type: ('normal' | 'separator');
+  private _label: string;
 
   get type() {
     return this._type;
   }
 
-  private readonly _label: string;
+  private _accelerator: string;
 
   get label(): string {
     return this._label;
   }
 
-  private readonly _accelerator: string;
+  private _icon: string;
 
   get accelerator(): string {
     return this._accelerator;
   }
 
-  private readonly _icon: string;
+  private _id: string;
 
   get icon(): string {
     return this._icon;
@@ -67,13 +56,32 @@ export class AngularMenuItem implements AngularMenuItemOptions {
     this.visibleChanged.next();
   }
 
-  private readonly _id: string;
+  private _position: string;
+
+  constructor(options: AngularMenuItemOptions) {
+    this._click = options.click;
+    this._type = options.type;
+    this._label = options.label;
+    this._accelerator = options.accelerator;
+    this._icon = options.icon;
+    this._enabled = options.enabled || true;
+    this._visible = options.visible || true;
+    this._id = options.id;
+    this._position = options.position;
+
+    if (options.submenu != null)
+      options.submenu.forEach(subOptions => this._submenu.push(new AngularMenuItem(subOptions)));
+  }
+
+  private _submenu: AngularMenuItem[] = [];
 
   get id(): string {
     return this._id;
   }
 
-  private readonly _position: string;
+  get submenu(): AngularMenuItem[] {
+    return this._submenu;
+  }
 
   get position(): string {
     return this._position;

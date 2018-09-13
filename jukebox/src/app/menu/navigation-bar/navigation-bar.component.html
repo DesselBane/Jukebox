@@ -7,11 +7,11 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav id="sidenavContainer" autosize>
+  <mat-sidenav #sidenav id="sidenavContainer" autosize="true" opened="true" hasBackdrop="false" mode="side">
 
     <mat-nav-list id="sidenavList">
       <mat-list-item (click)="newSidenavToggle()">
-        <mat-icon>menu</mat-icon>
+        <mat-icon class="noselect">menu</mat-icon>
       </mat-list-item>
 
       <app-nav-item *ngFor="let item of _navItems"

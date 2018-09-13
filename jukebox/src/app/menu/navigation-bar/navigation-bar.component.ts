@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationService} from '../navigation.service';
-import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
-import {fromEvent, Observable} from 'rxjs';
-import {debounceTime, map} from 'rxjs/operators';
-import {AngularMenuItem} from '../models/angular-menu-item';
+import {AngularNavItem} from '../models/angular-nav-item';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -14,69 +12,33 @@ import {AngularMenuItem} from '../models/angular-menu-item';
 })
 export class NavigationBarComponent implements OnInit {
 
-  public _navItems: AngularMenuItem[];
+  public _navItems: AngularNavItem[];
   private _navigation: NavigationService;
   @ViewChild(MatSidenav)
   private sidenav: MatSidenav;
-  private _lastQuery: boolean = undefined;
-  private _resizeEvent: Observable<void>;
   public _isExpanded: boolean;
+  private _location: Location;
 
-  constructor(navigation: NavigationService, media: MediaMatcher) {
+  constructor(navigation: NavigationService,
+              location: Location) {
     this._navigation = navigation;
     this._navItems = this._navigation.navItemsRepo;
+    this._location = location;
 
     this._navigation.navItemsChanged.subscribe(value => {
       this._navItems = value;
     });
-
-      this._mobileQuery = media.matchMedia('(max-width: 600px)');
-
-      this._resizeEvent = fromEvent(window, 'resize')
-        .pipe(
-          map(() => {
-          }),
-          debounceTime(200)
-        );
-
-      this._resizeEvent.subscribe(() => this.makeSidenavResponsveAgain());
-
-  }
-
-  private _mobileQuery: MediaQueryList;
-
-  get mobileQuery(): MediaQueryList {
-    return this._mobileQuery;
   }
 
   ngOnInit() {
-      this.makeSidenavResponsveAgain();
-  }
-
-  makeSidenavResponsveAgain(): void {
-
-    if (this._lastQuery != undefined && this._lastQuery === this._mobileQuery.matches)
-      return;
-
-    this._lastQuery = this._mobileQuery.matches;
-
-    if (this._lastQuery) {
-      this.sidenav.mode = 'over';
-      this.sidenav.close();
-    }
-    else {
-      this.sidenav.mode = 'side';
-      this.sidenav.open();
-    }
   }
 
   navItemClicked() {
-    if (this._mobileQuery.matches)
-      this.sidenav.toggle();
+    this._isExpanded = false;
   }
 
   action_back(): void {
-    console.log('back button clicked');
+    this._location.back();
   }
 
   newSidenavToggle(): void {

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AngularMenuItem} from '../models/angular-menu-item';
+import {AngularNavItem} from '../models/angular-nav-item';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav-item',
@@ -9,22 +10,25 @@ import {AngularMenuItem} from '../models/angular-menu-item';
 export class NavItemComponent implements OnInit {
 
   @Input()
-  CurrentItem: AngularMenuItem;
+  CurrentItem: AngularNavItem;
 
   @Input()
   IsExpanded: boolean;
 
   @Output()
   ItemClicked = new EventEmitter();
+  private _router: Router;
 
-  constructor() { }
+  constructor(router: Router) {
+    this._router = router;
+  }
 
   ngOnInit() {
   }
 
   public itemClickHandler() {
     this.ItemClicked.emit();
-    this.CurrentItem.click();
+    this._router.navigateByUrl(this.CurrentItem.location);
   }
 
 }
