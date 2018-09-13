@@ -3,11 +3,11 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <span id="title">Jukebox</span>
+  <span id="title" class="noselect">Jukebox</span>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav id="sidenavContainer" autosize="true" opened="true" hasBackdrop="false" mode="side">
+  <mat-sidenav #sidenav id="sidenavContainer" autosize opened hasBackdrop="false" mode="side">
 
     <mat-nav-list id="sidenavList">
       <mat-list-item (click)="newSidenavToggle()">
