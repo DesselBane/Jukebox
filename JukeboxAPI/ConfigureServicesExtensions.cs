@@ -4,6 +4,7 @@ using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.DynamicProxy;
+using IF.Lastfm.Core.Api;
 using Jukebox.Common.Abstractions.DataModel;
 using Jukebox.Common.Abstractions.Email;
 using Jukebox.Common.Abstractions.Options;
@@ -74,7 +75,8 @@ namespace Jukebox
                           .ConfigurePlayers()
                           .ConfigureNotifications()
                           .ConfigureSettings()
-                          .ConfigureFiles();
+                          .ConfigureFiles()
+                          .ConfigureLastFm();
         }
 
         #endregion
@@ -310,6 +312,22 @@ namespace Jukebox
 
             builder.RegisterType<FileServiceInterceptor>();
             builder.RegisterType<FileValidator>();
+            
+            return builder;
+        }
+
+        private static ContainerBuilder ConfigureLastFm(this ContainerBuilder builder)
+        {
+            var token = Environment.GetEnvironmentVariable("LASTFM_TOKEN");
+            var secret = Environment.GetEnvironmentVariable("LASTFM_SECRET");
+
+            builder.RegisterType<LastfmClient>()
+                   .WithParameters(new[]
+                                   {
+                                       new NamedParameter("apiKey", token),
+                                       new NamedParameter("apiSecret", secret)
+                                   });
+                
             
             return builder;
         }
