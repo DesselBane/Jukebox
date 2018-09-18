@@ -7,7 +7,6 @@
     <ItemGroup>
         <Folder Include="DependencyInjection"/>
         <Folder Include="RequestModels"/>
-        <Folder Include="Services"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -9,7 +9,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            test2();
+            TEST.TestApi();
             Console.ReadKey();
         }
 
