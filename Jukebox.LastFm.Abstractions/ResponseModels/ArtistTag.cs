@@ -11,5 +11,8 @@ namespace Jukebox.LastFm.Abstractions.ResponseModels
         
         [DataMember(Name = "url")]
         public Uri Url { get; set; }
+        
+        [DataMember(Name = "count", IsRequired = false)]
+        public int Count { get; set; }
     }
 }

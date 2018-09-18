@@ -17,7 +17,7 @@ namespace Test
             var content = response.Content.ReadAsStringAsync().Result;
             var artist = JObject.Parse(content)
                                 .SelectToken("artist")
-                                .ToObject<ArtistInfo>();
+                                .ToObject<ArtistFullInfo>();
 
             Console.WriteLine(JsonConvert.SerializeObject(artist, Formatting.Indented));
             
