@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Jukebox.LastFm.Abstractions\Jukebox.LastFm.Abstractions.csproj"/>
+        <ProjectReference Include="..\Jukebox.LastFm\Jukebox.LastFm.csproj"/>
     </ItemGroup>
 
 </Project>
