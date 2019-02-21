@@ -1,4 +1,0 @@
-Search and Replace quotations with \enquote{} using a regex
-
-Find ->             ("|'|`|´)([^'"´`]+)("|'|`|´)
-Rplace with ->      \enquote{$2}

@@ -1,9 +1,0 @@
-<div class="gridWrapper">
-  <mat-form-field>
-    <input type="text" matInput placeholder="Search here..." (keyup)="searchBarTyped($event.target.value)">
-  </mat-form-field>
-  <mat-list>
-    <app-song-list-view-model *ngFor="let item of availableSongs" [Song]="item"></app-song-list-view-model>
-  </mat-list>
-
-</div>

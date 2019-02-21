@@ -1,8 +1,0 @@
-<mat-list>
-  <div *ngFor="let letter of alphabet">
-    <div *ngIf="getSongByLetter(letter).length > 0">
-      <h3 matSubheader>{{letter}}</h3>
-      <app-song-list-view-model *ngFor="let song of getSongByLetter(letter)" [Song]="song"></app-song-list-view-model>
-    </div>
-  </div>
-</mat-list>
